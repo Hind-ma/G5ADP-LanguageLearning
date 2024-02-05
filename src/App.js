@@ -1,6 +1,6 @@
 import logo from "./logo.svg";
 import "./App.css";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Account from "./pages/Account";
 import ConnectWords from "./pages/ConnectWords";
 import FillBlank from "./pages/FillBlank";
@@ -10,9 +10,13 @@ import PickWord from "./pages/PickWord";
 import Sentence from "./pages/Sentence";
 import Welcome from "./pages/Welcome";
 
+import React from 'react';
+
 function App() {
+  
   return (
     <div className="App">
+      {/* Routes */}
       <Routes>
         <Route path="/welcome" element={<Welcome />} />
         <Route path="/" element={<Home />} />
