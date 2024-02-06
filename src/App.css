@@ -48,3 +48,22 @@
 .button-container button {
   margin: 8px; /* Adjust the margin between buttons */
 }
+
+/* ConnectWords.css */
+/*.word-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+
+.swedish-words,
+.english-words {
+  border: 1px solid #ccc;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.english-words div {
+  margin-bottom: 10px;
+}
+*/
