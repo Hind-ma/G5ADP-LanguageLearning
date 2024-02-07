@@ -8,17 +8,21 @@ export const Register = (props) => {
     
     const handleSubmit = (e) => {
         e.preventDefault();
-        var passwordsMatch = confPass === pass;
-        var nameAvailable = sessionStorage.getItem(name) === null;
-        if (nameAvailable) {
-            if (passwordsMatch) {
-                storeData();
-                document.getElementById("confirmation").innerHTML = "The account has been created";
-            } else
-                document.getElementById("confirmation").innerHTML = "Passwords do not match";
-        }
-        else {
-            document.getElementById("confirmation").innerHTML = "Username already taken";
+        if ([name,email,pass,confPass].includes("")) {
+            document.getElementById("confirmation").innerHTML ="Some fields are empty";
+        } else {
+            var passwordsMatch = confPass === pass;
+            var nameAvailable = sessionStorage.getItem(name) === null;
+            if (nameAvailable) {
+                if (passwordsMatch) {
+                    storeData();
+                    document.getElementById("confirmation").innerHTML = "The account has been created";
+                } else
+                    document.getElementById("confirmation").innerHTML = "Passwords do not match";
+            }
+            else {
+                document.getElementById("confirmation").innerHTML = "Username already taken";
+            }
         }
     }
 
