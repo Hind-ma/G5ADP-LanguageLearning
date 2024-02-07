@@ -12,8 +12,10 @@ function Welcome() {
 
   const navigate = useNavigate();
 
-  const switchToMenu = () => {
-    sessionStorage.setItem('username', 'Guest user');
+  const switchToMenu = (guest) => {
+    if (guest) {
+      sessionStorage.setItem('username', 'Guest user');
+    }
     navigate("/");
   }
 
@@ -21,7 +23,7 @@ function Welcome() {
     return (
       <>
         <button onClick={() => toggleForm('login')}>Start learning!</button>
-        <button onClick={() => switchToMenu()}>Try it as a guest</button>
+        <button onClick={() => switchToMenu(true)}>Try it as a guest</button>
       </>
     );
   }
@@ -29,8 +31,8 @@ function Welcome() {
   return (
     <div className="App">
       {
-        currentForm === 'login' ?  <Login onFormSwitch={toggleForm}/> : 
-        currentForm === 'register' ? <Register onFormSwitch={toggleForm}/> :
+        currentForm === 'login' ?  <Login onFormSwitch={toggleForm} continueToMenu={switchToMenu}/> : 
+        currentForm === 'register' ? <Register onFormSwitch={toggleForm} continueToMenu={switchToMenu}/> :
         welcomePage()
       }
     </div>

@@ -18,6 +18,7 @@ export const Register = (props) => {
                     storeData();
                     sessionStorage.setItem('username', name);
                     document.getElementById("confirmation").innerHTML = "The account has been created";
+                    props.continueToMenu(false);
                 } else
                     document.getElementById("confirmation").innerHTML = "Passwords do not match";
             }

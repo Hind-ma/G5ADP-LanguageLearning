@@ -12,6 +12,7 @@ export const Login = (props) => {
             if (userPassword === pass) {
                 sessionStorage.setItem('username', name);
                 document.getElementById("confirmation").innerHTML = "Login succesful";
+                props.continueToMenu(false);
             } else {
                 document.getElementById("confirmation").innerHTML = "Incorrect password";
             }
