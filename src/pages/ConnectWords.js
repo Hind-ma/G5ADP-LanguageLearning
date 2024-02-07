@@ -1,129 +1,85 @@
+// ConnectWords.js
+import React, { useState, useEffect } from 'react';
 import ChangePageButton from "./ChangePageButton";
-import React, { useState } from 'react';
+import './ConnectWords.css';
 
-const Line = ({ start, end }) => {
-  const distance = Math.sqrt(Math.pow(end[0] - start[0], 2) + Math.pow(end[1] - start[1], 2));
-  const angle = (Math.atan2(end[1] - start[1], end[0] - start[0]) * 180) / Math.PI;
-  const position = {
-    top: `${start[1]}px`,
-    left: `${start[0]}px`,
-    width: `${distance}px`,
-    transform: `rotate(${angle}deg)`,
-  };
-
-  return <div className="line" style={position}></div>;
-};
+const wordPairs = [
+  { id: 1, swedish: 'Hund', english: 'Dog' },
+  { id: 2, swedish: 'Bok', english: 'Book' },
+  { id: 3, swedish: 'Sol', english: 'Sun' },
+  { id: 4, swedish: 'Dator', english: 'Computer' },
+];
 
 const ConnectWords = () => {
-  // Initial state with words for Swedish and English
-  const [swedishWords, setSwedishWords] = useState([
-    'skola',
-    'bok',
-    'dator',
-    'lärare',
-  ]);
+  const [selectedWord, setSelectedWord] = useState(null);
+  const [result, setResult] = useState({tries: 0, correct: 0});
+  const [feedbackMessage, setFeedbackMessage] = useState('');
 
-  const [englishWords, setEnglishWords] = useState([
-    'school',
-    'book',
-    'computer',
-    'teacher',
-  ]);
-
-  // State used to track user connections
-  const [connections, setConnections] = useState(Array(swedishWords.length).fill(null));
-
-  const [selectedSwedishIndex, setSelectedSwedishIndex] = useState(null);
-  const [lineStart, setLineStart] = useState(null);
-
-  // This is a function which handles connecting words
-  const connectWords = (englishIndex) => {
-    if (selectedSwedishIndex !== null && connections[selectedSwedishIndex] === null) {
-      setConnections((prevConnections) => {
-        const newConnections = [...prevConnections];
-        newConnections[selectedSwedishIndex] = englishIndex;
-        return newConnections;
-      });
-      setSelectedSwedishIndex(null);
-      setLineStart(null);
+  const handleWordClick = (id, language) => {
+    // if it is the first word clicked, highlight it 
+    if (!selectedWord) {
+      setSelectedWord({ id, language });
+    } else if (selectedWord.language === language) {
+      // second word clicked, but the same language
+      setFeedbackMessage(`They are the same language. Try again but take a word from the ${language === 'swedish' ? 'English' : 'Swedish'} words.`);
+      setTimeout(() => setFeedbackMessage(''), 2000);
+    } else {
+      // Check if the translation matches
+      const isMatch = selectedWord.id === id;
+      if (isMatch) {
+        setResult((prevResult) => ({ tries: prevResult.tries + 1, correct: prevResult.correct + 1 }));
+        setTimeout(() => {
+          setSelectedWord(null);
+        }, 2000);
+      } else {
+          setResult((prevResult) => ({ tries: prevResult.tries + 1, correct: prevResult.correct }));
+          setFeedbackMessage('Wrong! Try again.');
+          setTimeout(() => {
+            setSelectedWord(null);
+            setFeedbackMessage('');
+          }, 2000);
+      }
     }
   };
 
-  const getRightOfElement = (id) => {
-    const element = document.getElementById(id);
-
-    if(element) {
-      const rect = element.getBoundingClientRect();
-      return [rect.right, (rect.top + rect.bottom)/2];
+  useEffect(() => {
+    if (result.tries === wordPairs.length) {
+      setFeedbackMessage(`You got ${result.correct} out of ${result.tries} correct!`);
     }
-
-    return null; // return null if the element is not found 
-  };
-
-  const getLeftOfElement = (id) => {
-    const element = document.getElementById(id);
-
-    if (element) {
-      const rect = element.getBoundingClientRect();
-      return [rect.left, (rect.top + rect.bottom)/2];
-    }
-
-    return null; // return null if element is not found 
-  };
-
-  const selectSwedishWord = (swedishIndex) => {
-    setSelectedSwedishIndex(swedishIndex);
-    const swedishElementId = `swedish-word-${swedishIndex}`;
-    const englishElementId = `english-word-${connections[swedishIndex]}`;
-
-    // Check if both elements are found before setting the line start position
-    if (document.getElementById(swedishElementId) && document.getElementById(englishElementId)) {
-      setLineStart(getLeftOfElement(swedishElementId));
-    }  
-};
-
-  // This function evaluates as well as shows the results
-  const showResults = () => {
-    const correctConnections = connections.filter((connection, index) => connection === index).length;
-    alert('You got ${correctConnections} out of ${swedishWords.length} correct! Good job!');
-  };
+  }, [result]);
 
   return (
     <div>
       <ChangePageButton to="/" label="Go to Home" />
-
-      <div className="connect-words-container">
-        <h2>Connect the Words</h2>
-        <div className="word-container">
-          <div className="swedish-words">
-            {swedishWords.map((word, index) => (
-              <div
-                key={index}
-                id={'swedish-word-${index}'}
-                className={`word ${selectedSwedishIndex === index ? 'selected' : ''}`}
-                onClick={() => selectSwedishWord(index)}
-              >
-                {word}
-              </div>
-            ))}
-          </div>
-          <div className="english-words">
-            {englishWords.map((word, index) => (
-              <div
-                key={index}
-                className={`word ${connections.indexOf(index) !== -1 ? 'connected' : ''}`}
-                onClick={() => connectWords(index)}
-              >
-                {word}
-              </div>
-            ))}
-          </div>
-          {selectedSwedishIndex !== null && lineStart !== null && (
-            <Line start={lineStart} end={getLeftOfElement(`english-word-${connections[selectedSwedishIndex]}`)} />
-          )}
+      <div className='word-pairs-container'>
+        {/* Display Swedish words on the left */}
+        <div className='word-column'>
+          {wordPairs.map((pair) => (
+            <button 
+              key={pair.id}
+              className={selectedWord && selectedWord.id === pair.id && selectedWord.language === 'swedish' ? 'highlight' : ''}
+              onClick={() => handleWordClick(pair.id, 'swedish')}
+            >
+              {pair.swedish}
+            </button>
+          ))}
         </div>
-        <button onClick={showResults}>Check Results</button>
-      </div>  
+
+        {/* Display English words on the right */}
+        <div className='word-column'>
+          {wordPairs.map((pair) => (
+            <button 
+              key={pair.id}
+              className={selectedWord && selectedWord.id === pair.id && selectedWord.language === 'english' ? 'highlight' : ''}
+              onClick={() => handleWordClick(pair.id, 'english')}
+            >
+              {pair.english}
+            </button>
+          ))}
+        </div>
+
+        <div className='feedback-message'>{feedbackMessage}</div>
+      </div>
     </div>
   );
 };
