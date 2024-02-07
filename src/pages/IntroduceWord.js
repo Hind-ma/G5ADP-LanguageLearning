@@ -1,5 +1,6 @@
 import ChangePageButton from "./ChangePageButton";
 import { GetRandomInt } from "../utils";
+import { useState } from "react";
 
 /* TODO: @CS, Remove in future - this is only for Sprint 1 demo */
 const introWords = [
@@ -28,7 +29,7 @@ function PrintWord({ id }) {
     return (
         <div>
             {/* id is for debugging */}
-            {item.id}
+            {/* {item.id} */}
             <span>{item.svWord.toLocaleUpperCase()} : {item.enWord.toLocaleUpperCase()}</span>
         </div>
     )
@@ -44,16 +45,16 @@ function PrintWordHeader() {
     );
 }
 
-/* TODO: @CS, fix */
-function NextWordButton({id}) {
-    function handleClick() {
-        alert('Getting next word');
-    }
-
+/**
+ *  NextWordButton - updates the displayed word
+ * @param {any} onClick - on click function
+ * @returns
+ */
+function NextWordButton({ onClick }) {
     return (
         <div>
-            <button onClick={handleClick}>
-                Next
+            <button onClick={onClick}>
+                Next Word
             </button>
         </div>
     );
@@ -61,15 +62,22 @@ function NextWordButton({id}) {
 
 function IntroduceWord() {
     const startIdx = GetRandomInt(0, introWords.length - 1);
-    var currentIdx = startIdx;
+    const [currentIdx, setCurrentIdx] = useState(startIdx);
+
+    /** Updates the word index to display */
+    function updateWord() {
+        setCurrentIdx(currentIdx => (currentIdx + 1 > introWords.length - 1) ? 0 : currentIdx + 1);
+    }
 
     return (
         <div>
-            <h2>Introduce words</h2>
             <ChangePageButton to="/" label="Go to Home" />
-            <PrintWordHeader />
-            <PrintWord id={currentIdx} />
-            <NextWordButton />
+            <div className="intro-word">
+                <h2>INTRODUCE WORDS</h2>
+                <PrintWordHeader />
+                <PrintWord id={currentIdx} />
+                <NextWordButton onClick={updateWord} />
+            </div>
         </div>
     );
 }
