@@ -1,5 +1,11 @@
 function Home() {
-  return <div>Home</div>;
+  var currentUsername = sessionStorage.getItem('username');
+  return (
+  <>
+  <h4>Welcome: {currentUsername}</h4>
+  <div>Home</div>
+  </>
+  );
 }
 
 export default Home;

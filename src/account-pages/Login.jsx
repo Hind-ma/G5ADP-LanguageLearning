@@ -10,6 +10,7 @@ export const Login = (props) => {
         if (userData !== null) {
             const userPassword = JSON.parse(userData)['password'];
             if (userPassword === pass) {
+                sessionStorage.setItem('username', name);
                 document.getElementById("confirmation").innerHTML = "Login succesful";
             } else {
                 document.getElementById("confirmation").innerHTML = "Incorrect password";

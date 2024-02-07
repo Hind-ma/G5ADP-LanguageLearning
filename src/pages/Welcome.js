@@ -13,6 +13,7 @@ function Welcome() {
   const navigate = useNavigate();
 
   const switchToMenu = () => {
+    sessionStorage.setItem('username', 'Guest user');
     navigate("/");
   }
 

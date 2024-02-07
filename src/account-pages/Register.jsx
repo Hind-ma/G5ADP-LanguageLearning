@@ -16,6 +16,7 @@ export const Register = (props) => {
             if (nameAvailable) {
                 if (passwordsMatch) {
                     storeData();
+                    sessionStorage.setItem('username', name);
                     document.getElementById("confirmation").innerHTML = "The account has been created";
                 } else
                     document.getElementById("confirmation").innerHTML = "Passwords do not match";
