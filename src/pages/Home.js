@@ -1,8 +1,11 @@
 import ChangePageButton from "./ChangePageButton";
 
 function Home() {
+  var currentUsername = sessionStorage.getItem('username');
+  
   return <div>Home
     {/* Navigation Buttons */}
+      <h4>Welcome: {currentUsername}</h4>
       <div className="button-container">
         <ChangePageButton to="/welcome" label="Go to Welcome page" />
         <ChangePageButton to="/" label="Go to Home page" />
