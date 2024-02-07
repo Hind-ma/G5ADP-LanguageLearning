@@ -17,19 +17,19 @@ button {
     padding: 8px 16px;
 }  
 
-.highlight {
+.clicked {
     background-color: #e6f7ff; 
 }
 
-.highlightCorrect {
+.correct {
     background-color: rgb(1, 203, 1);
 }
 
-.highlightWrong {
+.wrong {
     background-color: #ff0000;
 }
 
-.highlightHidden {
+.hidden {
     visibility: hidden;
     opacity: 0;
     pointer-events: none;
