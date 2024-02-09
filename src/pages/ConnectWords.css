@@ -1,0 +1,48 @@
+/* ConnectWords.css */
+.word-pairs-container {
+    display: flex;
+    justify-content: center;
+    margin: 50px; /* Adjust the margin as needed */
+  }
+  
+.word-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 30px;
+}
+
+button {
+    margin-bottom: 10px; /* Adjust the margin between words as needed */
+    padding: 8px 16px;
+}  
+
+.clicked {
+    background-color: #e6f7ff; 
+}
+
+.correct {
+    background-color: rgb(1, 203, 1);
+}
+
+.wrong {
+    background-color: #ff0000;
+}
+
+.hidden {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.feedback-message {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #ff0000; 
+}
+
+.result-container {
+    text-align: center;
+    margin-top: 50px;
+}
+  
