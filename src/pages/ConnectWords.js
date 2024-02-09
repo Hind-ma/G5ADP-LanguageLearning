@@ -5,16 +5,16 @@ import './ConnectWords.css';
 
 const ConnectWords = () => {
   const [wordPairs, setWordPairs] = useState([
-    { id: 1, swedish: 'Hund', english: 'Dog' , stateSwe: '', stateEng: '' },
+    { id: 1, swedish: 'Lärare', english: 'Teacher' , stateSwe: '', stateEng: '' },
     { id: 2, swedish: 'Bok', english: 'Book', stateSwe: '', stateEng: '' },
-    { id: 3, swedish: 'Sol', english: 'Sun', stateSwe: '', stateEng: '' },
+    { id: 3, swedish: 'Skola', english: 'School', stateSwe: '', stateEng: '' },
     { id: 4, swedish: 'Dator', english: 'Computer', stateSwe: '', stateEng: '' },
   ]);
 
-  const [selectedWords, setSelectedWords] = useState([]);
   const [result, setResult] = useState({tries: 0, correct: 0});
   const [feedbackMessage, setFeedbackMessage] = useState('');
   const [matchedPairs, setMatchedPairs] = useState([]);
+  const [showResult, setShowResult] = useState(false);
 
   const updateButtonState = (id, language, state) => {
     setWordPairs((prevWordPairs) =>
@@ -29,107 +29,124 @@ const ConnectWords = () => {
     );
   };
 
+  const findClickedWord = () => {
+    // Check if any swedish word has stateSwe set to 'clicked'
+    const swedishClickedWord = wordPairs.find((pair) => pair.stateSwe === 'clicked');
+  
+    // Check if any english word has stateEng set to 'clicked'
+    const englishClickedWord = wordPairs.find((pair) => pair.stateEng === 'clicked');
+  
+    // Return the id and language of the clicked word, or null if not found
+    if (swedishClickedWord) {
+      return { id: swedishClickedWord.id, language: 'swedish' };
+    } else if (englishClickedWord) {
+      return { id: englishClickedWord.id, language: 'english' };
+    } else {
+      return null;
+    }
+  };  
+
   const handleWordClick = (selectedId, selectedLanguage) => {
+    const firstClicked = findClickedWord();
     // if it is the first word clicked, highlight it 
-    if (selectedWords.length === 0) {
-      setSelectedWords([{ id: selectedId, language: selectedLanguage }]);
+    if (!firstClicked) {
       updateButtonState(selectedId, selectedLanguage, 'clicked')
-    } else if (selectedWords.length === 1) {
-      handleSecondWordClick(selectedId, selectedLanguage);
+    } else {
+      handleSecondWordClick(selectedId, selectedLanguage, firstClicked);
     } 
-    //TODO maybe handle else 
   };
 
-  const handleSecondWordClick = (selectedId, selectedLanguage) => {
-    setSelectedWords((prevSelectedWords) => [
-      ...prevSelectedWords, { id: selectedId, language: selectedLanguage }]);
-    
+  const handleSecondWordClick = (selectedId, selectedLanguage, firstClicked) => {
     updateButtonState(selectedId, selectedLanguage, 'clicked');
     
-    if (selectedLanguage === selectedWords[0].language) {
+    if (selectedLanguage === firstClicked.language) {
       // second word clicked, but the same language
       // TODO might need to handle some user feedback here, another highlight
       setFeedbackMessage(`They are the same language. Try again but take a word from the ${selectedLanguage === 'swedish' ? 'English' : 'Swedish'} words.`);
       updateButtonState(selectedId, selectedLanguage, 'wrong');
       setTimeout(() => {
         setFeedbackMessage('');
-        setSelectedWords((prevSelectedWords) => 
-          prevSelectedWords.filter((tuple, index) => index !== 1));
         updateButtonState(selectedId, selectedLanguage, '');
       }, 2000);
 
     } else {
       // Check if the translation matches
-      const isMatch = selectedWords[0].id === selectedId;
+      const isMatch = firstClicked.id === selectedId;
 
       if (isMatch) {
         // it is a match
         setResult((prevResult) => ({ tries: prevResult.tries + 1, correct: prevResult.correct + 1 }));
         setMatchedPairs([...matchedPairs, selectedId]);
-        updateButtonState(selectedWords[0].id, selectedWords[0].language, 'correct');
-        updateButtonState(selectedWords[1].id, selectedWords[1].language, 'correct');
+        updateButtonState(firstClicked.id, firstClicked.language, 'correct');
+        updateButtonState(selectedId, selectedLanguage, 'correct');
         setTimeout(() => {
-          updateButtonState(selectedWords[0].id, selectedWords[0].language, 'hidden');
-          updateButtonState(selectedWords[1].id, selectedWords[1].language, 'hidden');
-          setSelectedWords([]);
+          updateButtonState(firstClicked.id, firstClicked.language, 'hidden');
+          updateButtonState(selectedId, selectedLanguage, 'hidden');
         }, 2000);
 
       } else {
           // wrong answer
           setResult((prevResult) => ({ tries: prevResult.tries + 1, correct: prevResult.correct }));
           setFeedbackMessage('Wrong! Try again.');
-          updateButtonState(selectedWords[0].id, selectedWords[0].language, 'wrong');
-          updateButtonState(selectedWords[1].id, selectedWords[1].language, 'wrong');          
+          updateButtonState(firstClicked.id, firstClicked.language, 'wrong');
+          updateButtonState(selectedId, selectedLanguage, 'wrong');         
           setTimeout(() => {
             setFeedbackMessage('');
-            updateButtonState(selectedWords[0].id, selectedWords[0].language, '');
-            updateButtonState(selectedWords[0].id, selectedWords[0].language, '');
-            setSelectedWords([]);
+            updateButtonState(firstClicked.id, firstClicked.language, '');
+            updateButtonState(selectedId, selectedLanguage, '');
           }, 2000);
       }
     }
   }
 
   useEffect(() => {
-    if (result.correct === wordPairs.length) {
+    if (result.correct === wordPairs.length && matchedPairs.length === wordPairs.length) {
       setFeedbackMessage(`You got ${result.correct} out of ${result.tries} correct!`);
+      setShowResult(true);
     }
-  }, [result]);
+  }, [result, wordPairs.length, matchedPairs.length]);
 
   return (
     <div>
       <ChangePageButton to="/" label="Go to Home" />
-      <div className='word-pairs-container'>
-        {/* Display Swedish words on the left */}
-        <div className='word-column'>
-          {wordPairs.map((pair) => (
-            <button 
-              key={pair.id}
-              className={pair.stateSwe}
-              onClick={() => handleWordClick(pair.id, 'swedish')}
-            >
-              {pair.swedish}
-            </button>
-          ))}
-        </div>
 
-        {/* Display English words on the right */}
-        <div className='word-column'>
-          {wordPairs.map((pair) => (
-            <button 
-              key={pair.id}
-              className={pair.stateEng}
-              onClick={() => handleWordClick(pair.id, 'english')}
-            >
-              {pair.english}
-            </button>
-          ))}
+      {showResult ? (
+        <div className='result-container'>
+          <p>{feedbackMessage}</p>
+          <ChangePageButton to="/" label="Go to Home"/>
         </div>
-        <div className='feedback-message'>{feedbackMessage}</div>
-      </div>
+      ) : (
+        <div className='word-pairs-container'>
+          {/* Display Swedish words on the left */}
+          <div className='word-column'>
+            {wordPairs.map((pair) => (
+              <button 
+                key={pair.id}
+                className={pair.stateSwe}
+                onClick={() => handleWordClick(pair.id, 'swedish')}
+              >
+                {pair.swedish}
+              </button>
+            ))}
+          </div>
+
+          {/* Display English words on the right */}
+          <div className='word-column'>
+            {wordPairs.map((pair) => (
+              <button 
+                key={pair.id}
+                className={pair.stateEng}
+                onClick={() => handleWordClick(pair.id, 'english')}
+              >
+                {pair.english}
+              </button>
+            ))}
+          </div>
+          <div className='feedback-message'>{feedbackMessage}</div>
+        </div>
+      )}
     </div>
   );
 };
-
 
 export default ConnectWords;
