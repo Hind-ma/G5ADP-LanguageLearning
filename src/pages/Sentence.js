@@ -1,64 +1,82 @@
 import ChangePageButton from "./ChangePageButton";
-import { GetRandomInt, ShuffleArray } from "../utils";
-import { useState } from "react";
+import React, {useState} from "react"
+import { GetRandomInt } from "../utils";
 
-/* TODO: @CS, Remove in future - this is only for Sprint 1 demo */
-const makeSentences = [
-    { id: 0, words: ["ursakta", "var", "kan", "jag", "hitta", "mjolken"] },
-    { id: 1, words: ["den", "ar", "halv", "sju"] },
-    { id: 2, words: ["tack", "for", "en", "rolig", "fest"] },
-    { id: 3, words: ["jag", "trivs", "bra", "i", "Sverige"] },
-    { id: 4, words: ["Lisa", "laser", "svenska", "pa", "universitetet"] },
-]
+const sentenceList = [
+  {first:"Goddag, vad heter du?", second: "Good day, what is your name?" },
+  {first:"Vet du var centralstationen ligger?", second: "Do you know where the central station is?" },
+  {first:"Åh förlåt mig, jag äter inte kött.", second: "Oh I'm sorry, I don't eat meat." },
+  {first:"Sista bussen går om tre minuter.", second: "The last bus leaves in three minutes." },
+  {first:"Jag har bara 100 kronor kvar.", second: "I only have 100 kronor left." },
+];
 
-/* TODO: @CS,give proper function name, add space between buttons */
-function DisplayShuffledSentence({ id }) {
-    const item = makeSentences.find(sen => sen.id === id);
-    var shufflewords = item.words;
-    shufflewords = ShuffleArray(shufflewords);
-
-    // TODO: @CS, add the custom button
-    const sen = shufflewords.map(word =>
-        <button>{word.toString()}</button>
-    );
-
-    return (
-        <div>
-            {/* id is for debugging */}
-            {/* {item.id} */}  
-            <p>{sen}</p>
-        </div>
-    )
+function SetSentences({pos}) {
+  return (
+    <p>{sentenceList[pos].first}</p>
+  );
 }
 
-function NextSentenceButton({ onClick }) {
+function NextButton ({pos, movePos}) {
+  if (pos === sentenceList.length-1) {
     return (
-        <div>
-            <button onClick={onClick}>
-                Next Sentence
-            </button>
-        </div>
+    <ChangePageButton to="/" label="Finished! Go back to the home page"/>
     );
+  }
+  return (
+    <button id="next" onClick={movePos}>Next sentence</button>
+  );
+}
+
+function RandomizeLanguage () {
+  for (let i = 0; i < sentenceList.length; i++) {
+    var lan = GetRandomInt(0,1);
+    if (lan === 1) {
+    [sentenceList[i].first, sentenceList[i].second] = [sentenceList[i].second, sentenceList[i].first];
+    }
+  }
 }
 
 function Sentence() {
-    const startIdx = GetRandomInt(0, makeSentences.length - 1);
-    const [currentIdx, setCurrentIdx] = useState(startIdx);
+  const [sentence, setSentence] = useState("");
+  const [position, setPosition] = useState(0);
+  const [randomize, setRandomized] = useState(false);
+  
+  if (!randomize) {
+    RandomizeLanguage();
+    setRandomized(true);
+  }
 
-    function updateMakeSentence() {
-        setCurrentIdx(currentIdx => (currentIdx + 1 > makeSentences.length - 1) ? 0 : currentIdx + 1);
+  const movePosition = () => {
+    if (position < sentenceList.length -1) {
+      setPosition(position+1);
     }
+    setSentence("");
+    document.getElementById("result").innerHTML = "";
+  }
 
-    return (
-        <div>
-            <ChangePageButton to="/" label="Go to Home" />
-            <div className="intro-word">
-                <h2>MAKE THE SENTENCE</h2>
-                <DisplayShuffledSentence id={currentIdx} />
-                <NextSentenceButton onClick={updateMakeSentence} />
-            </div>
-        </div>
-    );
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (sentence === sentenceList[position].second) {
+      document.getElementById("result").innerHTML = "Sentence correctly translated!";
+    } else {
+      document.getElementById("result").innerHTML = "Incorrect translation.";
+    }
+  }
+
+  return(<>
+    <ChangePageButton to="/" label="Go to Home" />
+    <h2>Translate the swedish sentence into english.</h2>
+    <div className="auth-form-container">
+      <SetSentences pos={position}/>
+      <NextButton pos = {position} movePos = {movePosition}/>
+      <form className="login-form" onSubmit={handleSubmit}>
+                <input value={sentence} onChange={(e) => setSentence(e.target.value)} type="name" placeholder="Type here" id="sentence" name="sentence"/>
+                
+                <button type="submit">Check spelling</button>
+                <p id="result"></p>
+      </form>
+    </div>
+  </>);
 }
 
 export default Sentence;
