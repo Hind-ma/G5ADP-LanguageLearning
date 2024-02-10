@@ -2,7 +2,6 @@ import React, {useState} from "react"
 import {Login} from "../account-pages/Login";
 import {Register} from "../account-pages/Register";
 import { useNavigate } from 'react-router-dom';
-import ChangePageButton from "./ChangePageButton";
 
 function Welcome() {
   const [currentForm, setCurrentForm] = useState('');
