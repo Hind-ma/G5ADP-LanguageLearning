@@ -11,3 +11,30 @@ export function GetRandomInt(min, max) {
     const maxFloor = Math.floor(max);
     return Math.floor(Math.random() * (maxFloor - minCeil + 1) + minCeil);
 }
+
+/**
+ * Shuffle Array - unbiased shuffle algorithm
+ * Link: https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
+ * @param {any} array - input array
+ * @returns - shuffled array
+ */
+export function ShuffleArray(array) {
+    let currentIdx = array.length;
+    let randomIdx = null;
+    var res = array.slice();
+
+    // While there are remaining elements to shuffle
+    while (currentIdx > 0) {
+
+        // Pick the remaining element
+        randomIdx = Math.floor(Math.random() * currentIdx);
+        currentIdx--;
+
+        // Swap with the current element
+        //[array[currentIdx], array[randomIdx]] = [array[randomIdx], array[currentIdx]];
+        [res[currentIdx], res[randomIdx]] = [res[randomIdx], res[currentIdx]];
+    }
+
+    //return array;
+    return res;
+}
