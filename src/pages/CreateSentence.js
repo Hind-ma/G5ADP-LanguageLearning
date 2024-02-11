@@ -32,9 +32,7 @@ function DisplayShuffledSentence({ senId, wordOnClick }) {
     shuffleWords = ShuffleArray(shuffleWords);
     const senLength = item.words.length;
 
-    // TODO: @CS, add the custom button? kanske
     const sen = shuffleWords.map(word =>
-        //<DisplayWordButton key={word[0]} word={word[1].toString()} onClick={wordOnClick(word[0])} />
         <button
             key={word[0]}
             onClick={() => { wordOnClick(senLength, word[0], word[1].toString()); }}>
@@ -80,10 +78,10 @@ function DisplayUserSentence({ sentence }) {
 }
 
 // Displays the correct sentence
-function DisplayCorrectSentence({ bDisplay, sentence }) {
+function DisplayCorrectSentence({ bDisplay, bSuccess, sentence }) {
     return (
         <div>
-            <p>{bDisplay ? "Correct Answer: " + sentence : null}</p>
+            <p>{bDisplay ? (!bSuccess ? ("Correct Answer: " + sentence) : null) : null}</p>
         </div>
     );
 }
@@ -114,29 +112,22 @@ function CreateSentence() {
     var usrSen = "";
     var correctSen = getCorrectSentence(currentSenIdx);
 
+    //var bUpdateUsrSen = false;
+    //const [usrSentence, setUsrSentence] = useState("");
+
     // Word IDs of the current sentence
     var wordIdxs = [];
-
-    /** Reset the wordIdxs array */
-    function resetWordIdxsState() {
-        wordIdxs = [];
-    }
-
-    function resetShowResult() {
-        setShowResult(false);
-    }
-
-    function resetCorSentence() {
-        setCorSentence("");
-    }
 
     /** Updates the current sentence index to display */
     function updateMakeSentence() {
         setCurrentSenIdx(idx => (idx + 1 > makeSentences.length - 1) ? 0 : idx + 1);
 
-        resetWordIdxsState();
-        resetShowResult();
-        resetCorSentence();
+        // Reset states
+        wordIdxs = [];
+        setShowResult(false);
+        setCorSentence("");
+
+        //setUsrSentence("");
     }
 
     function getCorrectSentence(senId) {
@@ -152,6 +143,7 @@ function CreateSentence() {
     function updateUserSentence(word) {
         usrSen = usrSen + word + " ";
 
+        //setUsrSentence(usrSen);
         console.log("usrSen: " + usrSen);
     }
 
@@ -162,7 +154,7 @@ function CreateSentence() {
         setShowResult(true);
         setCorSentence(correctSen);
 
-        console.log("correctSen: " + correctSen);
+        //console.log("correctSen: " + correctSen);
         //console.log("usrSen: " + usrSen);
         //console.log("success: " + success);
     }
@@ -183,22 +175,21 @@ function CreateSentence() {
     }
 
     /*useEffect(() => {
-        if (bUpdateUserSen) {
+        if (bUpdateUsrSen) {
             //setShowResult(true);
+            setUsrSentence(usrSen);
         }
-    }, [bUpdateUserSen]);*/
+    }, [bUpdateUsrSen, usrSen]);*/
 
     return (
         <div>
             <ChangePageButton to="/" label="Go to Home" />
             <div className="intro-word">
                 <h2>CREATE THE SENTENCE</h2>
-                {/* TODO: @CS, fix result box parameters */}
                 <ResultBox bDisplay={bShowResult} bSuccess={bResult} />
-                <DisplayCorrectSentence bDisplay={!bResult} sentence={corSentence} />
+                <DisplayCorrectSentence bDisplay={bShowResult} bSuccess={bResult} sentence={corSentence} />
                 <DisplayUserSentence sentence={usrSen} />
                 <DisplayShuffledSentence senId={currentSenIdx} wordOnClick={onWordButtonClicked} />
-                {/*<CheckSentenceButton />*/}
                 <NextSentenceButton onClickFunc={updateMakeSentence} />
             </div>
         </div>
