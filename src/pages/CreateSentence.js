@@ -1,6 +1,6 @@
 import ChangePageButton from "./ChangePageButton";
 import { GetRandomInt, ShuffleArray } from "../utils";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 /* TODO: @CS, Remove in future - this is only for Sprint 1 demo */
 const makeSentences = [
@@ -15,9 +15,9 @@ const makeSentences = [
     //{ id: 4, words: [[0, "Lisa"], [1, "läser"], [2, "svenska"], [3, "på"], [4, "universitetet"]] },
 ]
 
-// TODO: @CS
+/** Shows if the sentence is correct or incorrect */
 function ResultBox({ bDisplay, bSuccess }) {
-    const item = bDisplay ? bSuccess ? "Correct" : "Incorrect" : null;
+    const item = bDisplay ? (bSuccess ? "Correct" : "Incorrect") : null;
     return (
         <div>
             <p>{item}</p>
@@ -49,7 +49,7 @@ function DisplayShuffledSentence({ senId, wordOnClick }) {
     )
 }
 
-function DisplayUserSentence({ senId, wordIds }) {
+function DisplayUserSentence({ sentence }) {
     //var [currentUsrSen, setCurrentUsrSen] = useState("");
     //const word = wordIds.map((id) => senId.id === id);
     /*var words = [];
@@ -70,9 +70,12 @@ function DisplayUserSentence({ senId, wordIds }) {
     }*/
 
     return (
-        <div>User Sentence Here</div>
+        //<div>User Sentence Here</div>
         //<div><p>{updateUserSen}</p></div>
         //<div>{sen}</div>
+        <div>
+            <p>{sentence}</p>
+        </div>
     )
 }
 
@@ -105,7 +108,7 @@ function CreateSentence() {
     const startSenIdx = GetRandomInt(0, makeSentences.length - 1);
     const [currentSenIdx, setCurrentSenIdx] = useState(startSenIdx);
     //const [correctSen, setCorrectSen] = useState(getCorrectSentence(startSenIdx));
-    //var [currentUsrSen, setCurrentUsrSen] = useState("");
+    //const [currentUsrSen, setCurrentUsrSen] = useState("");
     var usrSen = "";
     //var correctSen = getCorrectSentence(startSenIdx);
     var correctSen = getCorrectSentence(currentSenIdx);
@@ -115,6 +118,8 @@ function CreateSentence() {
     //var bMatchSenLength = false;
 
     var bCheckResult = false;
+    //var [corSen, setCorSen] = useState(getCorrectSentence(currentSenIdx));
+
 
     // Word IDs of the current sentence
     var wordIdxs = [];
@@ -131,10 +136,7 @@ function CreateSentence() {
 
     /** Updates the current sentence index to display */
     function updateMakeSentence() {
-        //console.log("updateMakeSentence");
         setCurrentSenIdx(idx => (idx + 1 > makeSentences.length - 1) ? 0 : idx + 1);
-        //setCurrentSenIdx(idx => (GetRandomInt(0, makeSentences.length - 1)));
-        //setCorrectSen(getCorrectSentence(currentSenIdx));
 
         resetWordIdxsState();
         resetShowResult();
@@ -148,13 +150,7 @@ function CreateSentence() {
         }
 
         return sen;
-        //setCorrectSen(sen);
     }
-
-    /*function updateCheckResult() {
-        //bCheckResult ? setShowResult(true) : setShowResult(false);
-        setShowResult(true);
-    }*/
 
     function updateUserSentence(word) {
         usrSen = usrSen + word + " ";
@@ -165,9 +161,15 @@ function CreateSentence() {
     function checkUserSentence() {
         var success = (correctSen === usrSen);
 
+        setShowResult(true);
+
         console.log("correctSen: " + correctSen);
         console.log("usrSen: " + usrSen);
         console.log("success: " + success);
+
+        //setShowResult(true);
+
+        //return success;
     }
 
     function onWordButtonClicked(senLength, wordId, word) {
@@ -181,16 +183,16 @@ function CreateSentence() {
         }
 
         if (wordIdxs.length === senLength) {
-            //setShowResult(true);
-            //bMatchSenLength = true;
-            bCheckResult = true;
-            setShowResult(true);
             checkUserSentence();
+            bCheckResult = true;
         }
-
-        //console.log(wordIdxs);
     }
 
+    useEffect(() => {
+        if (bCheckResult) {
+            setShowResult(true);
+        }
+    }, [bCheckResult]);
 
     return (
         <div>
@@ -198,9 +200,10 @@ function CreateSentence() {
             <div className="intro-word">
                 <h2>CREATE THE SENTENCE</h2>
                 {/* TODO: @CS, fix result box parameters */}
-                <ResultBox bDisplay={bShowResult} bSuccess={false} />
-                <DisplayCorrectSentence bDisplay={true} sentence={getCorrectSentence(currentSenIdx)} />
-                <DisplayUserSentence senId={currentSenIdx} wordIds={wordIdxs} />
+                <ResultBox bDisplay={bShowResult} bSuccess={bShowResult} />
+                {/*<DisplayCorrectSentence bDisplay={bShowResult} sentence={getCorrectSentence(currentSenIdx)} />*/}
+                <DisplayCorrectSentence bDisplay={bShowResult} sentence={correctSen} />
+                <DisplayUserSentence sentence={usrSen} />
                 <DisplayShuffledSentence senId={currentSenIdx} wordOnClick={onWordButtonClicked} />
                 {/*<CheckSentenceButton />*/}
                 <NextSentenceButton onClickFunc={updateMakeSentence} />
