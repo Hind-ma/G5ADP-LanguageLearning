@@ -9,7 +9,7 @@ import IntroduceWord from "./pages/IntroduceWord";
 import PickWord from "./pages/PickWord";
 import Sentence from "./pages/Sentence";
 import Welcome from "./pages/Welcome";
-
+import CreateSentence from "./pages/CreateSentence";
 import React from 'react';
 
 function App() {
@@ -25,6 +25,7 @@ function App() {
         <Route path="/introduce" element={<IntroduceWord />} />
         <Route path="/fill-blank" element={<FillBlank />} />
         <Route path="/sentence" element={<Sentence />} />
+        <Route path="/create-sen" element={<CreateSentence />} />
         <Route path="/connect-words" element={<ConnectWords />} />
       </Routes>
     </div>
