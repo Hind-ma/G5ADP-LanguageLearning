@@ -21,6 +21,7 @@ export function GetRandomInt(min, max) {
 export function ShuffleArray(array) {
     let currentIdx = array.length;
     let randomIdx = null;
+    var res = array.slice();
 
     // While there are remaining elements to shuffle
     while (currentIdx > 0) {
@@ -30,8 +31,10 @@ export function ShuffleArray(array) {
         currentIdx--;
 
         // Swap with the current element
-        [array[currentIdx], array[randomIdx]] = [array[randomIdx], array[currentIdx]];
+        //[array[currentIdx], array[randomIdx]] = [array[randomIdx], array[currentIdx]];
+        [res[currentIdx], res[randomIdx]] = [res[randomIdx], res[currentIdx]];
     }
 
-    return array;
+    //return array;
+    return res;
 }

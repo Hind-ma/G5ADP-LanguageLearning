@@ -1,18 +1,14 @@
 import ChangePageButton from "./ChangePageButton";
 import { GetRandomInt, ShuffleArray } from "../utils";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 /* TODO: @CS, Remove in future - this is only for Sprint 1 demo */
 const makeSentences = [
-    { id: 0, words: [[0, "ursakta"], [1, "var"], [2, "kan"], [3, "jag"], [4, "hitta"], [5, "mjolken"]] },
-    //{ id: 0, words: [[0, "ursäkta"], [1, "var"], [2, "kan"], [3, "jag"], [4, "hitta"], [5, "mjölken"]] },
-    { id: 1, words: [[0, "den"], [1, "ar"], [2, "halv"], [3, "sju"]] },
-    //{ id: 1, words: [[0, "den"], [1, "är"], [2, "halv"], [3, "sju"]] },
-    { id: 2, words: [[0, "tack"], [1, "for"], [2, "en"], [3, "rolig"], [4, "fest"]] },
-    //{ id: 2, words: [[0, "tack"], [1, "för"], [2, "en"], [3, "rolig"], [4, "fest"]] },
-    { id: 3, words: [[0, "jag"], [1, "trivs"], [2, "bra"], [3, "i"], [4, "Sverige"]] },
-    { id: 4, words: [[0, "Lisa"], [1, "laser"], [2, "svenska"], [3, "pa"], [4, "universitetet"]] },
-    //{ id: 4, words: [[0, "Lisa"], [1, "läser"], [2, "svenska"], [3, "på"], [4, "universitetet"]] },
+    { id: 0, words: ["ursakta", "var", "kan", "jag", "hitta", "mjolken"] },
+    { id: 1, words: ["den", "ar", "halv", "sju"] },
+    { id: 2, words: ["tack", "for", "en", "rolig", "fest"] },
+    { id: 3, words: ["jag", "trivs", "bra", "i", "Sverige"] },
+    { id: 4, words: ["Lisa", "laser", "svenska", "pa", "universitetet"] },
 ]
 
 /** Shows if the sentence is correct or incorrect */
@@ -25,63 +21,11 @@ function ResultBox({ bDisplay, bSuccess }) {
     );
 }
 
-/* TODO: @CS, add space between buttons */
-function DisplayShuffledSentence({ senId, wordOnClick }) {
-    const item = makeSentences.find(sen => sen.id === senId);
-    var shuffleWords = item.words;
-    shuffleWords = ShuffleArray(shuffleWords);
-    const senLength = item.words.length;
-
-    const sen = shuffleWords.map(word =>
-        <button
-            key={word[0]}
-            onClick={() => { wordOnClick(senLength, word[0], word[1].toString()); }}>
-            {word[1].toString()}
-        </button >
-    );
-
-    return (
-        <div>
-            <p>{sen}</p>
-        </div>
-    )
-}
-
-function DisplayUserSentence({ sentence }) {
-    //var [currentUsrSen, setCurrentUsrSen] = useState("");
-    //const word = wordIds.map((id) => senId.id === id);
-    /*var words = [];
-    wordIds.forEach((id) => {
-        if (id === makeSentences[senId].words[0]) {
-            words.push(words.makeSentences[senId].words[0]);
-        }
-    }
-    );
-    const res = words.map(word =>
-        <p>{word}</p>);*/
-
-    /*function updateUserSen() {
-        currentUsrSen = sen;
-        setCurrentUsrSen(currentUsrSen);
-        console.log("updateUserSen: " + currentUsrSen);
-        return (<p>{currentUsrSen}</p>);
-    }*/
-
-    return (
-        //<div>User Sentence Here</div>
-        //<div><p>{updateUserSen}</p></div>
-        //<div>{sen}</div>
-        <div>
-            <p>{sentence}</p>
-        </div>
-    )
-}
-
-// Displays the correct sentence
+/** Displays the correct sentence */
 function DisplayCorrectSentence({ bDisplay, bSuccess, sentence }) {
     return (
         <div>
-            <p>{bDisplay ? (!bSuccess ? ("Correct Answer: " + sentence) : null) : null}</p>
+            <p>{bDisplay ? (!bSuccess ? ("Correct Sentence: " + sentence) : null) : null}</p>
         </div>
     );
 }
@@ -91,107 +35,80 @@ function DisplayCorrectSentence({ bDisplay, bSuccess, sentence }) {
  * @param {any} onClickFunc - on click function
  * @returns
  */
-function NextSentenceButton({ onClickFunc }) {
-    //var label = bBtnState ? "Next Sentence" : "Check";
-    var label = "Next Sentence";
+function NextSentenceButton({ bDisabled, onClickFunc }) {
     return (
-        <div><button
-            onClick={() => { onClickFunc() }}>
-            {label}
-        </button></div>
+        <div>
+            <button
+                disabled={bDisabled}
+                onClick={() => { onClickFunc() }}>
+                Next Sentence
+            </button>
+        </div>
     );
 }
 
 function CreateSentence() {
     const startSenIdx = GetRandomInt(0, makeSentences.length - 1);
     const [currentSenIdx, setCurrentSenIdx] = useState(startSenIdx);
+    const [sentence, setSentence] = useState([]);
+    const [bCorrect, setIsCorrect] = useState(false);
     const [bShowResult, setShowResult] = useState(false);
-    const [bResult, setResult] = useState(false);
-    const [corSentence, setCorSentence] = useState("");
+    const [bNextDisable, setNextDisabled] = useState(true);
 
-    var usrSen = "";
-    var correctSen = getCorrectSentence(currentSenIdx);
+    const currentSentence = makeSentences[currentSenIdx].words;
+    const [shuffledWords, setShuffledWords] = useState([]);
 
-    //var bUpdateUsrSen = false;
-    //const [usrSentence, setUsrSentence] = useState("");
+    useEffect(() => {
+        setShuffledWords(ShuffleArray(makeSentences[currentSenIdx].words));
+    }, [currentSenIdx]);
 
-    // Word IDs of the current sentence
-    var wordIdxs = [];
-
-    /** Updates the current sentence index to display */
     function updateMakeSentence() {
-        setCurrentSenIdx(idx => (idx + 1 > makeSentences.length - 1) ? 0 : idx + 1);
+        setCurrentSenIdx((currentSenIdx + 1) % makeSentences.length);
+        //console.log("senId: " + currentSenIdx);
 
-        // Reset states
-        wordIdxs = [];
+        setSentence([]);
         setShowResult(false);
-        setCorSentence("");
-
-        //setUsrSentence("");
+        setNextDisabled(true);
     }
 
-    function getCorrectSentence(senId) {
-        const words = makeSentences[senId].words;
-        let sen = "";
-        for (let i = 0; i < words.length; i++) {
-            sen = sen + words[i][1].toString() + " ";
+    const handleWordClick = (word) => {
+        if (sentence.includes(word)) {
+            setSentence(sentence.filter((w) => w !== word));
+            return;
         }
 
-        return sen;
-    }
+        setSentence([...sentence, word]);
+    };
 
-    function updateUserSentence(word) {
-        usrSen = usrSen + word + " ";
-
-        //setUsrSentence(usrSen);
-        console.log("usrSen: " + usrSen);
-    }
-
-    function checkUserSentence() {
-        var success = (correctSen === usrSen);
-
-        setResult(success);
+    const checkSentence = (senId) => {
+        var cor = (sentence.join(' ') === makeSentences[senId].words.join(' '));
+        setIsCorrect(cor);
         setShowResult(true);
-        setCorSentence(correctSen);
-
-        //console.log("correctSen: " + correctSen);
-        //console.log("usrSen: " + usrSen);
-        //console.log("success: " + success);
-    }
-
-    function onWordButtonClicked(senLength, wordId, word) {
-        // Check for length of the sentence
-        if (wordIdxs.length < senLength) {
-            // Update wordIdxs
-            wordIdxs.push(wordId);
-
-            // TODO: @CS, some bug here
-            updateUserSentence(word);
-        }
-
-        if (wordIdxs.length === senLength) {
-            checkUserSentence();
-        }
-    }
-
-    /*useEffect(() => {
-        if (bUpdateUsrSen) {
-            //setShowResult(true);
-            setUsrSentence(usrSen);
-        }
-    }, [bUpdateUsrSen, usrSen]);*/
+        setNextDisabled(false);
+        //console.log("res: " + cor);
+    };
 
     return (
         <div>
             <ChangePageButton to="/" label="Go to Home" />
-            <div className="intro-word">
-                <h2>CREATE THE SENTENCE</h2>
-                <ResultBox bDisplay={bShowResult} bSuccess={bResult} />
-                <DisplayCorrectSentence bDisplay={bShowResult} bSuccess={bResult} sentence={corSentence} />
-                <DisplayUserSentence sentence={usrSen} />
-                <DisplayShuffledSentence senId={currentSenIdx} wordOnClick={onWordButtonClicked} />
-                <NextSentenceButton onClickFunc={updateMakeSentence} />
+            <h2>CREATE THE SENTENCE</h2>
+            <ResultBox bDisplay={bShowResult} bSuccess={bCorrect} />
+            <DisplayCorrectSentence bDisplay={bShowResult} bSuccess={bCorrect} sentence={currentSentence.join(' ')} />
+            <p>Sentence: {sentence.length > 0 ? sentence.join(' ') : null}</p>
+            <div>
+                {shuffledWords.map((word, index) => (
+                    <button
+                        key={index}
+                        onClick={() => handleWordClick(word)}
+                        //style={{ backgroundColor: sentence[index] === word ? 'green' : 'white' }}
+                    //style={{ backgroundColor: 'white'}}
+                    >
+                        {word}
+                    </button>
+                ))}
             </div>
+            <button onClick={() => checkSentence(currentSenIdx)}>Check</button>
+            <NextSentenceButton bDisabled={bNextDisable} onClickFunc={updateMakeSentence} />
         </div>
     );
 }
