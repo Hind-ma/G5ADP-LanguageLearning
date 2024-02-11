@@ -79,11 +79,11 @@ function DisplayUserSentence({ sentence }) {
     )
 }
 
-// TODO: @CS, fix css/html elements
+// Displays the correct sentence
 function DisplayCorrectSentence({ bDisplay, sentence }) {
     return (
         <div>
-            <p>{bDisplay ? sentence : null}</p>
+            <p>{bDisplay ? "Correct Answer: " + sentence : null}</p>
         </div>
     );
 }
@@ -109,11 +109,10 @@ function CreateSentence() {
     const [currentSenIdx, setCurrentSenIdx] = useState(startSenIdx);
     const [bShowResult, setShowResult] = useState(false);
     const [bResult, setResult] = useState(false);
+    const [corSentence, setCorSentence] = useState("");
 
     var usrSen = "";
     var correctSen = getCorrectSentence(currentSenIdx);
-
-    //var bCheckResult = false;
 
     // Word IDs of the current sentence
     var wordIdxs = [];
@@ -127,12 +126,17 @@ function CreateSentence() {
         setShowResult(false);
     }
 
+    function resetCorSentence() {
+        setCorSentence("");
+    }
+
     /** Updates the current sentence index to display */
     function updateMakeSentence() {
         setCurrentSenIdx(idx => (idx + 1 > makeSentences.length - 1) ? 0 : idx + 1);
 
         resetWordIdxsState();
         resetShowResult();
+        resetCorSentence();
     }
 
     function getCorrectSentence(senId) {
@@ -156,6 +160,7 @@ function CreateSentence() {
 
         setResult(success);
         setShowResult(true);
+        setCorSentence(correctSen);
 
         console.log("correctSen: " + correctSen);
         //console.log("usrSen: " + usrSen);
@@ -174,7 +179,6 @@ function CreateSentence() {
 
         if (wordIdxs.length === senLength) {
             checkUserSentence();
-            //bCheckResult = true;
         }
     }
 
@@ -191,8 +195,7 @@ function CreateSentence() {
                 <h2>CREATE THE SENTENCE</h2>
                 {/* TODO: @CS, fix result box parameters */}
                 <ResultBox bDisplay={bShowResult} bSuccess={bResult} />
-                {/*<DisplayCorrectSentence bDisplay={bShowResult} sentence={getCorrectSentence(currentSenIdx)} />*/}
-                <DisplayCorrectSentence bDisplay={bShowResult} sentence={correctSen} />
+                <DisplayCorrectSentence bDisplay={!bResult} sentence={corSentence} />
                 <DisplayUserSentence sentence={usrSen} />
                 <DisplayShuffledSentence senId={currentSenIdx} wordOnClick={onWordButtonClicked} />
                 {/*<CheckSentenceButton />*/}
