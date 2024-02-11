@@ -107,19 +107,13 @@ function NextSentenceButton({ onClickFunc }) {
 function CreateSentence() {
     const startSenIdx = GetRandomInt(0, makeSentences.length - 1);
     const [currentSenIdx, setCurrentSenIdx] = useState(startSenIdx);
-    //const [correctSen, setCorrectSen] = useState(getCorrectSentence(startSenIdx));
-    //const [currentUsrSen, setCurrentUsrSen] = useState("");
-    var usrSen = "";
-    //var correctSen = getCorrectSentence(startSenIdx);
-    var correctSen = getCorrectSentence(currentSenIdx);
-    //var correctSen = "";
-    //const [bDisplaySen, setDisplaySen] = useState(false);
     const [bShowResult, setShowResult] = useState(false);
-    //var bMatchSenLength = false;
+    const [bResult, setResult] = useState(false);
 
-    var bCheckResult = false;
-    //var [corSen, setCorSen] = useState(getCorrectSentence(currentSenIdx));
+    var usrSen = "";
+    var correctSen = getCorrectSentence(currentSenIdx);
 
+    //var bCheckResult = false;
 
     // Word IDs of the current sentence
     var wordIdxs = [];
@@ -131,7 +125,6 @@ function CreateSentence() {
 
     function resetShowResult() {
         setShowResult(false);
-        //bMatchSenLength = false;
     }
 
     /** Updates the current sentence index to display */
@@ -161,15 +154,12 @@ function CreateSentence() {
     function checkUserSentence() {
         var success = (correctSen === usrSen);
 
+        setResult(success);
         setShowResult(true);
 
         console.log("correctSen: " + correctSen);
-        console.log("usrSen: " + usrSen);
-        console.log("success: " + success);
-
-        //setShowResult(true);
-
-        //return success;
+        //console.log("usrSen: " + usrSen);
+        //console.log("success: " + success);
     }
 
     function onWordButtonClicked(senLength, wordId, word) {
@@ -184,15 +174,15 @@ function CreateSentence() {
 
         if (wordIdxs.length === senLength) {
             checkUserSentence();
-            bCheckResult = true;
+            //bCheckResult = true;
         }
     }
 
-    useEffect(() => {
-        if (bCheckResult) {
-            setShowResult(true);
+    /*useEffect(() => {
+        if (bUpdateUserSen) {
+            //setShowResult(true);
         }
-    }, [bCheckResult]);
+    }, [bUpdateUserSen]);*/
 
     return (
         <div>
@@ -200,7 +190,7 @@ function CreateSentence() {
             <div className="intro-word">
                 <h2>CREATE THE SENTENCE</h2>
                 {/* TODO: @CS, fix result box parameters */}
-                <ResultBox bDisplay={bShowResult} bSuccess={bShowResult} />
+                <ResultBox bDisplay={bShowResult} bSuccess={bResult} />
                 {/*<DisplayCorrectSentence bDisplay={bShowResult} sentence={getCorrectSentence(currentSenIdx)} />*/}
                 <DisplayCorrectSentence bDisplay={bShowResult} sentence={correctSen} />
                 <DisplayUserSentence sentence={usrSen} />
