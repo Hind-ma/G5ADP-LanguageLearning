@@ -1,0 +1,130 @@
+body {
+    background-color: #f1f1f1;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+.App {
+    margin: 0 auto;
+    width: 500px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 100px;
+}
+
+.placeholder {
+    color: transparent;
+    border-bottom: 1px solid black;
+    padding: 0 2px;
+}
+
+.title {
+    font-size: 36px;
+    margin-bottom: 40px;
+}
+
+.sentence-container {
+    margin-bottom: 20px;
+}
+
+.sentence {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.blank {
+    color: transparent;
+    border-bottom: 1px solid black;
+    padding: 0 2px;
+}
+
+input {
+    padding: 5px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    width: 50%;
+    margin-top: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: rgb(224, 217, 217);
+    text-align: center;
+}
+
+    input.green {
+        background-color: green;
+        color: white;
+    }
+
+    input.red {
+        background-color: red;
+        color: white;
+    }
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+button {
+    background-color: #6c63ff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 24px;
+    cursor: pointer;
+    margin-top: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+    button.check {
+        background-color: #5a52cc;
+    }
+
+    button.next {
+        background-color: #6c63ff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-size: 24px;
+        cursor: pointer;
+        margin-top: 20px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+        button.next:disabled {
+            background-color: #c0c0c0;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 24px;
+            cursor: not-allowed;
+            margin-top: 20px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+
+
+.star {
+    font-size: 36px;
+    color: gold;
+    margin-bottom: 20px;
+    display: none;
+}
+
+    .star.visible {
+        display: block;
+    }
