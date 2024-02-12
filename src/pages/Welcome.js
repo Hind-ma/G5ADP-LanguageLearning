@@ -1,44 +1,54 @@
-import React, {useState} from "react"
-import {Login} from "../account-pages/Login";
-import {Register} from "../account-pages/Register";
+import React, { useState } from 'react';
+//import './Welcome.css';
+import { Login } from '../account-pages/Login';
+import { Register } from '../account-pages/Register';
 import { useNavigate } from 'react-router-dom';
 
-function Welcome() {
+const WelcomePage = () => {
   const [currentForm, setCurrentForm] = useState('');
-
-  const toggleForm = (formName) => {
-    setCurrentForm(formName);
-  }
-
   const navigate = useNavigate();
 
   const switchToMenu = (guest) => {
     if (guest) {
       sessionStorage.setItem('username', 'Guest user');
     }
-    navigate("/");
-  }
+    navigate('/');
+  };
 
-  const welcomePage = () => {
-    return (
-      <>
-        <h1>Welcome</h1>
-        <h2>Here we learn swedish the right way :D</h2>
-        <button onClick={() => toggleForm('login')}>Start learning!</button>
-        <button onClick={() => switchToMenu(true)}>Try it as a guest</button>
-      </>
-    );
-  }
+  const handleFormSwitch = (formName) => {
+    setCurrentForm(formName);
+  };
 
-  return (
-    <div className="App">
-      {
-        currentForm === 'login' ?  <Login onFormSwitch={toggleForm} continueToMenu={switchToMenu}/> : 
-        currentForm === 'register' ? <Register onFormSwitch={toggleForm} continueToMenu={switchToMenu}/> :
-        welcomePage()
-      }
-    </div>
-  );
-}
+  const handleGuestClick = () => {
+    switchToMenu(true);
+  };
 
-export default Welcome;
+  const renderForm = () => {
+    if (currentForm === 'login') {
+      return <Login onFormSwitch={handleFormSwitch} continueToMenu={switchToMenu} />;
+    } else if (currentForm === 'register') {
+      return <Register onFormSwitch={handleFormSwitch} continueToMenu={switchToMenu} />;
+    } else {
+      return (
+        <>
+          <h1 className="welcome">Välkommen!    Welcome!</h1>
+          <p className="description">
+            Learn Swedish in a fun and interactive way!
+          </p>
+          <div className="button-container">
+            <button className="light-blue-button primary-button" onClick={() => handleFormSwitch('login')}>
+              Start learning!
+            </button>
+            <button className="blue-button secondary-button" onClick={handleGuestClick}>
+              Try it as guest
+            </button>
+          </div>
+        </>
+      );
+    }
+  };
+
+  return <div className="App">{renderForm()}</div>;
+};
+
+export default WelcomePage;
