@@ -1,3 +1,18 @@
+:root {
+  --main-color: #6A80CF;
+  --main-color-light: #C2CAF2;
+  --main-color-disabled: #777E98;
+
+  --green-positive: #79BB6E;
+  --red-negative: #C84C4C;
+  --yellow-sparkle: #EDDB3D;
+  --grey-outline: #D8D8D8;
+  --grey-disabled: #808080;
+
+  
+
+}
+
 .App {
   text-align: center;
 }
