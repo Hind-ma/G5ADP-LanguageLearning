@@ -9,15 +9,16 @@
   --grey-outline: #D8D8D8;
   --grey-disabled: #808080;
 
-  
-
+  --text-color: #000;
 }
 
 .App {
   text-align: center;
 }
 
-
+.drop-shadow {
+  box-shadow:0px 4px 14px 0 rgba(0,0,0,0.1);
+}
 
 .auth-form-container {
   border: 5px solid;
