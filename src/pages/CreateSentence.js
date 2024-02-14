@@ -12,7 +12,7 @@ import {completeList} from "../data-sets/compose-translate";
 //     { id: 4, words: ["Lisa", "laser", "svenska", "pa", "universitetet"] },
 // ]
 
-const makeSentences = [completeList[5], completeList[6], completeList[7], completeList[8], completeList[9]];
+const makeSentences = completeList;
 
 
 /** Shows if the sentence is correct or incorrect */
