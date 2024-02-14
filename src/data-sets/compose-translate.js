@@ -1,4 +1,4 @@
-const completeList = [
+export const completeList = [
   {id: 0, swedish:"Goddag, vad heter du?", words:["goddag", "vad", "heter", "du"], english: "Good day, what is your name?" },
   {id: 1, swedish:"Vet du var centralstationen ligger?", words:["vet", "du", "var", "centralstationen", "ligger"], english: "Do you know where the central station is?" },
   {id: 2, swedish:"Åh förlåt mig, jag äter inte kött.", words:["åh", "förlåt", "mig", "jag", "äter", "inte", "kött"], english: "Oh I'm sorry, I don't eat meat." },
