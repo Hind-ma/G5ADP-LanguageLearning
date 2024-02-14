@@ -16,7 +16,7 @@ export const completeList = [
   {id: 14, swedish:"Hur mycket kostar en enkelbiljett?", words: ["hur", "mycket", "kostar", "en", "enkelbiljett"], english: "How much does a single ticket cost?" },
   {id: 15, swedish:"Kan man byta till färjan på nästa stationen?", words: ["kan", "man", "byta", "till", "färjan", "på", "nästa", "stationen"], english: "Can you take the ferry in the next station?" },
   {id: 16, swedish:"Får man parkera här?", words: ["får", "man", "parkera", "här"], english: "Can you park here?" },
-  {id: 17, swedish:"Kan du visa din legitimiation, tack?", words: ["kan", "du", "visa", "din", "legitimation", "tack"], english: "Can you show your ID please?" },
+  {id: 17, swedish:"Kan du visa din legitimation, tack?", words: ["kan", "du", "visa", "din", "legitimation", "tack"], english: "Can you show your ID please?" },
   {id: 18, swedish:"Mitt batteri är nästan slut.", words: ["mitt", "batteri", "är", "nästan", "slut"], english: "My battery is almost gone." },
   {id: 19, swedish:"Vad kan jag köpa med 100 kronor?", words: ["vad", "kan", "jag", "köpa", "med", "100", "kronor"], english: "What can I buy with 100 kronor?" }
 ]
