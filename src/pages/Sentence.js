@@ -3,14 +3,6 @@ import React, {useState} from "react"
 import { GetRandomInt } from "../utils";
 import {completeList} from "../data-sets/compose-translate";
 
-// const sentenceList = [
-//   {swedish:"Goddag, vad heter du?", english: "Good day, what is your name?" },
-//   {swedish:"Vet du var centralstationen ligger?", english: "Do you know where the central station is?" },
-//   {swedish:"Åh förlåt mig, jag äter inte kött.", english: "Oh I'm sorry, I don't eat meat." },
-//   {swedish:"Sista bussen går om tre minuter.", english: "The last bus leaves in three minutes." },
-//   {swedish:"Jag har bara 100 kronor kvar.", english: "I only have 100 kronor left." },
-// ];
-
 const sentenceList = completeList;
 
 function SetSentences({pos}) {
