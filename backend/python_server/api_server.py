@@ -1,5 +1,4 @@
 from flask import Flask, request
-from flask_swagger_ui import get_swaggerui_blueprint
 import sys
 
 app = Flask(__name__)
