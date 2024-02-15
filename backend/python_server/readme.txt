@@ -14,7 +14,7 @@ in windows cmd:
 linux:
 .venv\Scripts\activate
 
-Repeat when oppening a new terminal
+Repeat when opening a new terminal
 
 4. Activate venv
 run:
@@ -29,11 +29,3 @@ run:
 python api_server.py 
 
 ctrl^c to stop
-
-
-
-
-
-
-
-
