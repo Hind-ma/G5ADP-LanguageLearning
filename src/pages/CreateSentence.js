@@ -1,15 +1,10 @@
 import ChangePageButton from "./ChangePageButton";
 import { GetRandomInt, ShuffleArray } from "../utils";
 import { useState, useEffect, useRef } from "react";
+import {completeList} from "../data-sets/compose-translate";
 
-/* TODO: @CS, Remove in future - this is only for Sprint 1 demo */
-const makeSentences = [
-    { id: 0, words: ["ursakta", "var", "kan", "jag", "hitta", "mjolken"] },
-    { id: 1, words: ["den", "ar", "halv", "sju"] },
-    { id: 2, words: ["tack", "for", "en", "rolig", "fest"] },
-    { id: 3, words: ["jag", "trivs", "bra", "i", "Sverige"] },
-    { id: 4, words: ["Lisa", "laser", "svenska", "pa", "universitetet"] },
-]
+const makeSentences = completeList;
+
 
 /** Shows if the sentence is correct or incorrect */
 function ResultBox({ bDisplay, bSuccess }) {

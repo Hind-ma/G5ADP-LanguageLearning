@@ -1,18 +1,13 @@
 import ChangePageButton from "./ChangePageButton";
 import React, {useState} from "react"
 import { GetRandomInt } from "../utils";
+import {completeList} from "../data-sets/compose-translate";
 
-const sentenceList = [
-  {first:"Goddag, vad heter du?", second: "Good day, what is your name?" },
-  {first:"Vet du var centralstationen ligger?", second: "Do you know where the central station is?" },
-  {first:"Åh förlåt mig, jag äter inte kött.", second: "Oh I'm sorry, I don't eat meat." },
-  {first:"Sista bussen går om tre minuter.", second: "The last bus leaves in three minutes." },
-  {first:"Jag har bara 100 kronor kvar.", second: "I only have 100 kronor left." },
-];
+const sentenceList = completeList;
 
 function SetSentences({pos}) {
   return (
-    <p>{sentenceList[pos].first}</p>
+    <p>{sentenceList[pos].swedish}</p>
   );
 }
 
@@ -31,7 +26,7 @@ function RandomizeLanguage () {
   for (let i = 0; i < sentenceList.length; i++) {
     var lan = GetRandomInt(0,1);
     if (lan === 1) {
-    [sentenceList[i].first, sentenceList[i].second] = [sentenceList[i].second, sentenceList[i].first];
+    [sentenceList[i].swedish, sentenceList[i].english] = [sentenceList[i].english, sentenceList[i].swedish];
     }
   }
 }
@@ -56,7 +51,7 @@ function Sentence() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (sentence === sentenceList[position].second) {
+    if (sentence === sentenceList[position].english) {
       document.getElementById("result").innerHTML = "Sentence correctly translated!";
     } else {
       document.getElementById("result").innerHTML = "Incorrect translation.";
