@@ -1,0 +1,10 @@
+.fill-title {
+    font-size: 15px;
+    margin-top: 20px;
+    font-family: sans-serif;
+}
+
+.fill-input {
+    display: inline-block;
+    margin-left: 10px;
+}
