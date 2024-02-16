@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import './FillBlankModel.css';
 
-
 const sentences = [
     {
         sentence: "Jag heter _.",
@@ -57,11 +56,15 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
         document.getElementById("next").style.color = "#ffffff";
         document.getElementById("id").style.color = "#79BB6E";
         document.getElementById("id").style.borderColor = "#79BB6E";
+        document.getElementById("allstar").style.visibility = "visible";
     }
 
     const setDisplayIncorrect = () => {
         document.getElementById("id").style.color = "#C84C4C";
         document.getElementById("id").style.borderColor = "#C84C4C";
+        document.getElementById("allstar").style.visibility = "hidden";
+        document.getElementById("next").style.backgroundColor = "lightgray";
+        document.getElementById("next").style.color = "gray";
     }
 
     const handleKeyPress = (event) => {
@@ -90,6 +93,7 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
         document.getElementById("next").style.color = "gray";
         document.getElementById("id").style.color = "black";
         document.getElementById("id").style.borderColor = "black";
+        document.getElementById("allstar").style.visibility = "hidden";
     }
 
     const inputIndex = sentence.indexOf("_");
@@ -107,17 +111,18 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
 
     return (
         <div className="sentence-container">
+            <img id="allstar" className="stars" src={require("../images/star.png")}/>
             <div className="fill-box">
-            <p className="fill-input">{sentenceWithInput}</p>
-            <input
-                type="text"
-                value={userInput}
-                onChange={handleInputChange}
-                onKeyPress={handleKeyPress}
-                className="fill-input"
-                id = "id"
-            />
-            <p className="fill-input">{sentenceWithInput2}</p>
+                <p className="fill-input">{sentenceWithInput}</p>
+                <input
+                    type="text"
+                    value={userInput}
+                    onChange={handleInputChange}
+                    onKeyPress={handleKeyPress}
+                    className="fill-input"
+                    id = "id"
+                />
+                <p className="fill-input">{sentenceWithInput2}</p>
             </div>
             <div className="fill-container">
                 <button onClick={checkAnswer} className="fill-button">

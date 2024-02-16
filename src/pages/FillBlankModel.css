@@ -18,6 +18,7 @@
 
 .fill-box {
     margin-top: 150px;
+    position: relative;
 }
 
 .fill-container {
@@ -39,4 +40,11 @@
     margin-left:20px;
     cursor: pointer;
     font-size: 15px;
+}
+
+.stars {
+    position: absolute;
+    visibility: hidden;
+    transform: rotate(9deg);
+    pointer-events: none;
 }
