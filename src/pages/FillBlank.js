@@ -47,6 +47,7 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
         } else {
             setSentenceCorrect(false);
             setInputColor("red");
+            setDisplayIncorrect();
             setNextDisabled(true);
         }
     };
@@ -56,6 +57,11 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
         document.getElementById("next").style.color = "#ffffff";
         document.getElementById("id").style.color = "#79BB6E";
         document.getElementById("id").style.borderColor = "#79BB6E";
+    }
+
+    const setDisplayIncorrect = () => {
+        document.getElementById("id").style.color = "#C84C4C";
+        document.getElementById("id").style.borderColor = "#C84C4C";
     }
 
     const handleKeyPress = (event) => {

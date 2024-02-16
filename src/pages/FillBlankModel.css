@@ -22,7 +22,7 @@
 
 .fill-container {
     display: flex;
-    justify-content: right;
+    justify-content: center;
     align-items: center;
     margin-top: 100px;
     border-radius: 50%;
@@ -36,4 +36,7 @@
     border: none;
     background-color: lightgray;
     color: black;
+    margin-left:20px;
+    cursor: pointer;
+    font-size: 15px;
 }
