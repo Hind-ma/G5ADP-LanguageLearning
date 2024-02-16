@@ -10,6 +10,10 @@
     font-size: 25px;
     font-family: sans-serif;
     font-weight: bold;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    outline:0;
 }
 
 .fill-box {
@@ -30,4 +34,6 @@
     height: 60px;
     border-radius: 50%;
     border: none;
+    background-color: lightgray;
+    color: black;
 }

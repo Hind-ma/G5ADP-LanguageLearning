@@ -42,8 +42,7 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
         if (userInput.toLowerCase() === answer.toLowerCase()) {
             setSentenceCorrect(true);
             setInputColor("green");
-            document.getElementById("next").style.backgroundColor = "#6169e1";
-            document.getElementById("next").style.color = "#ffffff";
+            setDisplayCorrect();
             setNextDisabled(false);
         } else {
             setSentenceCorrect(false);
@@ -51,6 +50,13 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
             setNextDisabled(true);
         }
     };
+
+    const setDisplayCorrect = () => {
+        document.getElementById("next").style.backgroundColor = "#6169e1";
+        document.getElementById("next").style.color = "#ffffff";
+        document.getElementById("id").style.color = "#79BB6E";
+        document.getElementById("id").style.borderColor = "#79BB6E";
+    }
 
     const handleKeyPress = (event) => {
         if (event.key === "Enter") {
@@ -69,8 +75,16 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
         setUserInput("");
         setInputColor("white");
         setSentenceCorrect(false);
+        resetDisplay();
         setNextDisabled(true);
     };
+
+    const resetDisplay = () => {
+        document.getElementById("next").style.backgroundColor = "lightgray";
+        document.getElementById("next").style.color = "gray";
+        document.getElementById("id").style.color = "black";
+        document.getElementById("id").style.borderColor = "black";
+    }
 
     const inputIndex = sentence.indexOf("_");
 
@@ -95,6 +109,7 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
                 onChange={handleInputChange}
                 onKeyPress={handleKeyPress}
                 className="fill-input"
+                id = "id"
             />
             <p className="fill-input">{sentenceWithInput2}</p>
             </div>
