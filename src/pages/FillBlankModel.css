@@ -45,6 +45,7 @@
 .stars {
     position: absolute;
     visibility: hidden;
-    transform: rotate(9deg);
     pointer-events: none;
+    left: 240px;
+    bottom: 25%;
 }
