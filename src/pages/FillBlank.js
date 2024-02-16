@@ -42,6 +42,8 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
         if (userInput.toLowerCase() === answer.toLowerCase()) {
             setSentenceCorrect(true);
             setInputColor("green");
+            document.getElementById("next").style.backgroundColor = "#6169e1";
+            document.getElementById("next").style.color = "#ffffff";
             setNextDisabled(false);
         } else {
             setSentenceCorrect(false);
@@ -85,7 +87,7 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
 
     return (
         <div className="sentence-container">
-            <div>
+            <div className="fill-box">
             <p className="fill-input">{sentenceWithInput}</p>
             <input
                 type="text"
@@ -96,11 +98,11 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
             />
             <p className="fill-input">{sentenceWithInput2}</p>
             </div>
-            <div className="button-container">
-                <button onClick={checkAnswer} className="check">
+            <div className="fill-container">
+                <button onClick={checkAnswer} className="fill-button">
                     Check
                 </button>
-                <button disabled={nextDisabled} onClick={() => { resetInput(); setCurrentSentence((currentSentence + 1) % sentences.length); }} className="next">
+                <button id="next" disabled={nextDisabled} onClick={() => { resetInput(); setCurrentSentence((currentSentence + 1) % sentences.length); }} className="fill-button">
                     Next
                 </button>
             </div>
@@ -116,7 +118,7 @@ function FillBlank() {
     return (
         <div className="App">
             <ChangePageButton to="/" label="Go to Home page" />
-            <h1 className="fill-title">Learn Swedish</h1>
+            <h1 className="fill-title">Fill in the blank of this sentence</h1>
             <Sentence
                 sentence={sentences[currentSentence].sentence}
                 answer={sentences[currentSentence].answer}
