@@ -111,8 +111,8 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
 
     return (
         <div className="sentence-container">
-            <img id="allstar" className="stars" src={require("../images/star.png")}/>
             <div className="fill-box">
+                <img id="allstar" className="stars" src={require("../images/star.png")}/>
                 <p className="fill-input">{sentenceWithInput}</p>
                 <input
                     type="text"
