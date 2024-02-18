@@ -1,11 +1,13 @@
 import ChangePageButton from "./ChangePageButton";
 import React, { useState } from "react";
+import './PickWord.css';
 
 function PickWord() {
 
   const [showRoundScore, setRoundScore] = useState(false);
   const [score, setScore] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [clickedButton, setClickedButton] = useState(null);
 
   const questions = [
     {
@@ -55,51 +57,75 @@ function PickWord() {
     },
   ]
 
-  const optionClicked = (isCorrect) => {
-    if (isCorrect) {
-      setScore(score + 1)
-    }
+  const optionClicked = (isCorrect, buttonId) => {
 
-    if (currentQuestion + 1 < questions.length) {
-      setCurrentQuestion(currentQuestion + 1)
-    } else {
-      setRoundScore(true);
-    }
+    setClickedButton(buttonId);
+
+    setTimeout(() => {
+      if (isCorrect) {
+        setScore(score + 1)
+      }
+
+      if (currentQuestion + 1 < questions.length) {
+        setCurrentQuestion(currentQuestion + 1);
+      } else {
+        setRoundScore(true);
+      }
+      setClickedButton(null);
+    }, 1000);
   }
 
-  return <div>
-    <ChangePageButton to="/" label="Go to Home" />
-    <h1>Pick the right answer</h1>
+  return (
+    <div>
+      <ChangePageButton to="/" label="Go to Home" />
+      <h1>Pick the right answer</h1>
 
-    <div>   
-    {showRoundScore ?
-      <div className="round-score">
-        <h2>Round score is "{score}"</h2>
-        <h2>
-          {score} out of {questions.length} correct
-        </h2>
-        <ChangePageButton to="/" label="End round" />
-      </div>
-      :
-      <div>
-        <h2> Question {currentQuestion + 1} out of {questions.length}</h2>
-        <h4>Current Score: {score}</h4>
+      <div>   
+        {showRoundScore ? (
+          <div className="round-score">
+            <h2>Round score is "{score}"</h2>
+            <h2>
+              {score} out of {questions.length} correct
+            </h2>
+            <ChangePageButton to="/" label="End round" />
+          </div>
+        ) : (
+          <div>
+            <h2> Question {currentQuestion + 1} out of {questions.length}</h2>
+            <h4>Current Score: {score}</h4>
 
-        <h3 className="question-text">
-          What is "{questions[currentQuestion].text}" in Swedish?
-        </h3>
-        <ul>
-          {questions[currentQuestion].options.map((option) => {
-            return (
-              <button><li onClick={() => optionClicked(option.isCorrect)} key={option.id}>{option.text} </li></button>
-            );
-          }
-          )}
-        </ul>
+            <h3 className="question-text">
+              Press on the Swedish word for "{questions[currentQuestion].text}" 
+            </h3>
+            <div className="pickword-button-container">
+              {questions[currentQuestion].options.map((option) => {
+                return (
+                  <button
+                    className={`color-button ${
+                      clickedButton === option.id 
+                      ? option.isCorrect 
+                        ? ' correct' 
+                        : ' wrong'
+                      : clickedButton !== null
+                        ? ' not-chosen'
+                        : ''
+                    }`}
+                    onClick={() => optionClicked(option.isCorrect, option.id)}
+                    key={option.id}
+                    //disabled={showRoundScore}
+                    disabled={clickedButton !== null}
+                  >
+                    {option.text}
+                  </button>
+                );
+              }
+              )}             
+            </div>
+          </div>
+        )} 
       </div>
-    } 
     </div>
-  </div>;
+  );
 }
 
 export default PickWord;
