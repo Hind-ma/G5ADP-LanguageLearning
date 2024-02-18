@@ -7,7 +7,8 @@ function PickWord() {
   const [showRoundScore, setRoundScore] = useState(false);
   const [score, setScore] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [clickedButton, setClickedButton] = useState(null);
+  const [clickedOptionButton, setClickedOptionButton] = useState(null);
+  const [nextButtonDisabled, setNextButtonDisabled] = useState(true);
 
   const questions = [
     {
@@ -59,21 +60,26 @@ function PickWord() {
 
   const optionClicked = (isCorrect, buttonId) => {
 
-    setClickedButton(buttonId);
+    setClickedOptionButton(buttonId);
+    setNextButtonDisabled(false);
 
-    setTimeout(() => {
-      if (isCorrect) {
-        setScore(score + 1)
-      }
+    if (isCorrect) {
+      setScore(score + 1);
+    }
 
-      if (currentQuestion + 1 < questions.length) {
-        setCurrentQuestion(currentQuestion + 1);
-      } else {
-        setRoundScore(true);
-      }
-      setClickedButton(null);
-    }, 1000);
   }
+
+  const handleNextButtonClicked = () => {
+   if (currentQuestion + 1 < questions.length) {
+      setCurrentQuestion(currentQuestion + 1);
+    } else {
+      setRoundScore(true);
+    }
+
+    // Reset clicked button and disable the next button
+    setClickedOptionButton(null);
+    setNextButtonDisabled(true);
+  };
 
   return (
     <div>
@@ -96,29 +102,37 @@ function PickWord() {
 
             Press on the Swedish word for <strong>{questions[currentQuestion].text}</strong>
             
-            <div className="pickword-button-container">
-              {questions[currentQuestion].options.map((option) => {
-                return (
-                  <button
-                    className={`color-button ${
-                      clickedButton === option.id 
-                      ? option.isCorrect 
-                        ? ' correct' 
-                        : ' wrong'
-                      : clickedButton !== null
-                        ? ' not-chosen'
-                        : ''
-                    }`}
-                    onClick={() => optionClicked(option.isCorrect, option.id)}
-                    key={option.id}
-                    //disabled={showRoundScore}
-                    disabled={clickedButton !== null}
-                  >
-                    {option.text}
-                  </button>
-                );
-              }
-              )}             
+            <div className="element-container">
+              <div className="pickword-button-container">
+                {questions[currentQuestion].options.map((option) => {
+                  return (
+                    <button
+                      className={`color-button ${
+                        clickedOptionButton === option.id 
+                        ? option.isCorrect 
+                          ? ' correct' 
+                          : ' wrong'
+                        : clickedOptionButton !== null
+                          ? ' not-chosen'
+                          : ''
+                      }`}
+                      onClick={() => optionClicked(option.isCorrect, option.id)}
+                      key={option.id}
+                      //disabled={showRoundScore}
+                      disabled={clickedOptionButton !== null}
+                    >
+                      {option.text}
+                    </button>
+                  );
+                }
+                )}             
+              </div>
+
+              <button
+                className="next-button"
+                onClick={handleNextButtonClicked}
+                disabled={nextButtonDisabled}
+              ></button>
             </div>
           </div>
         )} 
