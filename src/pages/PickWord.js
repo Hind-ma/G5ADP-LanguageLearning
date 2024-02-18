@@ -78,25 +78,24 @@ function PickWord() {
   return (
     <div>
       <ChangePageButton to="/" label="Go to Home" />
-      <h1>Pick the right answer</h1>
+      {/* <h1>Pick the right answer</h1> */}
 
       <div>   
         {showRoundScore ? (
           <div className="round-score">
-            <h2>Round score is "{score}"</h2>
+            {/* <h2>Round score is "{score}"</h2> */}
             <h2>
-              {score} out of {questions.length} correct
+              You got {score} out of {questions.length} correct
             </h2>
             <ChangePageButton to="/" label="End round" />
           </div>
         ) : (
           <div>
-            <h2> Question {currentQuestion + 1} out of {questions.length}</h2>
-            <h4>Current Score: {score}</h4>
+            {/* <h2> Question {currentQuestion + 1} out of {questions.length}</h2>
+            <h4>Current Score: {score}</h4> */}
 
-            <h3 className="question-text">
-              Press on the Swedish word for "{questions[currentQuestion].text}" 
-            </h3>
+            Press on the Swedish word for <strong>{questions[currentQuestion].text}</strong>
+            
             <div className="pickword-button-container">
               {questions[currentQuestion].options.map((option) => {
                 return (
