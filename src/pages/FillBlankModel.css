@@ -1,14 +1,12 @@
 .fill-title {
     font-size: 15px;
     margin-top:50px;
-    font-family: sans-serif;
 }
 
 .fill-input {
     display: inline-block;
     margin-left: 10px;
     font-size: 25px;
-    font-family: sans-serif;
     font-weight: bold;
     border-left: none;
     border-right: none;
