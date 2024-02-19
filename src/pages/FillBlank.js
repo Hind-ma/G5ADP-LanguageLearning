@@ -54,14 +54,14 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
     const setDisplayCorrect = () => {
         document.getElementById("next").style.backgroundColor = "#6169e1";
         document.getElementById("next").style.color = "#ffffff";
-        document.getElementById("id").style.color = "#79BB6E";
-        document.getElementById("id").style.borderColor = "#79BB6E";
+        document.getElementById("input").style.color = "#79BB6E";
+        document.getElementById("input").style.borderColor = "#79BB6E";
         document.getElementById("allstar").style.visibility = "visible";
     }
 
     const setDisplayIncorrect = () => {
-        document.getElementById("id").style.color = "#C84C4C";
-        document.getElementById("id").style.borderColor = "#C84C4C";
+        document.getElementById("input").style.color = "#C84C4C";
+        document.getElementById("input").style.borderColor = "#C84C4C";
         document.getElementById("allstar").style.visibility = "hidden";
         document.getElementById("next").style.backgroundColor = "lightgray";
         document.getElementById("next").style.color = "gray";
@@ -78,6 +78,7 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
         setInputColor("white");
         setSentenceCorrect(false);
         setNextDisabled(true);
+        standardInput();
     };
 
     const resetInput = () => {
@@ -88,11 +89,18 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
         setNextDisabled(true);
     };
 
+    const standardInput = () => {
+        setInputColor("white");
+        setSentenceCorrect(false);
+        resetDisplay();
+        setNextDisabled(true);
+    }
+
     const resetDisplay = () => {
         document.getElementById("next").style.backgroundColor = "lightgray";
         document.getElementById("next").style.color = "gray";
-        document.getElementById("id").style.color = "black";
-        document.getElementById("id").style.borderColor = "black";
+        document.getElementById("input").style.color = "black";
+        document.getElementById("input").style.borderColor = "black";
         document.getElementById("allstar").style.visibility = "hidden";
     }
 
@@ -120,7 +128,7 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
                     onChange={handleInputChange}
                     onKeyPress={handleKeyPress}
                     className="fill-input"
-                    id = "id"
+                    id = "input"
                 />
                 <p className="fill-input">{sentenceWithInput2}</p>
             </div>
