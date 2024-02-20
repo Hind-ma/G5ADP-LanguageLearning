@@ -36,16 +36,16 @@ function PrintWord({ id }) {
       {/* {item.id} */}
       <h1 className="main-word">{item.svWord.toLocaleLowerCase()}</h1>
 
-      <span>{item.enWord.toLocaleLowerCase()}</span>
+      <h2>{item.enWord.toLocaleLowerCase()}</h2>
     </div>
   );
 }
 
 function PrintWordHeader() {
   return (
-    <div>
+    <div className="header">
       <b>
-        <h2>New word!</h2>
+        <h1>New word!</h1>
       </b>
     </div>
   );
