@@ -2,6 +2,9 @@ import ChangePageButton from "./ChangePageButton";
 import { GetRandomInt } from "../utils";
 import { useState } from "react";
 import "./IntroduceWord.css";
+import blblob from "../pictures/bottom-left-blob.png";
+import tlblob from "../pictures/top-left-blob.png";
+import trblob from "../pictures/top-right-blob.png";
 
 /* TODO: @CS, Remove in future - this is only for Sprint 1 demo */
 const introWords = [
@@ -73,10 +76,11 @@ function IntroduceWord() {
   }
 
   return (
-    <div>
+    <div className="background">
       <ChangePageButton to="/" label="Go to Home" />
       <div>
         <PrintWordHeader />
+
         <PrintWord id={currentIdx} />
         <NextWordButton onClick={updateWord} />
       </div>
