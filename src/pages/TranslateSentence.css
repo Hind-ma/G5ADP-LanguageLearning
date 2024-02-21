@@ -96,3 +96,6 @@ input {
     cursor: not-allowed;
 }
 
+.correct-sentence {
+    color: var(--main-color-disabled);
+}

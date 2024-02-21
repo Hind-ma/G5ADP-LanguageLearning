@@ -8,15 +8,19 @@ import './TranslateSentence.css';
 const sentenceList = completeList.sort(() => Math.random() - 0.5).slice(0, 5); 
 
 function TranslateSentence() {
+  // consts for the user input
   const [userAnswer, setUserAnswer] = useState("");
   const [sentenceIndex, setSentenceIndex] = useState(0);
   const [isAnswerCorrect, setIsAnswerCorrect] = useState(null);
   const [isEnglishToSwedish, setIsEnglishToSwedish] = useState(true);
   
+  // consts for the buttons and other elements in the gui
   const [nextButtonDisabled, setNextButtonDisabled] = useState(true);
   const [checkButtonDisabled, setCheckButtonDisabled] = useState(true);
   const [inputDisabled, setInputDisabled] = useState(false);
+  const [showCorrectSentence, setShowCorrectSentence] = useState(false);
 
+  // consts for the score
   const [showRoundScore, setRoundScore] = useState(false);
   const [score, setScore] = useState(0);
 
@@ -39,6 +43,8 @@ function TranslateSentence() {
 
     if (isCorrect) {
       setScore(prevScore => prevScore + 1);
+    } else {
+      setShowCorrectSentence(true);
     }
 
     // set the states of the buttons/input
@@ -54,12 +60,13 @@ function TranslateSentence() {
        setRoundScore(true);
      }
  
-     //reset answer and next-button
+     //reset answer and GUI-elements
      setNextButtonDisabled(true);
      setUserAnswer("");
      setIsAnswerCorrect(null);
      setCheckButtonDisabled(true);
      setInputDisabled(false);
+     setShowCorrectSentence(false);
    };
 
   const handleInputChange = (e) => {
@@ -122,6 +129,12 @@ function TranslateSentence() {
                 disabled={nextButtonDisabled}
               ></button>
             </div>
+
+            {showCorrectSentence && !isAnswerCorrect && (
+              <div className="correct-sentence">
+                Correct answer: {isEnglishToSwedish ? currSentence.swedish : currSentence.english}
+              </div>
+            )}
           </div>
         )}
       </div>  
