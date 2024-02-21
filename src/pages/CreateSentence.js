@@ -1,7 +1,8 @@
 import ChangePageButton from "./ChangePageButton";
 import { GetRandomInt, ShuffleArray } from "../utils";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import {completeList} from "../data-sets/compose-translate";
+import './CreateSentence.css';
 
 const makeSentences = completeList;
 
@@ -11,7 +12,7 @@ function ResultBox({ bDisplay, bSuccess }) {
     const item = bDisplay ? (bSuccess ? "Correct" : "Incorrect") : null;
     return (
         <div>
-            <p>{item}</p>
+            <p className={`result-text ${bSuccess ? 'correct' : 'incorrect'}`}>{item}</p>
         </div>
     );
 }
@@ -19,8 +20,8 @@ function ResultBox({ bDisplay, bSuccess }) {
 /** Displays the correct sentence */
 function DisplayCorrectSentence({ bDisplay, bSuccess, sentence }) {
     return (
-        <div>
-            <p>{bDisplay ? (!bSuccess ? ("Correct Sentence: " + sentence) : null) : null}</p>
+        <div className={`correct-sen-container ${bSuccess ? 'correct' : 'incorrect'}`}>
+            <p className="correct-sen">{bDisplay ? (!bSuccess ? ("Correct Answer: " + sentence) : null) : null}</p>
         </div>
     );
 }
@@ -33,10 +34,9 @@ function DisplayCorrectSentence({ bDisplay, bSuccess, sentence }) {
 function NextSentenceButton({ bDisabled, onClickFunc }) {
     return (
         <div>
-            <button
+            <button className="next-button"
                 disabled={bDisabled}
                 onClick={() => { onClickFunc() }}>
-                Next Sentence
             </button>
         </div>
     );
@@ -49,6 +49,7 @@ function CreateSentence() {
     const [bCorrect, setIsCorrect] = useState(false);
     const [bShowResult, setShowResult] = useState(false);
     const [bNextDisable, setNextDisabled] = useState(true);
+    const [bWordsDisable, setWordsDisabled] = useState(false);
 
     const currentSentence = makeSentences[currentSenIdx].words;
     const [shuffledWords, setShuffledWords] = useState([]);
@@ -64,6 +65,7 @@ function CreateSentence() {
         setSentence([]);
         setShowResult(false);
         setNextDisabled(true);
+        setWordsDisabled(false);
     }
 
     const handleWordClick = (word) => {
@@ -80,30 +82,38 @@ function CreateSentence() {
         setIsCorrect(cor);
         setShowResult(true);
         setNextDisabled(false);
+        setWordsDisabled(true);
         //console.log("res: " + cor);
     };
 
     return (
         <div>
             <ChangePageButton to="/" label="Go to Home" />
-            <h2>CREATE THE SENTENCE</h2>
-            <ResultBox bDisplay={bShowResult} bSuccess={bCorrect} />
-            <DisplayCorrectSentence bDisplay={bShowResult} bSuccess={bCorrect} sentence={currentSentence.join(' ')} />
-            <p>Sentence: {sentence.length > 0 ? sentence.join(' ') : null}</p>
-            <div>
+            <div className="page-head">
+                <p>Make the sentence by selecting the words</p>
+            </div>
+            <div className={`result-container ${bShowResult ? (bCorrect ? 'correct' : 'incorrect') : null}`}>
+                <ResultBox bDisplay={bShowResult} bSuccess={bCorrect} />
+                <DisplayCorrectSentence bDisplay={bShowResult} bSuccess={bCorrect} sentence={currentSentence.join(' ')} />
+            </div>
+            <div className="user-sen-container">
+                <p className="user-sen">{sentence.length > 0 ? sentence.join(' ') : null}</p>
+            </div>
+            <div className="word-container" >
                 {shuffledWords.map((word, index) => (
                     <button
+                        className="word-button"
                         key={index}
-                        onClick={() => handleWordClick(word)}
-                        //style={{ backgroundColor: sentence[index] === word ? 'green' : 'white' }}
-                    //style={{ backgroundColor: 'white'}}
-                    >
+                        disabled={bWordsDisable}
+                        onClick={() => handleWordClick(word)}>
                         {word}
                     </button>
                 ))}
             </div>
-            <button onClick={() => checkSentence(currentSenIdx)}>Check</button>
-            <NextSentenceButton bDisabled={bNextDisable} onClickFunc={updateMakeSentence} />
+            <div className="button-container">
+                <button className="chk-button" onClick={() => checkSentence(currentSenIdx)}>Check</button>
+                <NextSentenceButton bDisabled={bNextDisable} onClickFunc={updateMakeSentence} />
+            </div>
         </div>
     );
 }

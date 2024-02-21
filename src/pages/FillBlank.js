@@ -147,7 +147,7 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
 function FillBlank() {
     const [currentSentence, setCurrentSentence] = useState(0);
 
-    console.log("curIdx: " + currentSentence + "sen: " + sentences[currentSentence].sentence);
+    //console.log("curIdx: " + currentSentence + "sen: " + sentences[currentSentence].sentence);
 
     return (
         <div className="App">
