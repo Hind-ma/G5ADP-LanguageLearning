@@ -13,7 +13,7 @@ const WelcomePage = () => {
         if (guest) {
             sessionStorage.setItem('username', 'Guest user');
         }
-        navigate('/');
+        navigate('/home');
     };
 
     const handleFormSwitch = (formName) => {
