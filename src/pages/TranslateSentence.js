@@ -5,7 +5,7 @@ import {completeList} from "../data-sets/compose-translate";
 import './TranslateSentence.css';
 
 // creates a list with five random sentences form the dataset 
-const sentenceList = completeList.sort(() => Math.random() - 0.5).slice(0, 5);
+const sentenceList = completeList.sort(() => Math.random() - 0.5).slice(0, 2); //TODO change to five
 
 function TranslateSentence() {
   const [userAnswer, setUserAnswer] = useState("");

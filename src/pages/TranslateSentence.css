@@ -21,6 +21,24 @@ h2 {
     background-color: transparent;
 }
 
+.answer-container.correct::before {
+    content: url('../images/threeStars.svg');
+    position: absolute;
+    top: -10%;
+    left: -30%;
+    width: 20%;
+    height: 20%;
+}
+
+.answer-container.correct::before {
+    content: url('../images/twoStars.svg');
+    position: absolute;
+    bottom: -10%;
+    right: -30%;
+    width: 20%;
+    height: 20%;
+}
+
 .answer-container.wrong {
     border: 4px solid var(--red-negative);
     background-color: transparent;
