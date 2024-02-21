@@ -11,7 +11,7 @@ const WelcomePage = () => {
 
     const switchToMenu = (guest) => {
         if (guest) {
-            sessionStorage.setItem('username', 'Guest user');
+            sessionStorage.setItem('username', 'Guest user'); 
         }
         navigate('/home');
     };
