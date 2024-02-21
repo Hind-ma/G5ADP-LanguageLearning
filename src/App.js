@@ -7,7 +7,7 @@ import FillBlank from "./pages/FillBlank";
 import Home from "./pages/Home";
 import IntroduceWord from "./pages/IntroduceWord";
 import PickWord from "./pages/PickWord";
-import Sentence from "./pages/Sentence";
+import TranlateSentence from "./pages/TranslateSentence";
 import Welcome from "./pages/Welcome";
 import CreateSentence from "./pages/CreateSentence";
 import React from 'react';
@@ -24,7 +24,7 @@ function App() {
         <Route path="/pick-word" element={<PickWord />} />
         <Route path="/introduce" element={<IntroduceWord />} />
         <Route path="/fill-blank" element={<FillBlank />} />
-        <Route path="/sentence" element={<Sentence />} />
+        <Route path="/TranslateSentence" element={<TranlateSentence />} />
         <Route path="/create-sen" element={<CreateSentence />} />
         <Route path="/connect-words" element={<ConnectWords />} />
       </Routes>
