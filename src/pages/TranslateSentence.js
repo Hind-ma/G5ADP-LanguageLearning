@@ -5,7 +5,7 @@ import {completeList} from "../data-sets/compose-translate";
 import './TranslateSentence.css';
 
 // creates a list with five random sentences form the dataset 
-const sentenceList = completeList.sort(() => Math.random() - 0.5).slice(0, 2); //TODO change to five
+const sentenceList = completeList.sort(() => Math.random() - 0.5).slice(0, 5); 
 
 function TranslateSentence() {
   const [userAnswer, setUserAnswer] = useState("");
@@ -96,33 +96,32 @@ function TranslateSentence() {
                 : "Translate this to English"}
             </h3>
 
-            {/* TODO denna vill itne funka att få rätt färg nu tydligen  */}
             <h2>{isEnglishToSwedish === true ? currSentence.english : currSentence.swedish}</h2>
             
-            <div className={`answer-container ${isAnswerCorrect !== null ? (isAnswerCorrect ? 'correct' : 'wrong') : ''}`}>
-              <input
-                className="input"
-                type="text"
-                placeholder="Type here"
-                value={userAnswer}
-                onChange={handleInputChange}
-                onKeyDown={handleKeyDown}
-                disabled={inputDisabled}
-              />
-              {/* <button onClick={checkAnswer}>Check</button> */}
-              {/* skriv om detta TODO, ovan och nedan */}
-              <button
-                className="check-button"
-                onClick={checkAnswer}
-                disabled={checkButtonDisabled}
-              >Check</button>
-            </div>
+            <div className="element-container">
+              <div className={`answer-container ${isAnswerCorrect !== null ? (isAnswerCorrect ? 'correct' : 'wrong') : ''}`}>
+                <input
+                  className="input"
+                  type="text"
+                  placeholder="Type here"
+                  value={userAnswer}
+                  onChange={handleInputChange}
+                  onKeyDown={handleKeyDown}
+                  disabled={inputDisabled}
+                />
+                <button
+                  className="check-button"
+                  onClick={checkAnswer}
+                  disabled={checkButtonDisabled}
+                >Check</button>
+              </div>
 
-            <button
-              className="next-button"
-              onClick={handleNextButtonClicked}
-              disabled={nextButtonDisabled}
-            ></button>
+              <button
+                className="next-button"
+                onClick={handleNextButtonClicked}
+                disabled={nextButtonDisabled}
+              ></button>
+            </div>
           </div>
         )}
       </div>  
