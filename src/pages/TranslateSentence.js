@@ -11,7 +11,7 @@ function TranslateSentence() {
   const [userAnswer, setUserAnswer] = useState("");
   const [sentenceIndex, setSentenceIndex] = useState(0);
   const [isAnswerCorrect, setIsAnswerCorrect] = useState(null);
-  const [translationDirection, setTranslationDirection] = useState("englishToSwedish");
+  const [isEnglishToSwedish, setIsEnglishToSwedish] = useState(true);
   
   const [nextButtonDisabled, setNextButtonDisabled] = useState(true);
   const [checkButtonDisabled, setCheckButtonDisabled] = useState(true);
@@ -24,22 +24,21 @@ function TranslateSentence() {
   
   // Switch the direction of translation randomly
   useEffect(() => {
-    setTranslationDirection(Math.random() < 0.5 ? "englishToSwedish" : "swedishToEnglish");
+    setIsEnglishToSwedish(Math.random() < 0.5 ? true : false);
   }, [sentenceIndex]);
 
   const checkAnswer = () => {
-    const ansToCheck = translationDirection === "englishToSwedish"
+    const ansToCheck = isEnglishToSwedish === true
       ? currSentence.swedish.toLowerCase()
       : currSentence.english.toLowerCase();
 
-    if (userAnswer.toLowerCase() === ansToCheck) {
-      setIsAnswerCorrect(true);
-    } else {
-      setIsAnswerCorrect(false);
-    }
+    // The use of the const isCorrect is needed since otherwise it gets
+    // into trouble with the asynchronous parts of isAnswerCorrect
+    const isCorrect = userAnswer.toLowerCase() === ansToCheck;
+    setIsAnswerCorrect(isCorrect);
 
-    if (isAnswerCorrect) {
-      setScore(score + 1);
+    if (isCorrect) {
+      setScore(prevScore => prevScore + 1);
     }
 
     // set the states of the buttons/input
@@ -92,13 +91,13 @@ function TranslateSentence() {
         ) : (
           <div>
             <h3>
-              {translationDirection === "englishToSwedish"
+              {isEnglishToSwedish === true
                 ? "Translate this to Swedish"
                 : "Translate this to English"}
             </h3>
 
             {/* TODO denna vill itne funka att få rätt färg nu tydligen  */}
-            <h2>{translationDirection === "englishToSwedish" ? currSentence.english : currSentence.swedish}</h2>
+            <h2>{isEnglishToSwedish === true ? currSentence.english : currSentence.swedish}</h2>
             
             <div className={`answer-container ${isAnswerCorrect !== null ? (isAnswerCorrect ? 'correct' : 'wrong') : ''}`}>
               <input
