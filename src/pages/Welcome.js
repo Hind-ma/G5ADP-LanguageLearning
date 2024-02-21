@@ -31,7 +31,7 @@ const WelcomePage = () => {
     } else {
       return (
         <>
-          <h1 className="welcome">Välkommen!    Welcome!</h1>
+          <h1 className="welcome">Vï¿½lkommen!    Welcome!</h1>
           <p className="description">
             Learn Swedish in a fun and interactive way!
           </p>

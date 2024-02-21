@@ -13,7 +13,7 @@ function Home() {
         <ChangePageButton to="/pick-word" label="Start session Pick a word" />
         <ChangePageButton to="/introduce" label="Start session Introduce words" />
         <ChangePageButton to="/fill-blank" label="Start session Fill in the blanks" />
-        <ChangePageButton to="/sentence" label="Start session Make a sentence" />
+        <ChangePageButton to="/TranslateSentence" label="Start session Translate a sentence" />
         <ChangePageButton to="/create-sen" label="Start session Create a sentence" />
         <ChangePageButton to="/connect-words" label="Start session Connect-words" />
         <ChangePageButton to="/welcome" label="LOG OUT" />
