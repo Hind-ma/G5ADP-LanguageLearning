@@ -1,0 +1,47 @@
+.fill-title {
+    font-size: 15px;
+    margin-top:50px;
+}
+
+.fill-input {
+    display: inline-block;
+    margin-left: 10px;
+    font-size: 25px;
+    font-weight: bold;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    outline:0;
+}
+
+.fill-box {
+    margin-top: 150px;
+    position: relative;
+}
+
+.fill-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
+    border-radius: 50%;
+     /* Set the height to 100% of the viewport height */
+  }
+
+.fill-button {
+    display: block;
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+    background-color: lightgray;
+    color: black;
+    margin-left:20px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.stars {
+    position: absolute;
+    visibility: hidden;
+    pointer-events: none;
+}

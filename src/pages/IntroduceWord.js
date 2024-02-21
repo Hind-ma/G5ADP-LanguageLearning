@@ -77,10 +77,9 @@ function IntroduceWord() {
 
   return (
     <div className="background">
-      <ChangePageButton to="/" label="Go to Home" />
+      <ChangePageButton to="/home" label="Go to Home" />
       <div>
         <PrintWordHeader />
-
         <PrintWord id={currentIdx} />
         <NextWordButton onClick={updateWord} />
       </div>

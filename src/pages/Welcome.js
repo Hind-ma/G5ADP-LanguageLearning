@@ -12,7 +12,7 @@ const WelcomePage = () => {
     if (guest) {
       sessionStorage.setItem('username', 'Guest user');
     }
-    navigate('/');
+    navigate('/home');
   };
 
   const handleFormSwitch = (formName) => {
@@ -31,7 +31,7 @@ const WelcomePage = () => {
     } else {
       return (
         <>
-          <h1 className="welcome">Välkommen!    Welcome!</h1>
+          <h1 className="welcome">VÃ¤lkommen!    Welcome!</h1>
           <p className="description">
             Learn Swedish in a fun and interactive way!
           </p>

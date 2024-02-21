@@ -1,8 +1,7 @@
 ﻿import ChangePageButton from "./ChangePageButton";
 
 import React, { useState } from "react";
-//import './FillBlank.css';
-
+import './FillBlankModel.css';
 
 const sentences = [
     {
@@ -42,13 +41,31 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
         if (userInput.toLowerCase() === answer.toLowerCase()) {
             setSentenceCorrect(true);
             setInputColor("green");
+            setDisplayCorrect();
             setNextDisabled(false);
         } else {
             setSentenceCorrect(false);
             setInputColor("red");
+            setDisplayIncorrect();
             setNextDisabled(true);
         }
     };
+
+    const setDisplayCorrect = () => {
+        document.getElementById("next").style.backgroundColor = "#6169e1";
+        document.getElementById("next").style.color = "#ffffff";
+        document.getElementById("input").style.color = "#79BB6E";
+        document.getElementById("input").style.borderColor = "#79BB6E";
+        document.getElementById("allstar").style.visibility = "visible";
+    }
+
+    const setDisplayIncorrect = () => {
+        document.getElementById("input").style.color = "#C84C4C";
+        document.getElementById("input").style.borderColor = "#C84C4C";
+        document.getElementById("allstar").style.visibility = "hidden";
+        document.getElementById("next").style.backgroundColor = "lightgray";
+        document.getElementById("next").style.color = "gray";
+    }
 
     const handleKeyPress = (event) => {
         if (event.key === "Enter") {
@@ -61,44 +78,65 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
         setInputColor("white");
         setSentenceCorrect(false);
         setNextDisabled(true);
+        standardInput();
     };
 
     const resetInput = () => {
         setUserInput("");
         setInputColor("white");
         setSentenceCorrect(false);
+        resetDisplay();
         setNextDisabled(true);
     };
+
+    const standardInput = () => {
+        setInputColor("white");
+        setSentenceCorrect(false);
+        resetDisplay();
+        setNextDisabled(true);
+    }
+
+    const resetDisplay = () => {
+        document.getElementById("next").style.backgroundColor = "lightgray";
+        document.getElementById("next").style.color = "gray";
+        document.getElementById("input").style.color = "black";
+        document.getElementById("input").style.borderColor = "black";
+        document.getElementById("allstar").style.visibility = "hidden";
+    }
 
     const inputIndex = sentence.indexOf("_");
 
     const sentenceWithInput = (
         <span>
             {sentence.slice(0, inputIndex)}
-            <span className={inputColor}>{userInput}</span>
-            {sentence.slice(inputIndex + 1)}
+        </span>
+    );
+    const sentenceWithInput2 = (
+        <span>
+            {sentence.slice(inputIndex+1)}
         </span>
     );
 
     return (
         <div className="sentence-container">
-            <p
-                className={sentenceCorrect ? "sentence correct" : "sentence incorrect"}
-            >
-                {sentenceWithInput}
-            </p>
-            <input
-                type="text"
-                value={userInput}
-                onChange={handleInputChange}
-                onKeyPress={handleKeyPress}
-                className={inputColor}
-            />
-            <div className="button-container">
-                <button onClick={checkAnswer} className="check">
+            <div className="fill-box">
+                <img id="allstar" className="stars" src={require("../images/star.png")}/>
+                <p className="fill-input">{sentenceWithInput}</p>
+                <input
+                    type="text"
+                    value={userInput}
+                    onChange={handleInputChange}
+                    onKeyPress={handleKeyPress}
+                    className="fill-input"
+                    id = "input"
+                />
+                <p className="fill-input">{sentenceWithInput2}</p>
+            </div>
+            <div className="fill-container">
+                <button onClick={checkAnswer} className="fill-button">
                     Check
                 </button>
-                <button disabled={nextDisabled} onClick={() => { resetInput(); setCurrentSentence((currentSentence + 1) % sentences.length); }} className="next">
+                <button id="next" disabled={nextDisabled} onClick={() => { resetInput(); setCurrentSentence((currentSentence + 1) % sentences.length); }} className="fill-button">
                     Next
                 </button>
             </div>
@@ -109,12 +147,12 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
 function FillBlank() {
     const [currentSentence, setCurrentSentence] = useState(0);
 
-    console.log("curIdx: " + currentSentence + "sen: " + sentences[currentSentence].sentence);
+    //console.log("curIdx: " + currentSentence + "sen: " + sentences[currentSentence].sentence);
 
     return (
         <div className="App">
-            <ChangePageButton to="/" label="Go to Home page" />
-            <h1 className="title">Learn Swedish</h1>
+            <ChangePageButton to="/home" label="Go to Home page" />
+            <h1 className="fill-title">Fill in the blank of this sentence</h1>
             <Sentence
                 sentence={sentences[currentSentence].sentence}
                 answer={sentences[currentSentence].answer}
