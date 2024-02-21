@@ -77,7 +77,7 @@ function TranslateSentence() {
   };
 
   return (
-    <div>
+    <div className="translate-page">
       <ChangePageButton to="/" label="Go to Home" />
 
       <div>
@@ -118,7 +118,6 @@ function TranslateSentence() {
               >Check</button>
             </div>
 
-            Score is {score}
             <button
               className="next-button"
               onClick={handleNextButtonClicked}

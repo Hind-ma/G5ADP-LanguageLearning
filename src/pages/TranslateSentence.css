@@ -1,6 +1,7 @@
 
 h2 {
-    color: var(--main-color)
+    color: var(--main-color);
+    margin-bottom: 50px;
 }
 
 .translate-page {
@@ -9,32 +10,34 @@ h2 {
 }
 
 .answer-container {
+    position: relative;
     display: flex;
     justify-content: space-between;
     padding: 10px;
+    margin-top: 20px;
     margin-bottom: 20px;
     border-radius: 10px;
 }
 
-.answer-container.correct {
+.answer-container {
     border: 4px solid var(--green-positive);
     background-color: transparent;
 }
 
-.answer-container.correct::before {
+.answer-container::before {
     content: url('../images/threeStars.svg');
     position: absolute;
-    top: -10%;
-    left: -30%;
+    top: -50%;
+    left: -12%;
     width: 20%;
     height: 20%;
 }
 
-.answer-container.correct::before {
+.answer-container::after {
     content: url('../images/twoStars.svg');
     position: absolute;
-    bottom: -10%;
-    right: -30%;
+    bottom: 0;
+    right: -12%;
     width: 20%;
     height: 20%;
 }
