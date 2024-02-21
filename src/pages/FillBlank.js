@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import './FillBlankModel.css';
-
 const sentences = [
     {
         sentence: "Jag heter _.",
@@ -31,6 +30,47 @@ const sentences = [
     },
 ];
 
+
+
+const url_address = "http://127.0.0.1:5000/get_fill_in_prob"
+
+async function pingURL(url) {
+    return fetch(url, { method: 'HEAD' })
+    .then(response => {
+        return true;
+    })
+    .catch(error => {
+        return false;
+    });
+}
+
+const ml_server_is_up = await pingURL(url_address)
+
+function fill_prob(before, fill, after, ratio) {
+    const params = {
+        before: before,
+        fill: fill,
+        after: after,
+        ratio: ratio
+    };
+
+    const url = new URL(url_address); // Replace url_address with your actual URL
+    url.search = new URLSearchParams(params).toString();
+    return fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json(); // Parse the JSON response
+        })
+        .then(data => {
+            return data; // Process the data
+        })
+        .catch(error => {
+            throw error; // Rethrow the error to propagate it
+        });
+}
+
 function Sentence({ sentence, answer, correct, setCurrentSentence, currentSentence }) {
     const [userInput, setUserInput] = useState("");
     const [inputColor, setInputColor] = useState("white");
@@ -38,17 +78,46 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
     const [nextDisabled, setNextDisabled] = useState(true);
 
     const checkAnswer = () => {
-        if (userInput.toLowerCase() === answer.toLowerCase()) {
-            setSentenceCorrect(true);
-            setInputColor("green");
-            setDisplayCorrect();
-            setNextDisabled(false);
-        } else {
-            setSentenceCorrect(false);
-            setInputColor("red");
-            setDisplayIncorrect();
-            setNextDisabled(true);
+
+
+        if(ml_server_is_up){
+            const correct_promise = fill_prob(sentence.split("_")[0], answer.toLowerCase(), sentence.split("_")[1], "1")
+            const answer_promise = fill_prob(sentence.split("_")[0], userInput.toLowerCase(), sentence.split("_")[1], "1")
+            Promise.all([correct_promise, answer_promise])
+            .then(dataArray => {
+                const [correct_prob, answer_prob] = dataArray;
+                var grade = answer_prob / correct_prob
+                if (grade > 1){ 
+                    grade = 1
+                }
+                setDisplayGrade(grade)
+                if(grade < 0.85){
+                    setDisplayIncorrect();
+                    setNextDisabled(true);
+                    setSentenceCorrect(false);
+                }else{
+                    setSentenceCorrect(true);
+                    setDisplayCorrect();
+                    setNextDisabled(false);
+                }
+            }).catch(error => {console.error('Error:', error);});
+            
+
         }
+        else{
+            if (userInput.toLowerCase() === answer.toLowerCase()) {
+                setSentenceCorrect(true);
+                setInputColor("green");
+                setDisplayCorrect();
+                setNextDisabled(false);
+            } else {
+                setSentenceCorrect(false);
+                setInputColor("red");
+                setDisplayIncorrect();
+                setNextDisabled(true);
+            }
+        }
+        
     };
 
     const setDisplayCorrect = () => {
@@ -65,6 +134,56 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
         document.getElementById("allstar").style.visibility = "hidden";
         document.getElementById("next").style.backgroundColor = "lightgray";
         document.getElementById("next").style.color = "gray";
+    }
+    function interpolateHexColor(color1, color2, ratio) {
+    const parseHex = (color) => parseInt(color.substring(1), 16);
+
+    const r1 = (parseHex(color1) >> 16) & 255;
+    const g1 = (parseHex(color1) >> 8) & 255;
+    const b1 = parseHex(color1) & 255;
+
+    const r2 = (parseHex(color2) >> 16) & 255;
+    const g2 = (parseHex(color2) >> 8) & 255;
+    const b2 = parseHex(color2) & 255;
+
+    const r = Math.round(r1 + (r2 - r1) * ratio);
+    const g = Math.round(g1 + (g2 - g1) * ratio);
+    const b = Math.round(b1 + (b2 - b1) * ratio);
+
+    return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
+}
+    function interpolateHexColor(color1, color2, ratio) {
+        const parseHex = (color) => parseInt(color.substring(1), 16);
+
+        const r1 = (parseHex(color1) >> 16) & 255;
+        const g1 = (parseHex(color1) >> 8) & 255;
+        const b1 = parseHex(color1) & 255;
+
+        const r2 = (parseHex(color2) >> 16) & 255;
+        const g2 = (parseHex(color2) >> 8) & 255;
+        const b2 = parseHex(color2) & 255;
+
+        const r = Math.round(r1 + (r2 - r1) * ratio);
+        const g = Math.round(g1 + (g2 - g1) * ratio);
+        const b = Math.round(b1 + (b2 - b1) * ratio);
+
+        return `#${(1 << 24 | r << 16 | g << 8 | b).toString(16).slice(1)}`;
+    }
+
+
+    
+    const setDisplayGrade = (grade) => {
+        console.log("?", grade)
+        const hex_color = interpolateHexColor("#C84C4C","#79BB6E", grade);
+  
+        document.getElementById("next").style.backgroundColor = "#6169e1";
+        document.getElementById("next").style.color = "#ffffff";
+        document.getElementById("input").style.color =hex_color;
+        document.getElementById("input").style.borderColor = hex_color;
+        if(grade > 0.85){
+            document.getElementById("allstar").style.visibility = "visible";
+        }
+        
     }
 
     const handleKeyPress = (event) => {

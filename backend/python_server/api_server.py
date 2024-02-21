@@ -1,8 +1,10 @@
 from flask import Flask, request
 import sys
 from swegptmodel import swegpt_handeler
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
 
 
 swe_gbt = swegpt_handeler()
