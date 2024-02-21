@@ -7,6 +7,7 @@ body {
 
 .page-head {
     display: flex;
+    flex-direction: column;
     font-size: large;
     font-weight: bolder;
     justify-content: space-between;
@@ -18,8 +19,68 @@ body {
     margin-left: 2.5%;
 }
 
+.correct-sen-container {
+    display: none;
+}
+
+.correct-sen-container.correct {
+    display: none;
+}
+
+.correct-sen-container.incorrect {
+    display: flex;
+}
+
+.correct-sen {
+    display: flex;
+    flex-direction: column;
+    font-size: medium;
+    font-weight: bold;
+    color: var(--red-negative);
+}
+
+.result-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    margin-left: 2%;
+    margin-right: 2%;
+    border-radius: 10px;
+}
+
+.result-container.correct {
+    border: 4px solid var(--green-positive);
+    background-color: transparent;
+}
+
+.result-container.correct::before {
+    content: url('../images/threeStars.svg');
+    position: absolute;
+    top: 13%;
+    left: 34.5%;
+    width: 5%;
+    height: 5%;
+}
+
+.result-container.correct::after {
+    content: url('../images/twoStars.svg');
+    position: absolute;
+    top: 20%;
+    left: 60%;
+    width: 5%;
+    height: 5%;
+}
+
+.result-container.incorrect {
+    border: 4px solid var(--red-negative);
+    background-color: transparent;
+}
+
 .result-text {
-    background-color: #f1f1f1;
+    background-color: #ffffff; /* HELP: I have to force color here to prevent errorneous color for correct answer */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -39,6 +100,84 @@ body {
     color: var(--red-negative);
 }
 
+.user-sen-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10%;
+    margin-bottom: 2%;
+    margin-left: 0.2%;
+    margin-right: 0.2%;
+    border-bottom: 4px solid black;
+}
+
+.user-sen {
+    display: flex;
+    flex-direction: column;
+    font-size: medium;
+    font-weight: bold;
+    margin-bottom: 3px;
+}
+
+.word-button {
+    display: block;
+    margin: 4px;
+    padding: auto;
+    border-width: 4px;
+    border-color: var(--grey-outline);
+    border-radius: 8px;
+    font-size: medium;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.word-button:disabled {
+    display: block;
+    margin: 4px;
+    padding: auto;
+    border-width: 4px;
+    border-color: var(--grey-outline);
+    color: var(--main-color-disabled);
+    background-color: var(--grey-outline);
+    border-radius: 8px;
+    cursor: default;
+}
+
+.word-button:hover {
+    display: block;
+    margin: 4px;
+    padding: auto;
+    border-width: 4px;
+    border-color: var(--grey-outline);
+    color: var(--grey-disabled);
+    border-radius: 8px;
+    font-size: medium;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.word-container {
+    display: flex;
+    flex-direction: row;
+    flex-basis: 2%;
+    flex-wrap: wrap;
+    padding: 4%;
+    background-size: contain;
+    background-color: var(--main-color);
+    margin-top: 10%;
+    margin-bottom: -60%;
+    border-radius: 15px;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.chk-button {
+    cursor: pointer;
+    border-radius: 40px;
+}
+
 .next-button {
     margin-bottom: 30px;
     margin-top: 30px;
@@ -50,10 +189,10 @@ body {
     border-radius: 25px;
     cursor: pointer;
     transition: background-image 0.3s;
-    background-image: url('./next.svg');
+    background-image: url('../images/next.svg');
 }
 
 .next-button:disabled {
-    background-image: url('./next-disabled.svg');
+    background-image: url('../images/next-disabled.svg');
     cursor: not-allowed;
 }
