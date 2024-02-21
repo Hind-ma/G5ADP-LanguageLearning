@@ -37,7 +37,6 @@ input {
 }
 
 .check-button {
-    /* background-image: url(./editSymbol.svg); */
     cursor: pointer;
     background-color: var(--main-color);
     border: none;
@@ -59,11 +58,11 @@ input {
     cursor: pointer;
     margin-top: 10px;
     transition: background-image 0.3s;
-    background-image: url('./next.svg');
+    background-image: url('../images/next.svg'); 
 }
 
 .next-button:disabled {
-    background-image: url('./next-disabled.svg');
+    background-image: url('../images/next-disabled.svg');
     cursor: not-allowed;
 }
 
