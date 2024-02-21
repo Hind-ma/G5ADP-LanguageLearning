@@ -134,7 +134,7 @@ const ConnectWords = () => {
       matchedPairs.length === wordPairs.length
     ) {
       setFeedbackMessage(
-        `You got ${result.correct} out of ${result.tries} correct!`
+        `You got ${result.correct} out of ${result.tries} on the first try!`
       );
       setShowResult(true);
     }
