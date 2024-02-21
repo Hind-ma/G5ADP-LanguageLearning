@@ -88,7 +88,7 @@ function CreateSentence() {
 
     return (
         <div>
-            <ChangePageButton to="/" label="Go to Home" />
+            <ChangePageButton to="/home" label="Go to Home" />
             <div className="page-head">
                 <p>Make the sentence by selecting the words</p>
             </div>

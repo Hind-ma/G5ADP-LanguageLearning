@@ -83,7 +83,7 @@ function PickWord() {
 
   return (
     <div>
-      <ChangePageButton to="/" label="Go to Home" />
+      <ChangePageButton to="/home" label="Go to Home" />
 
       <div>   
         {showRoundScore ? (
@@ -91,7 +91,7 @@ function PickWord() {
             <h2>
               You got {score} out of {questions.length} correct
             </h2>
-            <ChangePageButton to="/" label="End round" />
+            <ChangePageButton to="/home" label="End round" />
           </div>
         ) : (
           <div>

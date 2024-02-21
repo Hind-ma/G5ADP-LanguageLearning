@@ -6,9 +6,9 @@ import { useState } from "react";
 const introWords = [
     {id: 0, svWord: "apelsin", enWord: "orange"},
     { id: 1, svWord: "ost", enWord: "cheese"},
-    //{id: 2, svWord: "grädde", enWord: "cream"},
+    //{id: 2, svWord: "grï¿½dde", enWord: "cream"},
     { id: 2, svWord: "gradde", enWord: "cream"},
-    //{id: 3, svWord: "mjölk", enWord: "milk"},
+    //{id: 3, svWord: "mjï¿½lk", enWord: "milk"},
     { id: 3, svWord: "mjolk", enWord: "milk" },
     { id: 4, svWord: "banan", enWord: "banana" },
     { id: 5, svWord: "melon", enWord: "melon"},
@@ -71,7 +71,7 @@ function IntroduceWord() {
 
     return (
         <div>
-            <ChangePageButton to="/" label="Go to Home" />
+            <ChangePageButton to="/home" label="Go to Home" />
             <div className="intro-word">
                 <h2>INTRODUCE WORDS</h2>
                 <PrintWordHeader />

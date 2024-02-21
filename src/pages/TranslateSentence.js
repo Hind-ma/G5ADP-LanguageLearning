@@ -85,7 +85,7 @@ function TranslateSentence() {
 
   return (
     <div className="translate-page">
-      <ChangePageButton to="/" label="Go to Home" />
+      <ChangePageButton to="/home" label="Go to Home" />
 
       <div>
         {showRoundScore ? (

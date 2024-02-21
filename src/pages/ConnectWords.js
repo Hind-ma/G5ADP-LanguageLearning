@@ -108,7 +108,7 @@ const ConnectWords = () => {
 
   return (
     <div>
-      <ChangePageButton to="/" label="Go to Home" />
+      <ChangePageButton to="/home" label="Go to Home" />
 
       {showResult ? (
         <div className='result-container'>

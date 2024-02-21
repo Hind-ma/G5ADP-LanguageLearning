@@ -1,6 +1,6 @@
 import logo from "./logo.svg";
 import "./App.css";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Account from "./pages/Account";
 import ConnectWords from "./pages/ConnectWords";
 import FillBlank from "./pages/FillBlank";
@@ -18,8 +18,8 @@ function App() {
     <div className="App">
       {/* Routes */}
       <Routes>
-        <Route path="/welcome" element={<Welcome />} />
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Welcome />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/account" element={<Account />} />
         <Route path="/pick-word" element={<PickWord />} />
         <Route path="/introduce" element={<IntroduceWord />} />
