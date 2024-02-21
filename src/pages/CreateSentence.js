@@ -1,7 +1,8 @@
 import ChangePageButton from "./ChangePageButton";
 import { GetRandomInt, ShuffleArray } from "../utils";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import {completeList} from "../data-sets/compose-translate";
+import './CreateSentence.css';
 
 const makeSentences = completeList;
 
@@ -11,7 +12,7 @@ function ResultBox({ bDisplay, bSuccess }) {
     const item = bDisplay ? (bSuccess ? "Correct" : "Incorrect") : null;
     return (
         <div>
-            <p>{item}</p>
+            <p className={`result-text ${bSuccess ? ' correct' : ' incorrect'}`}>{item}</p>
         </div>
     );
 }
@@ -33,10 +34,9 @@ function DisplayCorrectSentence({ bDisplay, bSuccess, sentence }) {
 function NextSentenceButton({ bDisabled, onClickFunc }) {
     return (
         <div>
-            <button
+            <button className="next-button"
                 disabled={bDisabled}
                 onClick={() => { onClickFunc() }}>
-                Next Sentence
             </button>
         </div>
     );
@@ -86,7 +86,9 @@ function CreateSentence() {
     return (
         <div>
             <ChangePageButton to="/" label="Go to Home" />
-            <h2>CREATE THE SENTENCE</h2>
+            <div className="page-head">
+                <p>Make the sentence by selecting the words</p>
+            </div>
             <ResultBox bDisplay={bShowResult} bSuccess={bCorrect} />
             <DisplayCorrectSentence bDisplay={bShowResult} bSuccess={bCorrect} sentence={currentSentence.join(' ')} />
             <p>Sentence: {sentence.length > 0 ? sentence.join(' ') : null}</p>
