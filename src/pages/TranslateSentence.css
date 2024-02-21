@@ -13,25 +13,40 @@ h2 {
     justify-content: space-between;
     padding: 10px;
     margin-bottom: 20px;
+    border-radius: 10px;
 }
 
 .answer-container.correct {
-    border: 2px solid var(--green-positive);
+    border: 4px solid var(--green-positive);
+    background-color: transparent;
 }
 
 .answer-container.wrong {
-    border: 2px solid var(--red-negative);
+    border: 4px solid var(--red-negative);
+    background-color: transparent;
 }
 
 input {
     flex: 1;
     padding: 5px;
     margin-right: 10px;
+    border: none;
+    border-bottom: 2px solid black;
+    outline: none;
+    font-size: larger;
 }
 
-.pen-icon {
-    background-image: url(./editSymbol.svg);
+.check-button {
+    /* background-image: url(./editSymbol.svg); */
     cursor: pointer;
+    background-color: var(--main-color);
+    border: none;
+    border-radius: 25px;
+}
+
+.check-button:disabled {
+    background-color: var(--main-color-disabled);
+    cursor: not-allowed;
 }
 
 .next-button {
@@ -51,3 +66,4 @@ input {
     background-image: url('./next-disabled.svg');
     cursor: not-allowed;
 }
+

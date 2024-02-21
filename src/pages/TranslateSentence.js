@@ -14,6 +14,9 @@ function TranslateSentence() {
   const [translationDirection, setTranslationDirection] = useState("englishToSwedish");
   
   const [nextButtonDisabled, setNextButtonDisabled] = useState(true);
+  const [checkButtonDisabled, setCheckButtonDisabled] = useState(true);
+  const [inputDisabled, setInputDisabled] = useState(false);
+
   const [showRoundScore, setRoundScore] = useState(false);
   const [score, setScore] = useState(0);
 
@@ -35,11 +38,14 @@ function TranslateSentence() {
       setIsAnswerCorrect(false);
     }
 
-    setNextButtonDisabled(false);
-
     if (isAnswerCorrect) {
       setScore(score + 1);
     }
+
+    // set the states of the buttons/input
+    setNextButtonDisabled(false);
+    setCheckButtonDisabled(true);
+    setInputDisabled(true);
   };
 
   const handleNextButtonClicked = () => {
@@ -53,10 +59,16 @@ function TranslateSentence() {
      setNextButtonDisabled(true);
      setUserAnswer("");
      setIsAnswerCorrect(null);
+     setCheckButtonDisabled(true);
+     setInputDisabled(false);
    };
 
   const handleInputChange = (e) => {
-    setUserAnswer(e.target.value);
+    const inputValue = e.target.value;
+    setUserAnswer(inputValue);
+
+    // If there is some input, the check button should be enabled - otherwise not
+    setCheckButtonDisabled(inputValue.trim() === '');
   };
 
   const handleKeyDown = (e) => {
@@ -88,19 +100,26 @@ function TranslateSentence() {
             {/* TODO denna vill itne funka att få rätt färg nu tydligen  */}
             <h2>{translationDirection === "englishToSwedish" ? currSentence.english : currSentence.swedish}</h2>
             
-            <div className="answer-container">
+            <div className={`answer-container ${isAnswerCorrect !== null ? (isAnswerCorrect ? 'correct' : 'wrong') : ''}`}>
               <input
+                className="input"
                 type="text"
                 placeholder="Type here"
                 value={userAnswer}
                 onChange={handleInputChange}
                 onKeyDown={handleKeyDown}
+                disabled={inputDisabled}
               />
               {/* <button onClick={checkAnswer}>Check</button> */}
               {/* skriv om detta TODO, ovan och nedan */}
-              <img className="pen-icon" src="./editSymbol"/>
+              <button
+                className="check-button"
+                onClick={checkAnswer}
+                disabled={checkButtonDisabled}
+              >Check</button>
             </div>
 
+            Score is {score}
             <button
               className="next-button"
               onClick={handleNextButtonClicked}
