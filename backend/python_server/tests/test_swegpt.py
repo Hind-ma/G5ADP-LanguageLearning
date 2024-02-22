@@ -1,6 +1,8 @@
 import pytest
 import sys
 import csv
+from torch.cuda import is_available as cuda_is_available
+
 
 sys.path.append('backend\python_server') 
 from swegptmodel import swegpt_handeler
@@ -55,3 +57,22 @@ def test_context_understadning(before, fill_good, fill_bad, after, ratio):
     prob_good = handeler.calc_fill_prob(before, fill_good, after, ratio)
     prob_bad = handeler.calc_fill_prob(before, fill_bad, after, ratio)
     assert prob_good > prob_bad
+
+@pytest.mark.parametrize("before, fill, after",[
+    ("Jag brukar äta lunch runt", "klockan halv två", "på eftermiddagen"),
+    ("Jag brukar äta lunch runt", "klockan halv elva",  "på förmiddagen"),
+    ("Jag brukar äta lunch runt", "klockan halv två",  "på förmiddagen")
+])
+@pytest.mark.skipif(not cuda_is_available(), reason="The computer running this test does not have cude GPU cores, thus it can not be tested if the code can be ran on these cores")
+def test_cuda(before, fill, after):
+    handeler = swegpt_handeler(device="cuda")
+    handeler.calc_fill_prob(before, fill, after)
+
+@pytest.mark.parametrize("before, fill, after",[
+    ("Jag brukar äta lunch runt", "klockan halv två", "på eftermiddagen"),
+    ("Jag brukar äta lunch runt", "klockan halv elva",  "på förmiddagen"),
+    ("Jag brukar äta lunch runt", "klockan halv två",  "på förmiddagen")
+])
+def test_cpu(before, fill, after):
+    handeler = swegpt_handeler(device="cpu")
+    handeler.calc_fill_prob(before, fill, after)
