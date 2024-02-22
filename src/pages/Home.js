@@ -1,24 +1,43 @@
 import ChangePageButton from "./ChangePageButton";
 
+function LearnButton({bGuestUser}) {
+  const item = bGuestUser ? "Start Learning" : "Continue Learning";
+  return (
+    <div>
+      <button>
+        {item}
+      </button>
+    </div>
+  );
+}
+
 function Home() {
   var currentUsername = sessionStorage.getItem('username');
+  var bGuest = currentUsername === 'Guest User';
   
-  return <div>Home
-    {/* Navigation Buttons */}
-      <h4>Welcome: {currentUsername}</h4>
+  return (
+  <div>
+      {/* Navigation Buttons */}
+      {/* currentUsername.charAt(0).toLocaleUpperCase() + currentUsername.slice(1) */}
+      <div>
+        <h4>Welcome {currentUsername.toLocaleUpperCase()}</h4>
+      </div>
       <div className="button-container">
-        <ChangePageButton to="/" label="Go to Welcome page" />
-        <ChangePageButton to="/home" label="Go to Home page" />
-        <ChangePageButton to="/account" label="Go to Account page" />
-        <ChangePageButton to="/pick-word" label="Start session Pick a word" />
-        <ChangePageButton to="/introduce" label="Start session Introduce words" />
-        <ChangePageButton to="/fill-blank" label="Start session Fill in the blanks" />
-        <ChangePageButton to="/TranslateSentence" label="Start session Translate a sentence" />
-        <ChangePageButton to="/create-sen" label="Start session Create a sentence" />
-        <ChangePageButton to="/connect-words" label="Start session Connect-words" />
+        {/*<ChangePageButton to="/" label="Go to Welcome page" />*/}
+        {/*<ChangePageButton to="/home" label="Go to Home page" />*/}
+        {/*<ChangePageButton to="/home" label={bGuest ? "Guest Home" : currentUsername.toLocaleUpperCase()} />*/}
+        <ChangePageButton to="/account" label={bGuest ? "Guest Home" : currentUsername.toLocaleUpperCase()} />
+        <LearnButton bGuestUser={bGuest} />
+        <ChangePageButton to="/introduce" label="Introduce words" />
+        <ChangePageButton to="/pick-word" label="Word Translation" />
+        <ChangePageButton to="/fill-blank" label="Fill In The Blanks" />
+        <ChangePageButton to="/TranslateSentence" label="Translate Sentence" />
+        <ChangePageButton to="/create-sen" label="Make A Sentence" />
+        <ChangePageButton to="/connect-words" label="Match Words" />
         <ChangePageButton to="/" label="LOG OUT" />
       </div>
-  </div>;
+  </div>
+  );
 }
 
 export default Home;
