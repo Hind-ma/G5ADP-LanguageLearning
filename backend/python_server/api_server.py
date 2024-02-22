@@ -1,10 +1,13 @@
 from flask import Flask, request
 import sys
+from swegptmodel import swegpt_handeler
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
 
 
-
+swe_gbt = swegpt_handeler()
 
 @app.route('/greet')
 def greet():
@@ -12,6 +15,18 @@ def greet():
     name = request.args.get('name', 'Anonymous')
     greeting = request.args.get('greeting', 'Hello')
     return f'{greeting}, {name}!'
+
+@app.route('/get_fill_in_prob')
+def get_fill_in_prob():
+    before = request.args.get('before', '')
+    fill = request.args.get('fill', '')
+    after = request.args.get('after', '')
+    ratio = request.args.get('ratio', '')
+    if ratio != "":
+        prob = swe_gbt.calc_fill_prob(before, fill, after,  float(ratio))
+    else:
+        prob = swe_gbt.calc_fill_prob(before, fill, after)
+    return str(prob)
 
 
 if __name__ == '__main__':
