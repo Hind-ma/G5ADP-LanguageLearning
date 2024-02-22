@@ -266,11 +266,11 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
 function FillBlank() {
     const [currentSentence, setCurrentSentence] = useState(0);
 
-    console.log("curIdx: " + currentSentence + "sen: " + sentences[currentSentence].sentence);
+    //console.log("curIdx: " + currentSentence + "sen: " + sentences[currentSentence].sentence);
 
     return (
         <div className="App">
-            <ChangePageButton to="/" label="Go to Home page" />
+            <ChangePageButton to="/home" label="Go to Home page" />
             <h1 className="fill-title">Fill in the blank of this sentence</h1>
             <Sentence
                 sentence={sentences[currentSentence].sentence}
