@@ -12,7 +12,7 @@ function ResultBox({ bDisplay, bSuccess }) {
     const item = bDisplay ? (bSuccess ? "Correct" : "Incorrect") : null;
     return (
         <div>
-            <p className={`result-text ${bSuccess ? 'correct' : 'incorrect'}`}>{item}</p>
+            <p className={`result-text ${bSuccess ? 'rt' : 'wr'}`}>{item}</p>
         </div>
     );
 }
@@ -92,7 +92,7 @@ function CreateSentence() {
             <div className="page-head">
                 <p>Make the sentence by selecting the words</p>
             </div>
-            <div className={`result-container ${bShowResult ? (bCorrect ? 'correct' : 'incorrect') : null}`}>
+            <div className={`result-container ${bShowResult ? (bCorrect ? 'rt' : 'wr') : null}`}>
                 <ResultBox bDisplay={bShowResult} bSuccess={bCorrect} />
                 <DisplayCorrectSentence bDisplay={bShowResult} bSuccess={bCorrect} sentence={currentSentence.join(' ')} />
             </div>
