@@ -43,7 +43,7 @@ function PrintWord({ id }) {
 
 function PrintWordHeader() {
   return (
-    <div className="header">
+    <div className="new-word-header">
       <b>
         <h1>New word!</h1>
       </b>

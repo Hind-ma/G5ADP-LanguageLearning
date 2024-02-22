@@ -17,8 +17,8 @@
 
 }
 
-.header{
-    height: 20vh;
+.new-word-header{
+    height: 25vh;
     display: flex;
     align-items: center;
     justify-content: center;
