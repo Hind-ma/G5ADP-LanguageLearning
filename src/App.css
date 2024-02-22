@@ -62,4 +62,11 @@
 .button-container button {
   margin: 8px; /* Adjust the margin between buttons */
 }
+button {
+  font-family: "Signika", Verdana, Tahoma, sans-serif;
+}
+
+input {
+  font-family: "Signika", Verdana, Tahoma, sans-serif;
+}
 
