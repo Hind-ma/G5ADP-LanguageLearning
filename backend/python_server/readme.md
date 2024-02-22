@@ -24,7 +24,7 @@ python piper.py install deps.txt
 
 run:
 python api_server.py 
-
+(this will take some time the first time around)
 ctrl^c to stop
 
 
