@@ -3,8 +3,11 @@ import torch
 
 
 class swegpt_handeler:
-    def __init__(self) -> None:
-        self.device = "cuda" if torch.cuda.is_available() else "cpu"
+    def __init__(self, device = None) -> None:
+        if device == None:
+            self.device = "cuda" if torch.cuda.is_available() else "cpu"
+        else:
+            self.device = device
         self.tokenizer = AutoTokenizer.from_pretrained("AI-Sweden-Models/gpt-sw3-356m")
         self.model = AutoModelForCausalLM.from_pretrained("AI-Sweden-Models/gpt-sw3-356m").to(self.device)
 
