@@ -31,7 +31,9 @@ def install_library_from_line(line):
         # Split the line by whitespace to separate package name and additional arguments
         args = line.split()
         # Run pip install command with the arguments
-        subprocess.run(['pip', 'install'] + args, check=True)
+        if not has_dependency(line):
+            subprocess.run(['pip', 'install'] + args, check=True)
+            record_dependency(line)
         print(f"Successfully installed {' '.join(args)}")
     except subprocess.CalledProcessError:
         print(f"Failed to install {' '.join(args)}")
@@ -57,6 +59,15 @@ def remove_dependency(library_name):
         for line in lines:
             if line.strip() != library_name:
                 file.write(line)
+def has_dependency(library_name):
+    # Read the dependency file, remove the library entry, and rewrite the file
+    with open(DEPENDENCY_FILE, 'r') as file:
+        lines = file.readlines()
+    with open(DEPENDENCY_FILE, 'r') as file:
+        for line in lines:
+            if line.strip() == library_name:
+                return True
+    return False
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
