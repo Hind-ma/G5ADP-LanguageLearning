@@ -8,7 +8,7 @@ def piper(command, target):
         if target == DEPENDENCY_FILE:
             install_libraries_from_file(target, record_dependencies=False)
         else:
-            install_library(target)
+            install_library_from_line(target)
     elif command == "uninstall":
         if target.endswith('.txt'):
             print("Cannot uninstall from a file. Provide a single library name.")
