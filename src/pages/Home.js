@@ -12,10 +12,10 @@ import { GetRandomInt } from "../utils";
  */
 export const categoryList = [
   {id: 0, categoryName: "Generic", routePage: "/learn"},
-  {id: 0, categoryName: "Supermarket", routePage: ""},
-  {id: 0, categoryName: "Sports", routePage: ""},
-  {id: 0, categoryName: "Travel", routePage: ""},
-  {id: 0, categoryName: "Music", routePage: ""},
+  {id: 1, categoryName: "Supermarket", routePage: ""},
+  {id: 2, categoryName: "Sports", routePage: ""},
+  {id: 3, categoryName: "Travel", routePage: ""},
+  {id: 4, categoryName: "Music", routePage: ""},
 ];
 
 /**
