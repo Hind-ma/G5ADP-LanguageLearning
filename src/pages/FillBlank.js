@@ -2,35 +2,9 @@
 
 import React, { useState } from "react";
 import './FillBlankModel.css';
-const sentences = [
-    {
-        sentence: "Jag heter _.",
-        answer: "Anna",
-        correct: false,
-    },
-    {
-        sentence: "Han heter _.",
-        answer: "Hans",
-        correct: false,
-    },
-    {
-        sentence: "Vi åker _ till jobbet.",
-        answer: "katt",
-        correct: false,
-    },
-    {
-        sentence: "Vi åker _ till jobbet.",
-        answer: "tåget",
-        correct: false,
-    },
-    {
-        sentence: "Vi åker _ till jobbet.",
-        answer: "tåget",
-        correct: false,
-    },
-];
+import { sentenceList } from "../data-sets/fillBlank";
 
-
+const sentences = sentenceList;
 
 const url_address = "http://127.0.0.1:5000/get_fill_in_prob"
 
@@ -43,6 +17,7 @@ async function pingURL(url) {
         return false;
     });
 }
+
 
 const ml_server_is_up = await pingURL(url_address)
 
@@ -176,6 +151,7 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
         }
     };
 
+
     const handleInputChange = (event) => {
         setUserInput(event.target.value);
         setInputColor("white");
@@ -249,7 +225,7 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
 
 function FillBlank() {
     const [currentSentence, setCurrentSentence] = useState(0);
-
+    
     //console.log("curIdx: " + currentSentence + "sen: " + sentences[currentSentence].sentence);
 
     return (
