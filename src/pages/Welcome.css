@@ -2,16 +2,15 @@
     background-image: url('https://i.imgur.com/aaUK81h.png');
     background-repeat: no-repeat;
     background-size: cover;
+    width: 100vw;
+    height: 95vh;
 }
 
 .description {
-    font-family: Signika, sans-serif;
     font-size: 40px;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 .welcome {
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     font-size: 50px;
     margin-top: 50px;
 }
@@ -20,7 +19,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 60px;
+    height: 20vh;
     padding: 0 20px;
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -51,6 +50,12 @@
     font-size: 24px;
     color: #333;
     margin-bottom: 30px;
+}
+
+.main-buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 
@@ -84,17 +89,16 @@
 } 
 
 .button {
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     font-weight: 5px;
     font-size: 25px;
     text-align: center;
     font-weight: bold;
-    color: #000000;
-    background-color: #6a80cf;
+    color: #FFFFFF;
+    background-color: var(--main-color);
     padding: 10px 30px;
-    border: 2px solid #0066cc;
-    box-shadow: rgb(0, 0, 0) 0px 0px 0px 0px;
-    border-radius: 50px;
+    box-shadow:0px 4px 14px 0 rgba(0,0,0,0.1);
+    border:none;
+    border-radius: 20px;
     transition: 1360ms;
     transform: translateY(0);
     display: flex;
@@ -103,6 +107,9 @@
     cursor: pointer;
     width: 200px;
     height: 125px;
+    margin-top: 10vh;
+    margin-left: 5vw;
+    margin-right: 5vw;
 }
 
 .btn:hover {
