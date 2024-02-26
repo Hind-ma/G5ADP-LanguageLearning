@@ -12,7 +12,7 @@ export const sentenceList = [
     {id:10, sentence:"Gillar du _ eller te? ", answer:"kaffe"},
     {id:11, sentence:"Vad gillar du för sorts _? Jag gillar komedi ", answer:"svår"},
     {id:12, sentence:"I vilken _ bor du? Jag bor i Götborg ", answer:"stad"},
-    {id:13, sentence:"{Vad gillar du för _? Jag gillar jazz ", answer:"musik"},
+    {id:13, sentence:"Vad gillar du för _? Jag gillar jazz ", answer:"musik"},
     {id:14, sentence:"Hur många _ har du? Jag har en bro och en syster ", answer:"syskon"},
     {id:15, sentence:"Vilka _ pratar du? Jag pratar svenska och engeleska ", answer:"språk"},
     {id:16, sentence:"Ska vi öppna _? Det är väldigt varmt här ", answer:"fönstret"},
