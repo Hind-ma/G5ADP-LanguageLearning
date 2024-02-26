@@ -8,12 +8,12 @@ const WelcomePage = () => {
   const [currentForm, setCurrentForm] = useState("");
   const navigate = useNavigate();
 
-  const switchToMenu = (guest) => {
-    if (guest) {
-      sessionStorage.setItem("username", "Guest user");
-    }
-    navigate("/home");
-  };
+    const switchToMenu = (guest) => {
+        if (guest) {
+            sessionStorage.setItem('username', 'Guest User'); 
+        }
+        navigate('/home');
+    };
 
   const handleFormSwitch = (formName) => {
     setCurrentForm(formName);

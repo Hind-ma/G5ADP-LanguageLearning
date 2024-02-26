@@ -57,19 +57,17 @@ body {
 }
 
 .result-container.rt::before {
-    content: url('../images/threeStars.svg');
-    position: absolute;
-    top: 15%;
-    left: 32%;
+    content: url('../images/ph_sparkle-fill.svg');
+    position: relative;
+    left: -25%;
     width: 5%;
     height: 5%;
 }
 
 .result-container.rt::after {
-    content: url('../images/twoStars.svg');
-    position: absolute;
-    top: 20%;
-    left: 62%;
+    content: url('../images/fluent_sparkle-32-filled.svg');
+    position: relative;
+    left: 105%;
     width: 5%;
     height: 5%;
 }

@@ -10,6 +10,7 @@ import PickWord from "./pages/PickWord";
 import TranlateSentence from "./pages/TranslateSentence";
 import Welcome from "./pages/Welcome";
 import CreateSentence from "./pages/CreateSentence";
+import Learn from "./pages/Learn";
 import React from 'react';
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
         <Route path="/TranslateSentence" element={<TranlateSentence />} />
         <Route path="/create-sen" element={<CreateSentence />} />
         <Route path="/connect-words" element={<ConnectWords />} />
+        <Route path="/learn" element={<Learn />} />
       </Routes>
     </div>
   );
