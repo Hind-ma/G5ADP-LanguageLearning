@@ -1,0 +1,22 @@
+export const wordList = [
+    {id:0, english:"Morning", swedish:"Morgon", options: ["Morgon", "Dag", "Natt","Middag"]},
+    {id:1, english:"Lecture", swedish:"Föreläsning", options: ["Läxa", "Lärare", "Föreläsning","Tenta"]},
+    {id:2, english:"Train", swedish:"Tåg", options: ["Tåg", "Tong ", "Bil","Byggnad"]},
+    {id:3, english:"Suitcase", swedish:"Resväska", options: ["Resväska", "Ryggsäck", "Tygkassa","Datorväska"]},
+    {id:4, english:"Water", swedish:"Vatten", options: ["Vatten", "Hav", "Kran","Damm"]},
+    {id:5, english:"Shoes", swedish:"Skor", options: ["Skor", "Byxor", "Tröja","Strumpor"]},
+    {id:6, english:"Toliet", swedish:"Toalett", options: ["Toalett", "Dag", "Natt","Middag"]},
+    {id:7, english:"Kitchen", swedish:"Kök", options: ["Kök", "Dag", "Natt","Middag"]},
+    {id:8, english:"Jacket", swedish:"Jacka", options: ["Jacka", "Dag", "Natt","Middag"]},
+    {id:9, english:"Thanks", swedish:"Tack", options: ["Tack", "Dag", "Natt","Middag"]},
+    {id:10, english:"Run", swedish:"Springa", options: ["Springa", "Dag", "Natt","Middag"]},
+    {id:11, english:"Food", swedish:"Mat", options: ["Mat", "Dag", "Natt","Middag"]},
+    {id:12, english:"Strawberry", swedish:"Jordgubb", options: ["Jordgubb", "Dag", "Natt","Middag"]},
+    {id:13, english:"Sandwich", swedish:"Macka", options: ["Macka", "Dag", "Natt","Middag"]},
+    {id:14, english:"Hat", swedish:"Mössa", options: ["Mössa", "Dag", "Natt","Middag"]},
+    {id:15, english:"Gloves", swedish:"Vantar", options: ["Vantar", "Dag", "Natt","Middag"]},
+    {id:16, english:"Door", swedish:"Dörr", options: ["Dörr", "Dag", "Natt","Middag"]},
+    {id:17, english:"Window", swedish:"Fönster", options: ["Fönster", "Dag", "Natt","Middag"]},
+    {id:18, english:"Exit", swedish:"Utgång", options: ["Utgång", "Dag", "Natt","Middag"]},
+    {id:19, english:"Play", swedish:"Leka", options: ["Leka", "Dag", "Natt","Middag"]}
+]
