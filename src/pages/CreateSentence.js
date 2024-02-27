@@ -68,11 +68,8 @@ function CreateSentence() {
         setWordsDisabled(false);
     }
 
-    const handleWordClick = (word) => {
-        if (sentence.includes(word)) {
-            setSentence(sentence.filter((w) => w !== word));
-            return;
-        }
+    const handleWordClick = (word, index) => {
+        document.getElementById(index).disabled = true;
 
         setSentence([...sentence, word]);
     };
@@ -103,9 +100,10 @@ function CreateSentence() {
                 {shuffledWords.map((word, index) => (
                     <button
                         className="word-button"
+                        id={index}
                         key={index}
                         disabled={bWordsDisable}
-                        onClick={() => handleWordClick(word)}>
+                        onClick={() => handleWordClick(word, index)}>
                         {word}
                     </button>
                 ))}
