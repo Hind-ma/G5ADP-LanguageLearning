@@ -18,6 +18,8 @@ export const Register = (props) => {
                     storeData();
                     sessionStorage.setItem('username', name);
                     document.getElementById("confirmation").innerHTML = "The account has been created";
+                    document.getElementById('switchLogin').disabled = true;
+                    document.getElementById('create').disabled = true;
                     setTimeout(() => {props.continueToMenu(false);}, 1000);
                 } else
                     document.getElementById("confirmation").innerHTML = "Passwords do not match";
@@ -49,11 +51,11 @@ export const Register = (props) => {
                 <label htmlFor="confirmPassword">Confirm password</label>
                 <input value={confPass}  onChange={(e) => setConfPass(e.target.value)} type="password" placeholder="*****" id="confirmPassword" name="confirmPassword"/>
                 
-                <button type="submit">Create account</button>
+                <button id="create" type="submit">Create account</button>
 
                 <p id="confirmation"></p>
             </form>
-            <button onClick={() => props.onFormSwitch('login')}>Already have an account? Login here</button>
+            <button id="switchLogin" onClick={() => props.onFormSwitch('login')}>Already have an account? Login here</button>
         </div>
     )
 }
