@@ -42,6 +42,18 @@ const ConnectWords = () => {
     );
   };
 
+  // Update the state of the remaining buttons of the same language
+  const updateRemainingLanguageButtons = (id, language, state) => {
+    setWordPairs((prevWordPairs) =>
+      prevWordPairs.map((pair) => {
+        if (pair.id !== id && pair.stateEng !== "hidden" && pair.stateSwe !== "hidden") {
+          updateButtonState(pair.id, language, state);
+        }
+        return pair;
+      })
+    );
+  };
+
   const findClickedWord = () => {
     // Check if any swedish word has stateSwe set to 'clicked'
     const swedishClickedWord = wordPairs.find(
@@ -68,6 +80,7 @@ const ConnectWords = () => {
     // if it is the first word clicked, highlight it
     if (!firstClicked) {
       updateButtonState(selectedId, selectedLanguage, "clicked");
+      updateRemainingLanguageButtons(selectedId, selectedLanguage, "disabled");
     } else {
       handleSecondWordClick(selectedId, selectedLanguage, firstClicked);
     }
@@ -80,51 +93,48 @@ const ConnectWords = () => {
   ) => {
     updateButtonState(selectedId, selectedLanguage, "clicked");
 
-    if (selectedLanguage === firstClicked.language) {
-      // second word clicked, but the same language
-      // TODO might need to handle some user feedback here, another highlight
-      setFeedbackMessage(
-        `They are the same language. Try again but take a word from the ${
-          selectedLanguage === "swedish" ? "English" : "Swedish"
-        } words.`
-      );
+    // set all the other buttons in that language as disabled 
+    updateRemainingLanguageButtons(selectedId, selectedLanguage, "disabled");
+    
+    // Check if the translation matches
+    const isMatch = firstClicked.id === selectedId;
+
+    if (isMatch) {
+      // it is a match
+      setResult((prevResult) => ({
+        tries: prevResult.tries + 1,
+        correct: prevResult.correct + 1,
+      }));
+      setMatchedPairs([...matchedPairs, selectedId]);
+      updateButtonState(firstClicked.id, firstClicked.language, "correct");
+      updateButtonState(selectedId, selectedLanguage, "correct");
+      setTimeout(() => {
+        updateButtonState(firstClicked.id, firstClicked.language, "hidden");
+        updateButtonState(selectedId, selectedLanguage, "hidden");
+        const oppositeLanguage = selectedLanguage === "swedish" ? "english" : "swedish";
+        updateRemainingLanguageButtons(selectedId, oppositeLanguage, "");
+        updateRemainingLanguageButtons(selectedId, selectedLanguage, "");
+      }, 1500);
+    } else {
+      // wrong answer
+      setResult((prevResult) => ({
+        tries: prevResult.tries + 1,
+        correct: prevResult.correct,
+      }));
+      setFeedbackMessage("Wrong! Try again.");
+      updateButtonState(firstClicked.id, firstClicked.language, "wrong");
       updateButtonState(selectedId, selectedLanguage, "wrong");
       setTimeout(() => {
         setFeedbackMessage("");
-        updateButtonState(selectedId, selectedLanguage, "");
-      }, 2000);
-    } else {
-      // Check if the translation matches
-      const isMatch = firstClicked.id === selectedId;
+        // reset the buttons for the firstClicked language
+        updateButtonState(firstClicked.id, firstClicked.language, "");
+        updateRemainingLanguageButtons(firstClicked.id, firstClicked.language, "");
 
-      if (isMatch) {
-        // it is a match
-        setResult((prevResult) => ({
-          tries: prevResult.tries + 1,
-          correct: prevResult.correct + 1,
-        }));
-        setMatchedPairs([...matchedPairs, selectedId]);
-        updateButtonState(firstClicked.id, firstClicked.language, "correct");
-        updateButtonState(selectedId, selectedLanguage, "correct");
-        setTimeout(() => {
-          updateButtonState(firstClicked.id, firstClicked.language, "disabled");
-          updateButtonState(selectedId, selectedLanguage, "disabled");
-        }, 2000);
-      } else {
-        // wrong answer
-        setResult((prevResult) => ({
-          tries: prevResult.tries + 1,
-          correct: prevResult.correct,
-        }));
-        setFeedbackMessage("Wrong! Try again.");
-        updateButtonState(firstClicked.id, firstClicked.language, "wrong");
-        updateButtonState(selectedId, selectedLanguage, "wrong");
-        setTimeout(() => {
-          setFeedbackMessage("");
-          updateButtonState(firstClicked.id, firstClicked.language, "");
-          updateButtonState(selectedId, selectedLanguage, "");
-        }, 2000);
-      }
+        // reset the buttons for the second clicked language
+        updateButtonState(selectedId, selectedLanguage, "");
+        const oppositeLanguage = selectedLanguage === "swedish" ? "english" : "swedish";
+        updateRemainingLanguageButtons(selectedId, selectedLanguage, "");
+      }, 1500);
     }
   };
 

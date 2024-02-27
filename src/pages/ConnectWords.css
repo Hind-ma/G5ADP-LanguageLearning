@@ -24,10 +24,9 @@
     background-color: #FFFFFF;
     font-size: 36px;
     cursor: pointer;
-    margin: 50px;
+    margin: 30px;
     text-transform: lowercase;
-
-
+    pointer-events: all;
 }  
 
 .clicked {
@@ -35,7 +34,6 @@
     background-color: var(--main-color);
     border: none;
     color: #FFFFFF;
-
 }
 
 .correct {
@@ -73,12 +71,16 @@
     background-color: #EBEBEB;
     color: var(--grey-outline);
     pointer-events: none;
-    border:none;
+    border: none;
     /*border-style: solid;
     border-width: 1px;
     border-color: var(--grey-outline);*/
     box-shadow: none;
+}
 
+.hidden {
+    visibility: hidden;
+    pointer-events: none;
 }
 
 .feedback-message {
