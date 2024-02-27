@@ -12,6 +12,8 @@ export const Login = (props) => {
             if (userPassword === pass) {
                 sessionStorage.setItem('username', name);
                 document.getElementById("confirmation").innerHTML = "Login succesful";
+                document.getElementById('switchRegister').disabled = true;
+                document.getElementById('lCreate').disabled = true;
                 setTimeout(() => {props.continueToMenu(false);}, 1000);
             } else {
                 document.getElementById("confirmation").innerHTML = "Incorrect password";
@@ -32,10 +34,10 @@ export const Login = (props) => {
                 <label htmlFor="password">Password</label>
                 <input value={pass}  onChange={(e) => setPass(e.target.value)} type="password" placeholder="*********" id="password" name="password"/>
                 
-                <button type="submit">Log in</button>
+                <button id="lCreate" type="submit">Log in</button>
                 <p id="confirmation"></p>
             </form>
-            <button onClick={() => props.onFormSwitch('register')}>Don't have an account? Register here</button>
+            <button id="switchRegister" onClick={() => props.onFormSwitch('register')}>Don't have an account? Register here</button>
         </div>
     )
 }
