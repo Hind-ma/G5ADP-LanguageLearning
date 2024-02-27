@@ -69,8 +69,13 @@ function CreateSentence() {
     }
 
     const handleWordClick = (word, index) => {
-        document.getElementById(index).disabled = true;
+        if (sentence.includes(word)) {
+            document.getElementById(index).style.backgroundColor = '#FFFFFF';
+            setSentence(sentence.filter((w) => w !== word));
+            return;
+        }
 
+        document.getElementById(index).style.backgroundColor = '#A0A0A0';
         setSentence([...sentence, word]);
     };
 
@@ -103,6 +108,7 @@ function CreateSentence() {
                         id={index}
                         key={index}
                         disabled={bWordsDisable}
+                        style={{backgroundColor: !bWordsDisable ? 'white' : null}}
                         onClick={() => handleWordClick(word, index)}>
                         {word}
                     </button>
