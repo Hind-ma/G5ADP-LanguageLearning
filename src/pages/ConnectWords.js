@@ -29,6 +29,30 @@ const ConnectWords = () => {
   const [matchedPairs, setMatchedPairs] = useState([]);
   const [showResult, setShowResult] = useState(false);
 
+  // to handle the shuffling of the swedish order 
+  const [shuffledSwedishOrder, setShuffledSwedishOrder] = useState([]);
+  const [shuffledEnglishOrder, setShuffledEnglishOrder] = useState([]);
+
+  useEffect(() => {
+    // Create a shuffled array of IDs when the component mounts, so only initial time
+    const shuffledOrder = wordPairs.map((pair) => pair.id);
+    for (let i = shuffledOrder.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffledOrder[i], shuffledOrder[j]] = [shuffledOrder[j], shuffledOrder[i]];
+    }
+    setShuffledSwedishOrder(shuffledOrder);
+  }, []);
+
+  useEffect(() => {
+    // Create a shuffled array of IDs when the component mounts, so only initial time
+    const shuffledOrder = wordPairs.map((pair) => pair.id);
+    for (let i = shuffledOrder.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffledOrder[i], shuffledOrder[j]] = [shuffledOrder[j], shuffledOrder[i]];
+    }
+    setShuffledEnglishOrder(shuffledOrder);
+  }, []);  
+
   const updateButtonState = (id, language, state) => {
     setWordPairs((prevWordPairs) =>
       prevWordPairs.map((pair) =>
@@ -150,6 +174,14 @@ const ConnectWords = () => {
     }
   }, [result, wordPairs.length, matchedPairs.length]);
 
+  // used to display the sweidhs words according to the shuffled array
+  const createNewArrayFromOrder = (idArray) => {
+    const rearrangedPairs = idArray.map((id) =>
+      wordPairs.find((pair) => pair.id === id)
+    );
+    return rearrangedPairs;
+  };
+
   return (
     <div>
       <ChangePageButton to="/home" label="Go to Home" />
@@ -165,7 +197,7 @@ const ConnectWords = () => {
           <div className="word-pairs-container">
             {/* Display Swedish words on the left */}
             <div className="word-column">
-              {wordPairs.map((pair) => (
+              {createNewArrayFromOrder(shuffledSwedishOrder).map((pair) => (
                 <button
                   key={pair.id}
                   className={`connect-word-button ${pair.stateSwe}`}
@@ -178,7 +210,7 @@ const ConnectWords = () => {
 
             {/* Display English words on the right */}
             <div className="word-column">
-              {wordPairs.map((pair) => (
+              {createNewArrayFromOrder(shuffledEnglishOrder).map((pair) => (
                 <button
                   key={pair.id}
                   className={`connect-word-button ${pair.stateEng}`}
