@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import {completeList} from "../data-sets/compose-translate";
 import './CreateSentence.css';
 
-const makeSentences = completeList;
-
+// creates a list with five random sentences from the dataset 
+const makeSentences = completeList.sort(() => Math.random() - 0.5).slice(0, 5)
 
 /** Shows if the sentence is correct or incorrect */
 function ResultBox({ bDisplay, bSuccess }) {

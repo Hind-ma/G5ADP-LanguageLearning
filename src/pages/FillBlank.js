@@ -4,7 +4,8 @@ import React, { useState } from "react";
 import './FillBlankModel.css';
 import { sentenceList } from "../data-sets/fillBlank";
 
-const sentences = sentenceList;
+// creates a list with five random sentences from the dataset 
+const sentences = sentenceList.sort(() => Math.random() - 0.5).slice(0, 5); 
 
 const url_address = "http://127.0.0.1:5000/get_fill_in_prob"
 
