@@ -9,6 +9,7 @@ function PickWord() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [clickedOptionButton, setClickedOptionButton] = useState(null);
   const [nextButtonDisabled, setNextButtonDisabled] = useState(true);
+  const [correctOptionSelected, setCorrectOptionSelected] = useState(false);
 
   const questions = [
     {
@@ -60,9 +61,9 @@ function PickWord() {
 
   const optionClicked = (isCorrect, buttonId) => {
     setClickedOptionButton(buttonId);
-    
 
     if (isCorrect) {
+      setCorrectOptionSelected(true);
       setNextButtonDisabled(false);
       setScore(score + 1);
     } else {
@@ -81,6 +82,7 @@ function PickWord() {
     // Reset clicked button and disable the next button
     setClickedOptionButton(null);
     setNextButtonDisabled(true);
+    setCorrectOptionSelected(false);
   };
 
   return (
@@ -116,7 +118,7 @@ function PickWord() {
                       onClick={() => optionClicked(option.isCorrect, option.id)}
                       key={option.id}
                       //disabled={showRoundScore}
-                      //disabled={clickedOptionButton !== null}
+                      disabled={correctOptionSelected}
                     >
                       {option.text}
                     </button>
