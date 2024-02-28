@@ -3,48 +3,11 @@
 import React, { useState } from "react";
 import './FillBlankModel.css';
 import { sentenceList } from "../data-sets/fillBlank";
+import {server_is_up, fill_prob } from './AI_server_interface.js';
 
 const sentences = sentenceList;
 
-const url_address = "http://127.0.0.1:5000/get_fill_in_prob"
 
-async function pingURL(url) {
-    return fetch(url, { method: 'HEAD' })
-    .then(response => {
-        return true;
-    })
-    .catch(error => {
-        return false;
-    });
-}
-
-
-const ml_server_is_up = await pingURL(url_address)
-
-function fill_prob(before, fill, after, ratio) {
-    const params = {
-        before: before,
-        fill: fill,
-        after: after,
-        ratio: ratio
-    };
-
-    const url = new URL(url_address); // Replace url_address with your actual URL
-    url.search = new URLSearchParams(params).toString();
-    return fetch(url)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json(); // Parse the JSON response
-        })
-        .then(data => {
-            return data; // Process the data
-        })
-        .catch(error => {
-            throw error; // Rethrow the error to propagate it
-        });
-}
 
 function Sentence({ sentence, answer, correct, setCurrentSentence, currentSentence }) {
     const [userInput, setUserInput] = useState("");
@@ -54,8 +17,8 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
 
     const checkAnswer = () => {
 
-
-        if(ml_server_is_up){
+        console.log("server is up", server_is_up)
+        if(server_is_up){
             const correct_promise = fill_prob(sentence.split("_")[0], answer.toLowerCase(), sentence.split("_")[1], "1")
             const answer_promise = fill_prob(sentence.split("_")[0], userInput.toLowerCase(), sentence.split("_")[1], "1")
             Promise.all([correct_promise, answer_promise])
