@@ -87,6 +87,11 @@ button {
     button.check {
         background-color: #5a52cc;
     }
+    
+    button.check:disabled {
+        background-color: var(--main-color-disabled);
+        cursor: not-allowed;
+    }
 
     button.next {
         background-color: #6c63ff;

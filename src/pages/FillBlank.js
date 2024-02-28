@@ -52,9 +52,15 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
     const [inputColor, setInputColor] = useState("white");
     const [sentenceCorrect, setSentenceCorrect] = useState(false);
     const [nextDisabled, setNextDisabled] = useState(true);
+    
+    // To handle the score
+    const [showRoundScore, setShowRoundScore] = useState(false);
+    const [score, setScore] = useState(0);
+    const [showCorrectWord, setShowCorrectWord] = useState(false);
+    const [inputDisabled, setInputDisabled] = useState(false);
+    const [checkButtonDisabled, setCheckButtonDisabled] = useState(true);
 
     const checkAnswer = () => {
-
 
         if(ml_server_is_up){
             const correct_promise = fill_prob(sentence.split("_")[0], answer.toLowerCase(), sentence.split("_")[1], "1")
@@ -67,17 +73,23 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
                     grade = 1
                 }
                 setDisplayGrade(grade)
-                if(grade < 0.85){
+                if (grade < 0.85) {
                     setDisplayIncorrect();
-                    setNextDisabled(true);
                     setSentenceCorrect(false);
-                }else{
+                    setShowCorrectWord(true);
+                } else {
                     setSentenceCorrect(true);
                     setDisplayCorrect();
-                    setNextDisabled(false);
+                    if (grade !== 1) {
+                        // if not exaclty correct, but still considerad correct enough, show correct word 
+                        setShowCorrectWord(true); 
+                    }
                 }
+
+                // To handle the score 
+                setScore(prevScore => prevScore + grade); 
+
             }).catch(error => {console.error('Error:', error);});
-            
 
         }
         else{
@@ -85,20 +97,24 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
                 setSentenceCorrect(true);
                 setInputColor("green");
                 setDisplayCorrect();
-                setNextDisabled(false);
+
+                // To handle the score
+                setScore(prevScore => prevScore + 1);
             } else {
                 setSentenceCorrect(false);
                 setInputColor("red");
                 setDisplayIncorrect();
-                setNextDisabled(true);
             }
         }
-        
+
+        setNextDisabled(false);
+        setCheckButtonDisabled(true);
+        setInputDisabled(true);
     };
 
     const setDisplayCorrect = () => {
-        document.getElementById("next").style.backgroundColor = "#6169e1";
-        document.getElementById("next").style.color = "#ffffff";
+        // document.getElementById("next").style.backgroundColor = "#6169e1";
+        // document.getElementById("next").style.color = "#ffffff";
         document.getElementById("input").style.color = "#79BB6E";
         document.getElementById("input").style.borderColor = "#79BB6E";
         document.getElementById("allstar").style.visibility = "visible";
@@ -108,8 +124,8 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
         document.getElementById("input").style.color = "#C84C4C";
         document.getElementById("input").style.borderColor = "#C84C4C";
         document.getElementById("allstar").style.visibility = "hidden";
-        document.getElementById("next").style.backgroundColor = "lightgray";
-        document.getElementById("next").style.color = "gray";
+        // document.getElementById("next").style.backgroundColor = "lightgray";
+        // document.getElementById("next").style.color = "gray";
     }
   
     function interpolateHexColor(color1, color2, ratio) {
@@ -129,15 +145,13 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
 
         return `#${(1 << 24 | r << 16 | g << 8 | b).toString(16).slice(1)}`;
     }
-
-
     
     const setDisplayGrade = (grade) => {
         console.log("?", grade)
         const hex_color = interpolateHexColor("#C84C4C","#79BB6E", grade);
   
-        document.getElementById("next").style.backgroundColor = "#6169e1";
-        document.getElementById("next").style.color = "#ffffff";
+        // document.getElementById("next").style.backgroundColor = "#6169e1";
+        // document.getElementById("next").style.color = "#ffffff";
         document.getElementById("input").style.color =hex_color;
         document.getElementById("input").style.borderColor = hex_color;
         if(grade > 0.85){
@@ -155,10 +169,10 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
 
     const handleInputChange = (event) => {
         setUserInput(event.target.value);
-        setInputColor("white");
-        setSentenceCorrect(false);
-        setNextDisabled(true);
         standardInput();
+
+        // if there is some input, check button should be enabled 
+        setCheckButtonDisabled(event.target.value.trim() === '');
     };
 
     const resetInput = () => {
@@ -167,6 +181,7 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
         setSentenceCorrect(false);
         resetDisplay();
         setNextDisabled(true);
+        setInputDisabled(false);
     };
 
     const standardInput = () => {
@@ -177,8 +192,8 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
     }
 
     const resetDisplay = () => {
-        document.getElementById("next").style.backgroundColor = "lightgray";
-        document.getElementById("next").style.color = "gray";
+        // document.getElementById("next").style.backgroundColor = "lightgray";
+        // document.getElementById("next").style.color = "gray";
         document.getElementById("input").style.color = "black";
         document.getElementById("input").style.borderColor = "black";
         document.getElementById("allstar").style.visibility = "hidden";
@@ -197,30 +212,63 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
         </span>
     );
 
+    const handleNextButtonClicked = () => {
+        resetInput(); 
+
+        if (currentSentence + 1 < sentences.length) {
+            setCurrentSentence(currentSentence + 1);
+        } else {
+            setShowRoundScore(true);
+        }
+    }
+
     return (
-        <div className="sentence-container">
-            <div className="fill-box">
-                <img id="allstar" className="stars" src={require("../images/star.png")}/>
-                <p className="fill-input">{sentenceWithInput}</p>
-                <input
-                    type="text"
-                    value={userInput}
-                    onChange={handleInputChange}
-                    onKeyPress={handleKeyPress}
-                    className="fill-input"
-                    id = "input"
-                />
-                <p className="fill-input">{sentenceWithInput2}</p>
-            </div>
-            <div className="fill-container">
-                <button onClick={checkAnswer} className="fill-button">
-                    Check
-                </button>
-                <button id="next" disabled={nextDisabled} onClick={() => { resetInput(); setCurrentSentence((currentSentence + 1) % sentences.length); }} className="fill-button">
-                    Next
-                </button>
-            </div>
-        </div>
+
+        <div>
+            {showRoundScore ? (
+                <div className="round-score">
+                    <h2>
+                        You got {score} out of {sentences.length} correct
+                    </h2>
+                    <ChangePageButton to="/" label="End round" />
+                </div>
+            ) : ( 
+                <div className="sentence-container">
+                    <div className="fill-box">
+                        <img id="allstar" className="stars" src={require("../images/star.png")}/>
+                        <p className="fill-input">{sentenceWithInput}</p>
+                        <input
+                            type="text"
+                            value={userInput}
+                            onChange={handleInputChange}
+                            onKeyPress={handleKeyPress}
+                            className="fill-input"
+                            id = "input"
+                            disabled={inputDisabled}
+                        />
+                        <p className="fill-input">{sentenceWithInput2}</p>
+                    </div>
+                    <div className="fill-container">
+                        <button 
+                            id = "check"
+                            onClick={checkAnswer} 
+                            className="fill-button" 
+                            disabled={checkButtonDisabled}
+                            >
+                            Check
+                        </button>
+                        <button 
+                            id="next" 
+                            disabled={nextDisabled} 
+                            onClick={handleNextButtonClicked} 
+                            className="fill-button"
+                            >
+                            Next
+                        </button>
+                    </div>
+                </div>
+            )}
+        </div>  
     );
 }
 
@@ -232,6 +280,7 @@ function FillBlank() {
     return (
         <div className="App">
             <ChangePageButton to="/home" label="Go to Home page" />
+
             <h1 className="fill-title">Fill in the blank of this sentence</h1>
             <Sentence
                 sentence={sentences[currentSentence].sentence}
