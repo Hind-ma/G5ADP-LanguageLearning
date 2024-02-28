@@ -104,6 +104,7 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
                 setSentenceCorrect(false);
                 setInputColor("red");
                 setDisplayIncorrect();
+                setShowCorrectWord(true);
             }
         }
 
@@ -161,7 +162,7 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
     }
 
     const handleKeyPress = (event) => {
-        if (event.key === "Enter") {
+        if (event.key === "Enter" && !checkButtonDisabled) {
             checkAnswer();
         }
     };
@@ -182,6 +183,7 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
         resetDisplay();
         setNextDisabled(true);
         setInputDisabled(false);
+        setShowCorrectWord(false);
     };
 
     const standardInput = () => {
@@ -248,6 +250,11 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
                         />
                         <p className="fill-input">{sentenceWithInput2}</p>
                     </div>
+                    {showCorrectWord && !sentenceCorrect && (
+                        <div className="correct-word">
+                            Correct answer: {answer}
+                        </div>
+                    )}
                     <div className="fill-container">
                         <button 
                             id = "check"
@@ -266,6 +273,7 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
                             Next
                         </button>
                     </div>
+ 
                 </div>
             )}
         </div>  

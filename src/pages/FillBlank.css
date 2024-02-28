@@ -133,3 +133,7 @@ button {
     .star.visible {
         display: block;
     }
+
+.correct-word {
+    color: var(--main-color-disabled);
+}
