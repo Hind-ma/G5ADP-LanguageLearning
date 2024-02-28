@@ -68,12 +68,14 @@ function CreateSentence() {
         setWordsDisabled(false);
     }
 
-    const handleWordClick = (word) => {
+    const handleWordClick = (word, index) => {
         if (sentence.includes(word)) {
+            document.getElementById(index).style.backgroundColor = '#FFFFFF';
             setSentence(sentence.filter((w) => w !== word));
             return;
         }
 
+        document.getElementById(index).style.backgroundColor = '#A0A0A0';
         setSentence([...sentence, word]);
     };
 
@@ -103,9 +105,11 @@ function CreateSentence() {
                 {shuffledWords.map((word, index) => (
                     <button
                         className="word-button"
+                        id={index}
                         key={index}
                         disabled={bWordsDisable}
-                        onClick={() => handleWordClick(word)}>
+                        style={{backgroundColor: !bWordsDisable ? 'white' : null}}
+                        onClick={() => handleWordClick(word, index)}>
                         {word}
                     </button>
                 ))}
