@@ -59,12 +59,14 @@ function PickWord() {
   ]
 
   const optionClicked = (isCorrect, buttonId) => {
-
     setClickedOptionButton(buttonId);
-    setNextButtonDisabled(false);
+    
 
     if (isCorrect) {
+      setNextButtonDisabled(false);
       setScore(score + 1);
+    } else {
+      setNextButtonDisabled(true);
     }
 
   }
@@ -114,7 +116,7 @@ function PickWord() {
                       onClick={() => optionClicked(option.isCorrect, option.id)}
                       key={option.id}
                       //disabled={showRoundScore}
-                      disabled={clickedOptionButton !== null}
+                      //disabled={clickedOptionButton !== null}
                     >
                       {option.text}
                     </button>
