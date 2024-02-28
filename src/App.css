@@ -9,6 +9,8 @@
   --grey-outline: #D8D8D8;
   --grey-disabled: #808080;
 
+  --disabled-button: #D9D9D9;
+
   --text-color: #000;
 }
 
@@ -68,5 +70,59 @@ button {
 
 input {
   font-family: "Signika", Verdana, Tahoma, sans-serif;
+}
+
+.check-button {
+  cursor: pointer;
+  background-color: var(--main-color);
+  border: none;
+  border-radius: 25px;
+  font-size: large;
+  color: #FFF;
+  padding: 10px;
+  margin-left: 10px;
+  box-shadow:0px 4px 14px 0 rgba(0,0,0,0.1);
+}
+
+.check-button:disabled {
+  background-color: var(--disabled-button);
+  color: #FFF;
+  cursor: not-allowed;
+}
+
+.next-button{
+  cursor: pointer;
+  background-color: var(--main-color);
+  border: none;
+  border-radius: 25px;
+  font-size: large;
+  color: #FFF;
+  padding: 10px 40px 10px 10px;
+  margin-left: 10px;
+  box-shadow:0px 4px 14px 0 rgba(0,0,0,0.1);
+  position: relative;
+}
+
+.next-button:disabled {
+  background-color: var(--disabled-button);
+  color: #FFF;
+  cursor: not-allowed;
+  position: relative;
+}
+
+.next-button.disabled{
+  background-color: var(--disabled-button);
+  color: #FFF;
+  cursor: not-allowed;
+  position: relative;
+
+}
+
+.next-button::after {
+  content: url('./images/next-arrow.svg');
+    position: absolute;
+    width:1.5rem;
+    height: 1.5rem;
+    padding-left:5px;
 }
 

@@ -65,19 +65,7 @@ input {
     font-size: larger;
 }
 
-.check-button {
-    cursor: pointer;
-    background-color: var(--main-color);
-    border: none;
-    border-radius: 25px;
-    font-size: large;
-}
-
-.check-button:disabled {
-    background-color: var(--main-color-disabled);
-    cursor: not-allowed;
-}
-
+/*
 .next-button {
     margin-bottom: 28px;
     margin-left: 100px;
@@ -95,6 +83,7 @@ input {
     background-image: url('../images/next-disabled.svg');
     cursor: not-allowed;
 }
+*/
 
 .correct-sentence {
     color: var(--main-color-disabled);
