@@ -2,7 +2,7 @@ export const sentenceList = [
     {id:0, sentence:"Vi åker _ till jobbet", answer:"tåget"},
     {id:1, sentence:"Mitt favorit ämne i skolan är _, jag gillar ekvationer", answer:"matte"},
     {id:2, sentence:"Jag brukar åka till _ varannan vecka för att låna böcker", answer:"biblioteket"},
-    {id:3, sentence:"Är du i _ ? kan jag snälla få ett glas vatten", answer:"köket"},
+    {id:3, sentence:"Är du i _? kan jag snälla få ett glas vatten", answer:"köket"},
     {id:4, sentence:"Min pappa är _, han jobbar på sjukhust ", answer:"läkare"},
     {id:5, sentence:"Min syster är lärare,hon jobbar på _", answer:"skolan"},
     {id:6, sentence:"Ska vi gå kolla den nya _ på bio? ", answer:"filmen"},
