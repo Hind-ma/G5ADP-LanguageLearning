@@ -111,7 +111,7 @@ function PickWord() {
                         ? option.isCorrect 
                           ? ' correct' 
                           : ' wrong'
-                        : clickedOptionButton !== null
+                        : correctOptionSelected
                           ? ' not-chosen'
                           : ''
                       }`}
