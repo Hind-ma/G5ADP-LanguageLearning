@@ -122,7 +122,7 @@ function PickWord() {
                       onClick={() => optionClicked(option.isCorrect, option.id)}
                       key={option.id}
                       //disabled={showRoundScore}
-                      disabled={correctOptionSelected}
+                      disabled={optionsSelected.includes(option.id)}
                     >
                       {option.text}
                     </button>
