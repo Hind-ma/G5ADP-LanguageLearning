@@ -75,6 +75,7 @@ function CreateSentence() {
         setShowResult(false);
         setNextDisabled(true);
         setWordsDisabled(false);
+        setCheckButtonDisabled(false);
     }
 
     const handleWordClick = (word) => {
@@ -98,11 +99,12 @@ function CreateSentence() {
             setShowResult(true);
         } 
         //console.log("res: " + cor);
+        
+        setCheckButtonDisabled(true);
     };
 
     return (
         <div>
-            your score is: {score}
             {showRoundScore ? (
                 <div className="round-score">
                     <h2>
@@ -135,15 +137,18 @@ function CreateSentence() {
                         ))}
                     </div>
                     <div className="button-container">
-                        <button className="chk-button" onClick={() => checkSentence(currentSenIdx)}>Check</button>
+                        <button 
+                            className="chk-button" 
+                            onClick={() => checkSentence(currentSenIdx)}
+                            disabled={checkButtonDisabled}
+                            >
+                            Check
+                        </button>
                         <NextSentenceButton bDisabled={nextDisable} onClickFunc={updateMakeSentence} />
                     </div>
                 </div>
             )}
         </div>
-
-
-
     );
 }
 
