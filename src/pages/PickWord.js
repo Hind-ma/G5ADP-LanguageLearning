@@ -10,6 +10,7 @@ function PickWord() {
   const [clickedOptionButton, setClickedOptionButton] = useState(null);
   const [nextButtonDisabled, setNextButtonDisabled] = useState(true);
   const [correctOptionSelected, setCorrectOptionSelected] = useState(false);
+  const [optionsSelected, setOptionsSelected] = useState([]);
 
   const questions = [
     {
@@ -67,9 +68,9 @@ function PickWord() {
       setNextButtonDisabled(false);
       setScore(score + 1);
     } else {
+      setOptionsSelected(currentSelected => [...currentSelected, buttonId]);
       setNextButtonDisabled(true);
     }
-
   }
 
   const handleNextButtonClicked = () => {
@@ -83,6 +84,7 @@ function PickWord() {
     setClickedOptionButton(null);
     setNextButtonDisabled(true);
     setCorrectOptionSelected(false);
+    setOptionsSelected([]);
   };
 
   return (
@@ -112,7 +114,9 @@ function PickWord() {
                           ? ' correct' 
                           : ' wrong'
                         : correctOptionSelected
-                          ? ' not-chosen'
+                          ? ' not-chosen' :
+                        optionsSelected.includes(option.id) 
+                        ? ' not-correct'
                           : ''
                       }`}
                       onClick={() => optionClicked(option.isCorrect, option.id)}

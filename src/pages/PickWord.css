@@ -63,6 +63,11 @@ body {
 .color-button.not-chosen {
     background-color: var(--grey-disabled);
 }
+
+.color-button.not-correct {
+    background-color: var(--grey-disabled);
+    cursor: not-allowed;
+}
   
 .color-button:disabled {
     cursor: not-allowed;
