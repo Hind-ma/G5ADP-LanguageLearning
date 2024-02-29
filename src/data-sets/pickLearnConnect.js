@@ -18,5 +18,5 @@ export const wordList = [
     {id:16, english:"Fridge", swedish:"Kylskåp", options: ["Skåp", "Dörr", "Kylskåp","Spis"], stateEng: "", stateSwe: "" },
     {id:17, english:"Window", swedish:"Fönster", options: ["Tak", "Golv", "Vägg","Fönster"], stateEng: "", stateSwe: "" },
     {id:18, english:"Exit", swedish:"Utgång", options: ["Utgång", "Ingång", "Genväg","Väg"], stateEng: "", stateSwe: "" },
-    {id:19, english:"Play", swedish:"Leka", options: ["Bygga", "Leka", "Läsa","Måla"]}
+    {id:19, english:"Play", swedish:"Leka", options: ["Bygga", "Leka", "Läsa","Måla"], stateEng: "", stateSwe: "" }
 ]
