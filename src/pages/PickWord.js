@@ -8,6 +8,8 @@ function PickWord() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [clickedOptionButton, setClickedOptionButton] = useState(null);
   const [nextButtonDisabled, setNextButtonDisabled] = useState(true);
+  const [correctOptionSelected, setCorrectOptionSelected] = useState(false);
+  const [optionsSelected, setOptionsSelected] = useState([]);
 
   const questions = [
     {
@@ -59,10 +61,14 @@ function PickWord() {
 
   const optionClicked = (isCorrect, buttonId) => {
     setClickedOptionButton(buttonId);
-    setNextButtonDisabled(false);
 
     if (isCorrect) {
+      setCorrectOptionSelected(true);
+      setNextButtonDisabled(false);
       setScore(score + 1);
+    } else {
+      setOptionsSelected((currentSelected) => [...currentSelected, buttonId]);
+      setNextButtonDisabled(true);
     }
   };
 
@@ -76,6 +82,8 @@ function PickWord() {
     // Reset clicked button and disable the next button
     setClickedOptionButton(null);
     setNextButtonDisabled(true);
+    setCorrectOptionSelected(false);
+    setOptionsSelected([]);
   };
 
   return (
@@ -104,14 +112,19 @@ function PickWord() {
                           ? option.isCorrect
                             ? " correct"
                             : " wrong"
-                          : clickedOptionButton !== null
+                          : correctOptionSelected
                           ? " not-chosen"
+                          : optionsSelected.includes(option.id)
+                          ? " not-correct"
                           : ""
                       }`}
                       onClick={() => optionClicked(option.isCorrect, option.id)}
                       key={option.id}
                       //disabled={showRoundScore}
-                      disabled={clickedOptionButton !== null}
+                      disabled={
+                        optionsSelected.includes(option.id) |
+                        correctOptionSelected
+                      }
                     >
                       {option.text}
                     </button>

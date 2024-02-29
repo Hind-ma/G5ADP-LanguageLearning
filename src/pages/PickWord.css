@@ -57,11 +57,23 @@ body {
 }
   
 .color-button.wrong {
-    background-color: var(--red-negative);
+    animation: color-change 1s;
+    background-color: var(--grey-disabled);
 }
+
+@keyframes color-change {
+    0% { background-color: var(--main-color); }
+    50% { background-color: var(--red-negative); }
+    100% { background-color: var(--grey-disabled); }
+  }
 
 .color-button.not-chosen {
     background-color: var(--grey-disabled);
+}
+
+.color-button.not-correct {
+    background-color: var(--grey-disabled);
+    cursor: not-allowed;
 }
   
 .color-button:disabled {
