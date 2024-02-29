@@ -182,11 +182,10 @@ function Sentence({
   };
 
   const resetDisplay = () => {
-    // document.getElementById("next").style.backgroundColor = "lightgray";
-    // document.getElementById("next").style.color = "gray";
-    // document.getElementById("input").style.color = "black";
-    // document.getElementById("input").style.borderColor = "black";
-    // document.getElementById("allstar").style.visibility = "hidden";
+    document.getElementById("next").classList.add("disabled");
+    document.getElementById("input").style.color = "black";
+    document.getElementById("input").style.borderColor = "black";
+    document.getElementById("allstar").style.visibility = "hidden";
   };
 
   const inputIndex = sentence.indexOf("_");

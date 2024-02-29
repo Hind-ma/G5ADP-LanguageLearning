@@ -1,9 +1,8 @@
 import ChangePageButton from "./ChangePageButton";
 import React, { useState } from "react";
-import './PickWord.css';
+import "./PickWord.css";
 
 function PickWord() {
-
   const [showRoundScore, setRoundScore] = useState(false);
   const [score, setScore] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -56,21 +55,19 @@ function PickWord() {
         { id: 3, text: "Strumpor", isCorrect: false },
       ],
     },
-  ]
+  ];
 
   const optionClicked = (isCorrect, buttonId) => {
-
     setClickedOptionButton(buttonId);
     setNextButtonDisabled(false);
 
     if (isCorrect) {
       setScore(score + 1);
     }
-
-  }
+  };
 
   const handleNextButtonClicked = () => {
-   if (currentQuestion + 1 < questions.length) {
+    if (currentQuestion + 1 < questions.length) {
       setCurrentQuestion(currentQuestion + 1);
     } else {
       setRoundScore(true);
@@ -85,7 +82,7 @@ function PickWord() {
     <div>
       <ChangePageButton to="/home" label="Go to Home" />
 
-      <div>   
+      <div>
         {showRoundScore ? (
           <div className="round-score">
             <h2>
@@ -95,21 +92,21 @@ function PickWord() {
           </div>
         ) : (
           <div>
-            Press on the Swedish word for <strong>{questions[currentQuestion].text}</strong>
-            
+            Press on the Swedish word for{" "}
+            <strong>{questions[currentQuestion].text}</strong>
             <div className="element-container">
               <div className="pickword-button-container">
                 {questions[currentQuestion].options.map((option) => {
                   return (
                     <button
                       className={`color-button ${
-                        clickedOptionButton === option.id 
-                        ? option.isCorrect 
-                          ? ' correct' 
-                          : ' wrong'
-                        : clickedOptionButton !== null
-                          ? ' not-chosen'
-                          : ''
+                        clickedOptionButton === option.id
+                          ? option.isCorrect
+                            ? " correct"
+                            : " wrong"
+                          : clickedOptionButton !== null
+                          ? " not-chosen"
+                          : ""
                       }`}
                       onClick={() => optionClicked(option.isCorrect, option.id)}
                       key={option.id}
@@ -119,18 +116,18 @@ function PickWord() {
                       {option.text}
                     </button>
                   );
-                }
-                )}             
+                })}
               </div>
-
-              <button
-                className="next-button"
-                onClick={handleNextButtonClicked}
-                disabled={nextButtonDisabled}
-              ></button>
             </div>
+            <button
+              className="next-button"
+              onClick={handleNextButtonClicked}
+              disabled={nextButtonDisabled}
+            >
+              Next
+            </button>
           </div>
-        )} 
+        )}
       </div>
     </div>
   );

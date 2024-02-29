@@ -1,11 +1,11 @@
 import ChangePageButton from "./ChangePageButton";
-import React, {useEffect, useState} from "react"
+import React, { useEffect, useState } from "react";
 import { GetRandomInt } from "../utils";
-import {completeList} from "../data-sets/compose-translate";
-import './TranslateSentence.css';
+import { completeList } from "../data-sets/compose-translate";
+import "./TranslateSentence.css";
 
-// creates a list with five random sentences form the dataset 
-const sentenceList = completeList.sort(() => Math.random() - 0.5).slice(0, 5); 
+// creates a list with five random sentences form the dataset
+const sentenceList = completeList.sort(() => Math.random() - 0.5).slice(0, 5);
 
 function TranslateSentence() {
   // consts for the user input
@@ -13,7 +13,7 @@ function TranslateSentence() {
   const [sentenceIndex, setSentenceIndex] = useState(0);
   const [isAnswerCorrect, setIsAnswerCorrect] = useState(null);
   const [isEnglishToSwedish, setIsEnglishToSwedish] = useState(true);
-  
+
   // consts for the buttons and other elements in the gui
   const [nextButtonDisabled, setNextButtonDisabled] = useState(true);
   const [checkButtonDisabled, setCheckButtonDisabled] = useState(true);
@@ -25,16 +25,17 @@ function TranslateSentence() {
   const [score, setScore] = useState(0);
 
   const currSentence = sentenceList[sentenceIndex];
-  
+
   // Switch the direction of translation randomly
   useEffect(() => {
     setIsEnglishToSwedish(Math.random() < 0.5 ? true : false);
   }, [sentenceIndex]);
 
   const checkAnswer = () => {
-    const ansToCheck = isEnglishToSwedish === true
-      ? currSentence.swedish.toLowerCase()
-      : currSentence.english.toLowerCase();
+    const ansToCheck =
+      isEnglishToSwedish === true
+        ? currSentence.swedish.toLowerCase()
+        : currSentence.english.toLowerCase();
 
     // The use of the const isCorrect is needed since otherwise it gets
     // into trouble with the asynchronous parts of isAnswerCorrect
@@ -42,7 +43,7 @@ function TranslateSentence() {
     setIsAnswerCorrect(isCorrect);
 
     if (isCorrect) {
-      setScore(prevScore => prevScore + 1);
+      setScore((prevScore) => prevScore + 1);
     } else {
       setShowCorrectSentence(true);
     }
@@ -57,28 +58,28 @@ function TranslateSentence() {
     if (sentenceIndex + 1 < sentenceList.length) {
       setSentenceIndex(sentenceIndex + 1);
     } else {
-       setRoundScore(true);
-     }
- 
-     //reset answer and GUI-elements
-     setNextButtonDisabled(true);
-     setUserAnswer("");
-     setIsAnswerCorrect(null);
-     setCheckButtonDisabled(true);
-     setInputDisabled(false);
-     setShowCorrectSentence(false);
-   };
+      setRoundScore(true);
+    }
+
+    //reset answer and GUI-elements
+    setNextButtonDisabled(true);
+    setUserAnswer("");
+    setIsAnswerCorrect(null);
+    setCheckButtonDisabled(true);
+    setInputDisabled(false);
+    setShowCorrectSentence(false);
+  };
 
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
     setUserAnswer(inputValue);
 
     // If there is some input, the check button should be enabled - otherwise not
-    setCheckButtonDisabled(inputValue.trim() === '');
+    setCheckButtonDisabled(inputValue.trim() === "");
   };
 
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       checkAnswer();
     }
   };
@@ -103,10 +104,22 @@ function TranslateSentence() {
                 : "Translate this to English"}
             </h3>
 
-            <h2>{isEnglishToSwedish === true ? currSentence.english : currSentence.swedish}</h2>
-            
+            <h2>
+              {isEnglishToSwedish === true
+                ? currSentence.english
+                : currSentence.swedish}
+            </h2>
+
             <div className="element-container">
-              <div className={`answer-container ${isAnswerCorrect !== null ? (isAnswerCorrect ? 'correct' : 'wrong') : ''}`}>
+              <div
+                className={`answer-container ${
+                  isAnswerCorrect !== null
+                    ? isAnswerCorrect
+                      ? "correct"
+                      : "wrong"
+                    : ""
+                }`}
+              >
                 <input
                   className="input"
                   type="text"
@@ -120,24 +133,30 @@ function TranslateSentence() {
                   className="check-button"
                   onClick={checkAnswer}
                   disabled={checkButtonDisabled}
-                >Check</button>
+                >
+                  Check
+                </button>
               </div>
-
-              <button
-                className="next-button"
-                onClick={handleNextButtonClicked}
-                disabled={nextButtonDisabled}
-              ></button>
             </div>
+            <button
+              className="next-button"
+              onClick={handleNextButtonClicked}
+              disabled={nextButtonDisabled}
+            >
+              Next
+            </button>
 
             {showCorrectSentence && !isAnswerCorrect && (
               <div className="correct-sentence">
-                Correct answer: {isEnglishToSwedish ? currSentence.swedish : currSentence.english}
+                Correct answer:{" "}
+                {isEnglishToSwedish
+                  ? currSentence.swedish
+                  : currSentence.english}
               </div>
             )}
           </div>
         )}
-      </div>  
+      </div>
     </div>
   );
 }
