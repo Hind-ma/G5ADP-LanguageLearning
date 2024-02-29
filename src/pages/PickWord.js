@@ -12,17 +12,21 @@ function PickWord() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [clickedOptionButton, setClickedOptionButton] = useState(null);
   const [nextButtonDisabled, setNextButtonDisabled] = useState(true);
+  const [correctOptionSelected, setCorrectOptionSelected] = useState(false);
+  const [optionsSelected, setOptionsSelected] = useState([]);
 
 
   const optionClicked = (correctOption, option) => {
-
     setClickedOptionButton(option);
-    setNextButtonDisabled(false);
 
     if (correctOption === option) {
+      setCorrectOptionSelected(true);
+      setNextButtonDisabled(false);
       setScore(score + 1);
+    } else {
+      setOptionsSelected(currentSelected => [...currentSelected, buttonId]);
+      setNextButtonDisabled(true);
     }
-
   }
 
   const handleNextButtonClicked = () => {
@@ -35,6 +39,8 @@ function PickWord() {
     // Reset clicked button and disable the next button
     setClickedOptionButton(null);
     setNextButtonDisabled(true);
+    setCorrectOptionSelected(false);
+    setOptionsSelected([]);
   };
 
   return (
@@ -63,14 +69,16 @@ function PickWord() {
                         ? questions[currentQuestion].swedish === option
                           ? ' correct' 
                           : ' wrong'
-                        : clickedOptionButton !== null
-                          ? ' not-chosen'
+                        : correctOptionSelected
+                          ? ' not-chosen' :
+                        optionsSelected.includes(option.id) 
+                        ? ' not-correct'
                           : ''
                       }`}
                       onClick={() => optionClicked(questions[currentQuestion].swedish, option)}
                       key={option}
                       //disabled={showRoundScore}
-                      disabled={clickedOptionButton !== null}
+                      disabled={optionsSelected.includes(option.id) | correctOptionSelected}
                     >
                       {option}
                     </button>
