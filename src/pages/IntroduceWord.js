@@ -59,7 +59,9 @@ function PrintWordHeader() {
 function NextWordButton({ onClick }) {
   return (
     <div>
-      <button onClick={onClick}>Next Word</button>
+      <button className="next-button" onClick={onClick}>
+        Next Word
+      </button>
     </div>
   );
 }
