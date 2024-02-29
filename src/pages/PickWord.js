@@ -24,7 +24,7 @@ function PickWord() {
       setNextButtonDisabled(false);
       setScore(score + 1);
     } else {
-      setOptionsSelected(currentSelected => [...currentSelected, buttonId]);
+      setOptionsSelected(currentSelected => [...currentSelected, option]);
       setNextButtonDisabled(true);
     }
   }
@@ -71,14 +71,14 @@ function PickWord() {
                           : ' wrong'
                         : correctOptionSelected
                           ? ' not-chosen' :
-                        optionsSelected.includes(option.id) 
+                        optionsSelected.includes(option) 
                         ? ' not-correct'
                           : ''
                       }`}
                       onClick={() => optionClicked(questions[currentQuestion].swedish, option)}
                       key={option}
                       //disabled={showRoundScore}
-                      disabled={optionsSelected.includes(option.id) | correctOptionSelected}
+                      disabled={optionsSelected.includes(option) | correctOptionSelected}
                     >
                       {option}
                     </button>
