@@ -57,7 +57,7 @@ function CreateSentence() {
     // To handle the score
     const [showRoundScore, setShowRoundScore] = useState(false);
     const [score, setScore] = useState(0);
-    const [checkButtonDisabled, setCheckButtonDisabled] = useState(true);
+    const [checkButtonDisabled, setCheckButtonDisabled] = useState(false);
 
     useEffect(() => {
         setShuffledWords(ShuffleArray(makeSentences[currentSenIdx].words));
@@ -75,15 +75,17 @@ function CreateSentence() {
         setShowResult(false);
         setNextDisabled(true);
         setWordsDisabled(false);
-        setCheckButtonDisabled(false);
+        setCheckButtonDisabled(false); //TODO
     }
 
-    const handleWordClick = (word) => {
+    const handleWordClick = (word, index) => {
         if (sentence.includes(word)) {
+            //document.getElementById(index).style.backgroundColor = '#FFFFFF'; //TODO ERASED??
             setSentence(sentence.filter((w) => w !== word));
             return;
         }
 
+        //document.getElementById(index).style.backgroundColor = '#A0A0A0'; // TODO ERASED??
         setSentence([...sentence, word]);
     };
 
@@ -95,9 +97,9 @@ function CreateSentence() {
         
         if (isCor) {
             setScore(prevScore => prevScore + 1);
-        } else {
-            setShowResult(true);
         } 
+
+        setShowResult(true);
         //console.log("res: " + cor);
         
         setCheckButtonDisabled(true);
