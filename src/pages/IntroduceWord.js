@@ -5,9 +5,10 @@ import "./IntroduceWord.css";
 import blblob from "../pictures/bottom-left-blob.png";
 import tlblob from "../pictures/top-left-blob.png";
 import trblob from "../pictures/top-right-blob.png";
+import { wordList } from "../data-sets/pickLearnConnect";
 
 /* TODO: @CS, Remove in future - this is only for Sprint 1 demo */
-const introWords = [
+/*const introWords = [
   { id: 0, svWord: "apelsin", enWord: "orange" },
   { id: 1, svWord: "ost", enWord: "cheese" },
   //{id: 2, svWord: "gr�dde", enWord: "cream"},
@@ -19,7 +20,8 @@ const introWords = [
   { id: 6, svWord: "kiwi", enWord: "kiwi" },
   { id: 7, svWord: "citron", enWord: "lemon" },
 ];
-
+*/
+const introWords = wordList;
 /**
  * PrintWord
  * @param {any} id - ID of the word from introWords list
@@ -34,9 +36,9 @@ function PrintWord({ id }) {
     <div>
       {/* id is for debugging */}
       {/* {item.id} */}
-      <h1 className="main-word">{item.svWord.toLocaleLowerCase()}</h1>
+      <h1 className="main-word">{item.swedish.toLocaleLowerCase()}</h1>
 
-      <h2>{item.enWord.toLocaleLowerCase()}</h2>
+      <h2>{item.english.toLocaleLowerCase()}</h2>
     </div>
   );
 }
