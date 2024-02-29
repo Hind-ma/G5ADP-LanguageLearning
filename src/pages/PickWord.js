@@ -1,6 +1,9 @@
 import ChangePageButton from "./ChangePageButton";
 import React, { useState } from "react";
 import './PickWord.css';
+import { wordList } from "../data-sets/pickLearnConnect";
+
+const questions = wordList.sort(() => Math.random() - 0.5).slice(0, 5); 
 
 function PickWord() {
 
@@ -10,60 +13,13 @@ function PickWord() {
   const [clickedOptionButton, setClickedOptionButton] = useState(null);
   const [nextButtonDisabled, setNextButtonDisabled] = useState(true);
 
-  const questions = [
-    {
-      text: "Lecture",
-      options: [
-        { id: 0, text: "Läxa", isCorrect: false },
-        { id: 1, text: "Lärare", isCorrect: false },
-        { id: 2, text: "Föreläsning", isCorrect: true },
-        { id: 3, text: "Tenta", isCorrect: false },
-      ],
-    },
-    {
-      text: "Train",
-      options: [
-        { id: 0, text: "Tåg", isCorrect: true },
-        { id: 1, text: "Tong", isCorrect: false },
-        { id: 2, text: "Bil", isCorrect: false },
-        { id: 3, text: "Byggnad", isCorrect: false },
-      ],
-    },
-    {
-      text: "Suitcase",
-      options: [
-        { id: 0, text: "Ryggsäck", isCorrect: false },
-        { id: 1, text: "Resväska", isCorrect: true },
-        { id: 2, text: "Tygkasse", isCorrect: false },
-        { id: 3, text: "Datorväska", isCorrect: false },
-      ],
-    },
-    {
-      text: "Water",
-      options: [
-        { id: 0, text: "Hav", isCorrect: false },
-        { id: 1, text: "Kran", isCorrect: false },
-        { id: 2, text: "Damm", isCorrect: false },
-        { id: 3, text: "Vatten", isCorrect: true },
-      ],
-    },
-    {
-      text: "Shoes",
-      options: [
-        { id: 0, text: "Skor", isCorrect: true },
-        { id: 1, text: "Byxor", isCorrect: false },
-        { id: 2, text: "Tröja", isCorrect: false },
-        { id: 3, text: "Strumpor", isCorrect: false },
-      ],
-    },
-  ]
 
-  const optionClicked = (isCorrect, buttonId) => {
+  const optionClicked = (correctOption, option) => {
 
-    setClickedOptionButton(buttonId);
+    setClickedOptionButton(option);
     setNextButtonDisabled(false);
 
-    if (isCorrect) {
+    if (correctOption === option) {
       setScore(score + 1);
     }
 
@@ -95,7 +51,7 @@ function PickWord() {
           </div>
         ) : (
           <div>
-            Press on the Swedish word for <strong>{questions[currentQuestion].text}</strong>
+            Press on the Swedish word for <strong>{questions[currentQuestion].english}</strong>
             
             <div className="element-container">
               <div className="pickword-button-container">
@@ -103,20 +59,20 @@ function PickWord() {
                   return (
                     <button
                       className={`color-button ${
-                        clickedOptionButton === option.id 
-                        ? option.isCorrect 
+                        clickedOptionButton === option 
+                        ? questions[currentQuestion].swedish === option
                           ? ' correct' 
                           : ' wrong'
                         : clickedOptionButton !== null
                           ? ' not-chosen'
                           : ''
                       }`}
-                      onClick={() => optionClicked(option.isCorrect, option.id)}
-                      key={option.id}
+                      onClick={() => optionClicked(questions[currentQuestion].swedish, option)}
+                      key={option}
                       //disabled={showRoundScore}
                       disabled={clickedOptionButton !== null}
                     >
-                      {option.text}
+                      {option}
                     </button>
                   );
                 }
