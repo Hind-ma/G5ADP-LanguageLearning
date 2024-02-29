@@ -55,6 +55,7 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
     
     // To handle the score
     const [showRoundScore, setShowRoundScore] = useState(false);
+    const [tries, setTries] = useState(0);
     const [score, setScore] = useState(0);
     const [showCorrectWord, setShowCorrectWord] = useState(false);
     const [inputDisabled, setInputDisabled] = useState(false);
@@ -76,7 +77,6 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
                 if (grade < 0.85) {
                     setDisplayIncorrect();
                     setSentenceCorrect(false);
-                    setShowCorrectWord(true);
                 } else {
                     setSentenceCorrect(true);
                     setDisplayCorrect();
@@ -84,10 +84,14 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
                         // if not exaclty correct, but still considerad correct enough, show correct word 
                         setShowCorrectWord(true); 
                     }
+                    setNextDisabled(false);
+                    setCheckButtonDisabled(true);
+                    setInputDisabled(true);
                 }
 
                 // To handle the score 
-                setScore(prevScore => prevScore + grade); 
+                setTries(prevTries => prevTries + 1); 
+                setScore(prevScore => prevScore + grade);
 
             }).catch(error => {console.error('Error:', error);});
 
@@ -100,17 +104,17 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
 
                 // To handle the score
                 setScore(prevScore => prevScore + 1);
+
+                setNextDisabled(false);
+                setCheckButtonDisabled(true);
+                setInputDisabled(true);
             } else {
                 setSentenceCorrect(false);
                 setInputColor("red");
                 setDisplayIncorrect();
-                setShowCorrectWord(true);
             }
+            setTries(prevTries => prevTries + 1);
         }
-
-        setNextDisabled(false);
-        setCheckButtonDisabled(true);
-        setInputDisabled(true);
     };
 
     const setDisplayCorrect = () => {
@@ -230,7 +234,7 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
             {showRoundScore ? (
                 <div className="round-score">
                     <h2>
-                        You got {score} out of {sentences.length} correct
+                        You got {score} out of {sentences.length} correct, on {tries} tries
                     </h2>
                     <ChangePageButton to="/" label="End round" />
                 </div>
