@@ -34,6 +34,32 @@ function LearnButton({bGuestUser}) {
 }
 
 /**
+ * LogoutButton - resets username in sessionStorage
+ * 
+ * TODO: @CS, Move to account page instead
+ * 
+ * NOTE: if this is not done, pressing back on web browser shows up the
+ * last logged in user. I'm just doing it to prevent that. Clearing the
+ * storage causes error - so i reset to "Guest User".
+ */
+function LogoutButton({route, bGuestUser}) {
+  const nav = useNavigate();
+  const logout = () => {
+    //console.log("Logging Out");
+    sessionStorage.setItem("username", "Guest User");
+    nav(route);
+  };
+
+  return (
+    <div>
+      <button onClick={logout}>
+        {bGuestUser ? "LOG IN" : "LOG OUT"}
+      </button>
+    </div>
+  );
+}
+
+/**
  * CategoryButton - for users to navigate to a specific category.
  */
 function CategoryButton({label, route, bDisabled}) {
@@ -74,7 +100,8 @@ function Home() {
       </div>
       <div className="top-btn-container">
         <ChangePageButton to="/account" label={bGuest ? "Guest Home" : currentUsername.toLocaleUpperCase() + "'s Home"} />
-        <ChangePageButton to="/" label="LOG OUT" />
+        {/*<ChangePageButton to="/" label="LOG OUT" />*/}
+        <LogoutButton bGuestUser={bGuest} route="/" />
       </div>
       <div className="learn-btn-container">
         <LearnButton bGuestUser={bGuest} />
