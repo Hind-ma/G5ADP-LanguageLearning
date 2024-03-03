@@ -87,11 +87,11 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
                     setNextDisabled(false);
                     setCheckButtonDisabled(true);
                     setInputDisabled(true);
+                    setScore(prevScore => prevScore + grade);
                 }
 
                 // To handle the score 
                 setTries(prevTries => prevTries + 1); 
-                setScore(prevScore => prevScore + grade);
 
             }).catch(error => {console.error('Error:', error);});
 
