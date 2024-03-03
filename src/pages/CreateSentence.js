@@ -97,16 +97,20 @@ function CreateSentence() {
                 }
             
             setIsCorrect(grad > 0.60);
+            setShowResult(true);
+            setNextDisabled(false);
+            setWordsDisabled(true);
             console.log(user_prob, correct_prob, grad)
             }).catch(error => {console.error('Error:', error);});    
         }else{
             var cor = (user_scenatnce === correct_scentance);
             setIsCorrect(cor);
+            setShowResult(true);
+            setNextDisabled(false);
+            setWordsDisabled(true);
             //console.log("res: " + cor);
         }
-        setShowResult(true);
-        setNextDisabled(false);
-        setWordsDisabled(true);
+        
     };
 
     return (
