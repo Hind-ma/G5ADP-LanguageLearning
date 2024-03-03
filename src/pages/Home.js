@@ -10,7 +10,7 @@ import { GetRandomInt } from "../utils";
  * I'm using routePage to determine the button disable state.
  * This is *NOT* a good solution but probably will do for now.
  */
-export const categoryList = [
+const categoryList = [
   {id: 0, categoryName: "Generic", routePage: "/learn"},
   {id: 1, categoryName: "Supermarket", routePage: ""},
   {id: 2, categoryName: "Sports", routePage: ""},

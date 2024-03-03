@@ -53,7 +53,7 @@ function PickWord() {
             <h2>
               You got {score} out of {questions.length} correct
             </h2>
-            <ChangePageButton to="/home" label="End round" />
+            {/*<ChangePageButton to="/home" label="End round" />*/}
           </div>
         ) : (
           <div>
