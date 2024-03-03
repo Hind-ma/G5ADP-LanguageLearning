@@ -3,26 +3,14 @@ import React, { useState, useEffect } from "react";
 import ChangePageButton from "./ChangePageButton";
 import "./ConnectWords.css";
 import "../App.css";
+import { wordList } from "../data-sets/pickLearnConnect";
 
+
+const pairsList = wordList.sort(() => Math.random() - 0.5).slice(0, 4); 
 const ConnectWords = () => {
-  const [wordPairs, setWordPairs] = useState([
-    {
-      id: 1,
-      swedish: "Lärare",
-      english: "Teacher",
-      stateSwe: "",
-      stateEng: "",
-    },
-    { id: 2, swedish: "Bok", english: "Book", stateSwe: "", stateEng: "" },
-    { id: 3, swedish: "Skola", english: "School", stateSwe: "", stateEng: "" },
-    {
-      id: 4,
-      swedish: "Dator",
-      english: "Computer",
-      stateSwe: "",
-      stateEng: "",
-    },
-  ]);
+  
+  const [wordPairs, setWordPairs] = useState(pairsList);
+  
 
   const [result, setResult] = useState({ tries: 0, correct: 0 });
   const [feedbackMessage, setFeedbackMessage] = useState("");

@@ -1,6 +1,9 @@
 import ChangePageButton from "./ChangePageButton";
 import React, { useState } from "react";
 import "./PickWord.css";
+import { wordList } from "../data-sets/pickLearnConnect";
+
+const questions = wordList.sort(() => Math.random() - 0.5).slice(0, 5);
 
 function PickWord() {
   const [showRoundScore, setRoundScore] = useState(false);
@@ -11,63 +14,15 @@ function PickWord() {
   const [correctOptionSelected, setCorrectOptionSelected] = useState(false);
   const [optionsSelected, setOptionsSelected] = useState([]);
 
-  const questions = [
-    {
-      text: "Lecture",
-      options: [
-        { id: 0, text: "Läxa", isCorrect: false },
-        { id: 1, text: "Lärare", isCorrect: false },
-        { id: 2, text: "Föreläsning", isCorrect: true },
-        { id: 3, text: "Tenta", isCorrect: false },
-      ],
-    },
-    {
-      text: "Train",
-      options: [
-        { id: 0, text: "Tåg", isCorrect: true },
-        { id: 1, text: "Tong", isCorrect: false },
-        { id: 2, text: "Bil", isCorrect: false },
-        { id: 3, text: "Byggnad", isCorrect: false },
-      ],
-    },
-    {
-      text: "Suitcase",
-      options: [
-        { id: 0, text: "Ryggsäck", isCorrect: false },
-        { id: 1, text: "Resväska", isCorrect: true },
-        { id: 2, text: "Tygkasse", isCorrect: false },
-        { id: 3, text: "Datorväska", isCorrect: false },
-      ],
-    },
-    {
-      text: "Water",
-      options: [
-        { id: 0, text: "Hav", isCorrect: false },
-        { id: 1, text: "Kran", isCorrect: false },
-        { id: 2, text: "Damm", isCorrect: false },
-        { id: 3, text: "Vatten", isCorrect: true },
-      ],
-    },
-    {
-      text: "Shoes",
-      options: [
-        { id: 0, text: "Skor", isCorrect: true },
-        { id: 1, text: "Byxor", isCorrect: false },
-        { id: 2, text: "Tröja", isCorrect: false },
-        { id: 3, text: "Strumpor", isCorrect: false },
-      ],
-    },
-  ];
+  const optionClicked = (correctOption, option) => {
+    setClickedOptionButton(option);
 
-  const optionClicked = (isCorrect, buttonId) => {
-    setClickedOptionButton(buttonId);
-
-    if (isCorrect) {
+    if (correctOption === option) {
       setCorrectOptionSelected(true);
       setNextButtonDisabled(false);
       setScore(score + 1);
     } else {
-      setOptionsSelected((currentSelected) => [...currentSelected, buttonId]);
+      setOptionsSelected((currentSelected) => [...currentSelected, option]);
       setNextButtonDisabled(true);
     }
   };
@@ -101,32 +56,36 @@ function PickWord() {
         ) : (
           <div>
             Press on the Swedish word for{" "}
-            <strong>{questions[currentQuestion].text}</strong>
+            <strong>{questions[currentQuestion].english}</strong>
             <div className="element-container">
               <div className="pickword-button-container">
                 {questions[currentQuestion].options.map((option) => {
                   return (
                     <button
                       className={`color-button ${
-                        clickedOptionButton === option.id
-                          ? option.isCorrect
+                        clickedOptionButton === option
+                          ? questions[currentQuestion].swedish === option
                             ? " correct"
                             : " wrong"
                           : correctOptionSelected
                           ? " not-chosen"
-                          : optionsSelected.includes(option.id)
+                          : optionsSelected.includes(option)
                           ? " not-correct"
                           : ""
                       }`}
-                      onClick={() => optionClicked(option.isCorrect, option.id)}
-                      key={option.id}
+                      onClick={() =>
+                        optionClicked(
+                          questions[currentQuestion].swedish,
+                          option
+                        )
+                      }
+                      key={option}
                       //disabled={showRoundScore}
                       disabled={
-                        optionsSelected.includes(option.id) |
-                        correctOptionSelected
+                        optionsSelected.includes(option) | correctOptionSelected
                       }
                     >
-                      {option.text}
+                      {option}
                     </button>
                   );
                 })}
