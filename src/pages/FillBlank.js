@@ -62,10 +62,12 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
     const [answerChecked, setAnswerChecked] = useState(false);
     const [grading, setGrading] = useState(0);
     const [colorScale, setColorScale] = useState("#000000")
+    const [gradingIsLoading, setGradingIsLoading] = useState(false);
 
     const checkAnswer = () => {
 
         if(ml_server_is_up){
+            setGradingIsLoading(true);
             const correct_promise = fill_prob(sentence.split("_")[0], answer.toLowerCase(), sentence.split("_")[1], "1")
             const answer_promise = fill_prob(sentence.split("_")[0], userInput.toLowerCase(), sentence.split("_")[1], "1")
             Promise.all([correct_promise, answer_promise])
@@ -96,9 +98,12 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
                 setTries(prevTries => prevTries + 1); 
                 setGrading(grade);
 
-            }).catch(error => {console.error('Error:', error);});
+            }).catch(error => {console.error('Error:', error);})
+            .finally(() => {
+                setAnswerChecked(true);
+                setGradingIsLoading(false);
+            });
 
-            setAnswerChecked(true);
 
         }
         else{
@@ -236,7 +241,7 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
                     <h2>
                         You got {score} out of {sentences.length} correct, on {tries} tries
                     </h2>
-                    <ChangePageButton to="/" label="End round" />
+                    <ChangePageButton to="/home" label="End round" />
                 </div>
             ) : ( 
                 <div className="sentence-container">
@@ -260,35 +265,41 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
                             Correct answer: {answer}
                         </div>
                     )}
-                    {/* Show the grade */}
-                    {answerChecked && (
-                        <div>Grading: {grading.toFixed(2)}/1</div>
+                    {/* Show the grading */}
+                    {gradingIsLoading && (
+                        <div>Grading is being calculated...</div>
                     )}
 
-                    <div style={{ display: "flex", flexDirection: "row" }}>
-                        <div
-                            style={{
-                                background: colorScale,
-                                height: "10px", // Adjust the height as needed
-                                width: `${grading * 100}%`, // Adjust the width as needed
-                                marginTop: "5px", 
-                                borderLeft: "1px solid black",
-                                borderTop: "1px solid black",
-                                borderBottom: "1px solid black",
-                            }}
-                        />
-                        <div
-                            style={{
-                                background: "lightgrey",
-                                height: "10px", // Adjust the height as needed
-                                width: `${(1-grading) * 100}%`, // Adjust the width as needed
-                                marginTop: "5px",
-                                borderRight: "1px solid black",
-                                borderTop: "1px solid black",
-                                borderBottom: "1px solid black", 
-                            }}
-                        />
-                    </div>
+                    {answerChecked && !gradingIsLoading && (
+                        <>
+                            <div>Grading: {grading.toFixed(2)}/1</div>
+
+                            <div style={{ display: "flex", flexDirection: "row" }}>
+                                <div
+                                    style={{
+                                        background: colorScale,
+                                        height: "10px", // Adjust the height as needed
+                                        width: `${grading * 100}%`, // Adjust the width as needed
+                                        marginTop: "5px", 
+                                        borderLeft: "1px solid black",
+                                        borderTop: "1px solid black",
+                                        borderBottom: "1px solid black",
+                                    }}
+                                />
+                                <div
+                                    style={{
+                                        background: "lightgrey",
+                                        height: "10px", // Adjust the height as needed
+                                        width: `${(1-grading) * 100}%`, // Adjust the width as needed
+                                        marginTop: "5px",
+                                        borderRight: "1px solid black",
+                                        borderTop: "1px solid black",
+                                        borderBottom: "1px solid black", 
+                                    }}
+                                />
+                            </div>
+                        </>
+                    )}
                     
                     <div className="fill-container">
                         <button 
