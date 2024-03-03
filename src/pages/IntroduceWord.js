@@ -2,9 +2,6 @@ import ChangePageButton from "./ChangePageButton";
 import { GetRandomInt } from "../utils";
 import { useState } from "react";
 import "./IntroduceWord.css";
-import blblob from "../pictures/bottom-left-blob.png";
-import tlblob from "../pictures/top-left-blob.png";
-import trblob from "../pictures/top-right-blob.png";
 import { wordList } from "../data-sets/pickLearnConnect";
 
 /* TODO: @CS, Remove in future - this is only for Sprint 1 demo */
@@ -61,7 +58,9 @@ function PrintWordHeader() {
 function NextWordButton({ onClick }) {
   return (
     <div>
-      <button onClick={onClick}>Next Word</button>
+      <button className="next-button" onClick={onClick}>
+        Next Word
+      </button>
     </div>
   );
 }

@@ -1,9 +1,27 @@
-.Valkom {
-    background-image: url('https://i.imgur.com/aaUK81h.png');
+.welcome-background {
+    /*background-image: url('https://i.imgur.com/aaUK81h.png');
     background-repeat: no-repeat;
     background-size: cover;
     width: 100vw;
-    height: 95vh;
+    height: 95vh;*/
+    width: 55vw;
+    height: 86vh;
+    left: 0;
+    top: 0;
+    background-image:  url("../images/hellobubble.png"), url("../images/hejbubble.png"), url("../images/welcomeblob.png");
+    background-repeat: no-repeat;
+    background-position: top 5em right, bottom 5em left, center;
+    background-size: 60%, 50%, contain;
+    margin: 7vh 5vw 7vh 5vw;
+    display: flex;
+}
+
+.welcome-area{
+    width:25vw;
+    margin-left: 10vw;
+    align-content: flex-start;
+    display: flex;
+    flex-direction: column;
 }
 
 .description {
@@ -13,6 +31,7 @@
 .welcome {
     font-size: 50px;
     margin-top: 50px;
+    text-align: left;
 }
 
 .header {
@@ -41,9 +60,8 @@
 
 .content {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    padding: 50px 0;
 }
 
 .placeholder-text {
@@ -54,8 +72,9 @@
 
 .main-buttons{
     display: flex;
-    flex-direction: row;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: left;
+    align-items: left;
 }
 
 
@@ -90,12 +109,12 @@
 
 .button {
     font-weight: 5px;
-    font-size: 25px;
+    font-size: 2.2rem;
     text-align: center;
     font-weight: bold;
     color: #FFFFFF;
     background-color: var(--main-color);
-    padding: 10px 30px;
+    padding: 3rem 3rem;
     box-shadow:0px 4px 14px 0 rgba(0,0,0,0.1);
     border:none;
     border-radius: 20px;
@@ -103,13 +122,9 @@
     transform: translateY(0);
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-self: flex-start;
     cursor: pointer;
-    width: 200px;
-    height: 125px;
-    margin-top: 10vh;
-    margin-left: 5vw;
-    margin-right: 5vw;
+    margin-top: 5vh;
 }
 
 .btn:hover {
