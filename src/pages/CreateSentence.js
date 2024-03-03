@@ -1,29 +1,33 @@
 import ChangePageButton from "./ChangePageButton";
 import { GetRandomInt, ShuffleArray } from "../utils";
 import { useState, useEffect } from "react";
-import {completeList} from "../data-sets/compose-translate";
-import './CreateSentence.css';
+import { completeList } from "../data-sets/compose-translate";
+import "./CreateSentence.css";
 
 // creates a list with five random sentences from the dataset 
 const makeSentences = completeList.sort(() => Math.random() - 0.5).slice(0, 5)
 
 /** Shows if the sentence is correct or incorrect */
 function ResultBox({ bDisplay, bSuccess }) {
-    const item = bDisplay ? (bSuccess ? "Correct" : "Incorrect") : null;
-    return (
-        <div>
-            <p className={`result-text ${bSuccess ? 'rt' : 'wr'}`}>{item}</p>
-        </div>
-    );
+  const item = bDisplay ? (bSuccess ? "Correct" : "Incorrect") : null;
+  return (
+    <div>
+      <p className={`result-text ${bSuccess ? "rt" : "wr"}`}>{item}</p>
+    </div>
+  );
 }
 
 /** Displays the correct sentence */
 function DisplayCorrectSentence({ bDisplay, bSuccess, sentence }) {
-    return (
-        <div className={`correct-sen-container ${bSuccess ? 'correct' : 'incorrect'}`}>
-            <p className="correct-sen">{bDisplay ? (!bSuccess ? ("Correct Answer: " + sentence) : null) : null}</p>
-        </div>
-    );
+  return (
+    <div
+      className={`correct-sen-container ${bSuccess ? "correct" : "incorrect"}`}
+    >
+      <p className="correct-sen">
+        {bDisplay ? (!bSuccess ? "Correct Answer: " + sentence : null) : null}
+      </p>
+    </div>
+  );
 }
 
 /**
@@ -32,18 +36,22 @@ function DisplayCorrectSentence({ bDisplay, bSuccess, sentence }) {
  * @returns
  */
 function NextSentenceButton({ bDisabled, onClickFunc }) {
-    return (
-        <div>
-            <button className="next-button"
-                disabled={bDisabled}
-                onClick={() => { onClickFunc() }}>
-            </button>
-        </div>
-    );
+  return (
+    <div>
+      <button
+        className="next-button"
+        disabled={bDisabled}
+        onClick={() => {
+          onClickFunc();
+        }}
+      >
+        Next
+      </button>
+    </div>
+  );
 }
 
 function CreateSentence() {
-    // const startSenIdx = GetRandomInt(0, makeSentences.length - 1);
     const [currentSenIdx, setCurrentSenIdx] = useState(0);
     const [sentence, setSentence] = useState([]);
     const [isCorrect, setIsCorrect] = useState(false);
@@ -152,7 +160,7 @@ function CreateSentence() {
                 </div>
             )}
         </div>
-    );
+  );
 }
 
 export default CreateSentence;

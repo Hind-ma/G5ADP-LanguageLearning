@@ -1,50 +1,49 @@
 ﻿import ChangePageButton from "./ChangePageButton";
 
 import React, { useState } from "react";
-import './FillBlankModel.css';
+import "./FillBlankModel.css";
 import { sentenceList } from "../data-sets/fillBlank";
 
 // creates a list with five random sentences from the dataset 
 const sentences = sentenceList.sort(() => Math.random() - 0.5).slice(0, 5); 
 
-const url_address = "http://127.0.0.1:5000/get_fill_in_prob"
+const url_address = "http://127.0.0.1:5000/get_fill_in_prob";
 
 async function pingURL(url) {
-    return fetch(url, { method: 'HEAD' })
-    .then(response => {
-        return true;
+  return fetch(url, { method: "HEAD" })
+    .then((response) => {
+      return true;
     })
-    .catch(error => {
-        return false;
+    .catch((error) => {
+      return false;
     });
 }
 
-
-const ml_server_is_up = await pingURL(url_address)
+const ml_server_is_up = await pingURL(url_address);
 
 function fill_prob(before, fill, after, ratio) {
-    const params = {
-        before: before,
-        fill: fill,
-        after: after,
-        ratio: ratio
-    };
+  const params = {
+    before: before,
+    fill: fill,
+    after: after,
+    ratio: ratio,
+  };
 
-    const url = new URL(url_address); // Replace url_address with your actual URL
-    url.search = new URLSearchParams(params).toString();
-    return fetch(url)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json(); // Parse the JSON response
-        })
-        .then(data => {
-            return data; // Process the data
-        })
-        .catch(error => {
-            throw error; // Rethrow the error to propagate it
-        });
+  const url = new URL(url_address); // Replace url_address with your actual URL
+  url.search = new URLSearchParams(params).toString();
+  return fetch(url)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json(); // Parse the JSON response
+    })
+    .then((data) => {
+      return data; // Process the data
+    })
+    .catch((error) => {
+      throw error; // Rethrow the error to propagate it
+    });
 }
 
 function Sentence({ sentence, answer, correct, setCurrentSentence, currentSentence }) {
@@ -205,19 +204,6 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
         document.getElementById("allstar").style.visibility = "hidden";
     }
 
-    const inputIndex = sentence.indexOf("_");
-
-    const sentenceWithInput = (
-        <span>
-            {sentence.slice(0, inputIndex)}
-        </span>
-    );
-    const sentenceWithInput2 = (
-        <span>
-            {sentence.slice(inputIndex+1)}
-        </span>
-    );
-
     const handleNextButtonClicked = () => {
         resetInput(); 
 
@@ -285,9 +271,7 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
 }
 
 function FillBlank() {
-    const [currentSentence, setCurrentSentence] = useState(0);
-    
-    //console.log("curIdx: " + currentSentence + "sen: " + sentences[currentSentence].sentence);
+  const [currentSentence, setCurrentSentence] = useState(0);
 
     return (
         <div className="App">

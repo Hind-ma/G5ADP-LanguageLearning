@@ -10,7 +10,7 @@
     height: 100vh;
     left: 0;
     top: 0;
-    background-image: url("../pictures/top-right-blob.png"), url("../pictures/bottom-left-blob.png"), url("../pictures/top-left-blob.png");
+    background-image: url("../images/top-right-blob.png"), url("../images/bottom-left-blob.png"), url("../images/top-left-blob.png");
     background-repeat: no-repeat;
     background-position: top right, bottom left, bottom 10em left;
     background-size: auto 50%, 50%, 20%;
