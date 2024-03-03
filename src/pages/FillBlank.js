@@ -59,6 +59,9 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
     const [showCorrectWord, setShowCorrectWord] = useState(false);
     const [inputDisabled, setInputDisabled] = useState(false);
     const [checkButtonDisabled, setCheckButtonDisabled] = useState(true);
+    const [answerChecked, setAnswerChecked] = useState(false);
+    const [grading, setGrading] = useState(0);
+    const [colorScale, setColorScale] = useState("#000000")
 
     const checkAnswer = () => {
 
@@ -91,8 +94,11 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
 
                 // To handle the score 
                 setTries(prevTries => prevTries + 1); 
+                setGrading(grade);
 
             }).catch(error => {console.error('Error:', error);});
+
+            setAnswerChecked(true);
 
         }
         else{
@@ -153,6 +159,7 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
     const setDisplayGrade = (grade) => {
         console.log("?", grade)
         const hex_color = interpolateHexColor("#C84C4C","#79BB6E", grade);
+        setColorScale(hex_color);
   
         // document.getElementById("next").style.backgroundColor = "#6169e1";
         // document.getElementById("next").style.color = "#ffffff";
@@ -212,7 +219,14 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
         } else {
             setShowRoundScore(true);
         }
+
+        setAnswerChecked(false);
+        setGrading(0);
     }
+
+    const inputIndex = sentence.indexOf("_");
+    const sentenceWithInput = <span>{sentence.slice(0, inputIndex)}</span>;
+    const sentenceWithInput2 = <span>{sentence.slice(inputIndex + 1)}</span>;
 
     return (
 
@@ -240,11 +254,42 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
                         />
                         <p className="fill-input">{sentenceWithInput2}</p>
                     </div>
+                    {/* TODO add code to use this below - now never shown */}
                     {showCorrectWord && !sentenceCorrect && (
                         <div className="correct-word">
                             Correct answer: {answer}
                         </div>
                     )}
+                    {/* Show the grade */}
+                    {answerChecked && (
+                        <div>Grading: {grading.toFixed(2)}/1</div>
+                    )}
+
+                    <div style={{ display: "flex", flexDirection: "row" }}>
+                        <div
+                            style={{
+                                background: colorScale,
+                                height: "10px", // Adjust the height as needed
+                                width: `${grading * 100}%`, // Adjust the width as needed
+                                marginTop: "5px", 
+                                borderLeft: "1px solid black",
+                                borderTop: "1px solid black",
+                                borderBottom: "1px solid black",
+                            }}
+                        />
+                        <div
+                            style={{
+                                background: "lightgrey",
+                                height: "10px", // Adjust the height as needed
+                                width: `${(1-grading) * 100}%`, // Adjust the width as needed
+                                marginTop: "5px",
+                                borderRight: "1px solid black",
+                                borderTop: "1px solid black",
+                                borderBottom: "1px solid black", 
+                            }}
+                        />
+                    </div>
+                    
                     <div className="fill-container">
                         <button 
                             id = "check"
