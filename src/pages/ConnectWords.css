@@ -68,8 +68,8 @@
 }
 
 .disabled {
-    background-color: #EBEBEB;
-    color: var(--grey-outline);
+    background-color: var(--disabled-button);
+    color: var(--grey-disabled);
     pointer-events: none;
     border: none;
     /*border-style: solid;

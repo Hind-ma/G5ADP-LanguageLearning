@@ -78,12 +78,12 @@ function CreateSentence() {
 
   const handleWordClick = (word, index) => {
     if (sentence.includes(word)) {
-      document.getElementById(index).classList.remove("disabled");
+      document.getElementById(index).classList.remove("word-disabled");
       setSentence(sentence.filter((w) => w !== word));
       return;
     }
 
-    document.getElementById(index).classList.add("disabled");
+    document.getElementById(index).classList.add("word-disabled");
     setSentence([...sentence, word]);
   };
 
@@ -133,7 +133,9 @@ function CreateSentence() {
             id={index}
             key={index}
             disabled={bWordsDisable}
-            className={!bWordsDisable ? "word-button" : "word-button disabled"}
+            className={
+              !bWordsDisable ? "word-button" : "word-button word-disabled"
+            }
             onClick={() => handleWordClick(word, index)}
           >
             {word}

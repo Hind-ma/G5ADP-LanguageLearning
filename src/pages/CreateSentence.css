@@ -121,6 +121,7 @@
     margin: 4px;
     padding: 4px;
     background-color: #ffffff;
+    color:black;
     border:none;
     border-radius: 8px;
     font-size: 24px;
@@ -128,26 +129,18 @@
     cursor: pointer;
 }
 
-.word-button .disabled {
-    display: block;
-    margin: 4px;
-    padding: auto;
-    border-width: 4px;
+.word-disabled {
     border-color: var(--grey-outline);
-    color: var(--main-color-disabled);
-    background-color: var(--grey-outline);
-    border-radius: 8px;
-    cursor: default;
+    /*color: var(--main-color-disabled);
+    background-color: var(--grey-outline);*/
+    color: var(--grey-disabled);
+    background-color: var(--disabled-button);
 }
 
 .word-button:hover {
-    display: block;
-    margin: 4px;
-    padding: auto;
-    border-width: 4px;
     border-color: var(--grey-outline);
     color: var(--grey-disabled);
-    border-radius: 8px;
+    background-color: #ffffff;
     cursor: pointer;
 }
 
