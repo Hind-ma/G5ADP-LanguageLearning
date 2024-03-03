@@ -27,3 +27,6 @@ yarn-error.log*
 # Visual Studio cache files
 .vs/
 *.pyc
+
+# for local venv
+backend/python_server/.venv/
