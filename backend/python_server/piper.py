@@ -26,9 +26,9 @@ def install_libraries_from_file(file_path):
            
 
 def install_library_from_line(line, force = False):
+    # Split the line by whitespace to separate package name and additional arguments
+    args = line.split()
     try:
-        # Split the line by whitespace to separate package name and additional arguments
-        args = line.split()
         # Run pip install command with the arguments
         if not has_dependency(line) or force:
             subprocess.run(['pip', 'install'] + args, check=True)
