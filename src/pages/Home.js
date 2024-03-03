@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import ChangePageButton from "./ChangePageButton";
 import "./Home.css";
 import { GetRandomInt } from "../utils";
+import { useState } from "react";
 
 /**
  * categoryList
@@ -51,6 +52,9 @@ function CategoryButton({label, route, bDisabled}) {
   );
 }
 
+/**
+ * StatsButton - Displays basic user stats
+ */
 function StatsButton({label}) {
   return (
     <div>
@@ -61,9 +65,84 @@ function StatsButton({label}) {
   );
 }
 
+/**
+ * StatsDisplay - display container for user stats
+ */
+function StatsDisplay() {
+  return (
+    <div>
+      {/* TODO: @CS, remove the para tag below, placeholder stats, Stats */}
+      <p>Stats</p>
+        <StatsButton label={sessionStorage.getItem("dayStreak").toLocaleString() +  " Day Streak!"} />
+        <StatsButton label={sessionStorage.getItem("wordPerc").toLocaleString() + "% of All Words"} />
+        <StatsButton label={sessionStorage.getItem("wordRate").toLocaleString() + " Words/Day"} />
+    </div>
+  );
+}
+
+/**
+ * Random Stats generator
+ */
+function GenerateDayStreak() {
+  if (sessionStorage.key(2) === null) {
+    var val = GetRandomInt(1, 7);
+    sessionStorage.setItem("dayStreak", val);
+    return val;
+  }
+  else {
+    return sessionStorage.getItem("dayStreak")
+  }
+}
+
+function GenerateWordPercent() {
+  if (sessionStorage.key(3) === null) {
+    var val = GetRandomInt(30, 60);
+    sessionStorage.setItem("wordPerc", val);
+    return val;
+  }
+  else {
+    return sessionStorage.getItem("wordPerc");
+  }
+}
+
+function GenerateWordRate() {
+  if (sessionStorage.key(4) === null) {
+    var val = GetRandomInt(4, 9);
+    sessionStorage.setItem("wordRate", val);
+    return val;
+  }
+  else {
+    return sessionStorage.getItem("wordRate");
+  }
+}
+
+function GenerateWordCount() {
+  if (sessionStorage.key(5) === null) {
+    var val = GetRandomInt(35, 75);
+    sessionStorage.setItem("wordCount", val);
+    return val;
+  }
+  else {
+    return sessionStorage.getItem("wordCount");
+  }
+}
+
 function Home() {
   var currentUsername = sessionStorage.getItem('username');
   var bGuest = currentUsername === 'Guest User';
+
+  // Store "FAKE" stats to make it consistent with account page view
+  var [dayStreak] = useState(GenerateDayStreak);
+  sessionStorage.setItem("dayStreak", dayStreak);
+
+  var [wordPerc] = useState(GenerateWordPercent);
+  sessionStorage.setItem("wordPerc", wordPerc);
+
+  var [wordRate] = useState(GenerateWordRate);
+  sessionStorage.setItem("wordRate", wordRate);
+
+  var [wordCount] = useState(GenerateWordCount);
+  sessionStorage.setItem("wordCount", wordCount);
   
   return (
   <div>
@@ -74,7 +153,7 @@ function Home() {
       </div>
       <div className="top-btn-container">
         <ChangePageButton to="/account" label={bGuest ? "Guest Home" : currentUsername.toLocaleUpperCase() + "'s Home"} />
-        <ChangePageButton to="/" label="LOG OUT" />
+        {/*<ChangePageButton to="/" label="LOG OUT" />*/}
       </div>
       <div className="learn-btn-container">
         <LearnButton bGuestUser={bGuest} />
@@ -87,11 +166,7 @@ function Home() {
         ))}
       </div>
       <div className="stats-btn-container">
-        {/* TODO: @CS, remove the para tag below, placeholder stats, Stats */}
-        <p>Stats</p>
-        <StatsButton label={bGuest ? "0 Day Streak" : GetRandomInt(1, 7).toLocaleString() +  " Day Streak!"} />
-        <StatsButton label={bGuest ? "0 % of All Words" : GetRandomInt(30, 60).toLocaleString() + "% of All Words"} />
-        <StatsButton label={bGuest ? "0 Words/Day" : GetRandomInt(4, 9).toLocaleString() + " Words/Day"} />
+        {bGuest ? null : <StatsDisplay />}
       </div>
   </div>
   );
