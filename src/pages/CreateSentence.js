@@ -57,6 +57,7 @@ function CreateSentence() {
     // To handle the score
     const [showRoundScore, setShowRoundScore] = useState(false);
     const [score, setScore] = useState(0);
+    const [tries, setTries] = useState(0);
     const [checkButtonDisabled, setCheckButtonDisabled] = useState(false);
 
     useEffect(() => {
@@ -92,17 +93,17 @@ function CreateSentence() {
     const checkSentence = (senId) => {
         var isCor = (sentence.join(' ') === makeSentences[senId].words.join(' '));
         setIsCorrect(isCor);
-        setNextDisabled(false);
-        setWordsDisabled(true);
         
         if (isCor) {
             setScore(prevScore => prevScore + 1);
+            setCheckButtonDisabled(true);
+            setNextDisabled(false);
+            setWordsDisabled(true);
         } 
 
         setShowResult(true);
+        setTries(prevTries => prevTries + 1);
         //console.log("res: " + cor);
-        
-        setCheckButtonDisabled(true);
     };
 
     return (
@@ -110,7 +111,7 @@ function CreateSentence() {
             {showRoundScore ? (
                 <div className="round-score">
                     <h2>
-                        You got {score} out of {makeSentences.length} correct
+                        You got {score} out of {makeSentences.length} correct, on {tries} tries
                     </h2>
                     <ChangePageButton to="/" label="End round" />
                 </div>
