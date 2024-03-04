@@ -3,31 +3,43 @@ import React, { useState, useEffect } from "react";
 import ChangePageButton from "./ChangePageButton";
 import "./ConnectWords.css";
 import "../App.css";
+import { wordList } from "../data-sets/pickLearnConnect";
 
+
+const pairsList = wordList.sort(() => Math.random() - 0.5).slice(0, 4); 
 const ConnectWords = () => {
-  const [wordPairs, setWordPairs] = useState([
-    {
-      id: 1,
-      swedish: "Lärare",
-      english: "Teacher",
-      stateSwe: "",
-      stateEng: "",
-    },
-    { id: 2, swedish: "Bok", english: "Book", stateSwe: "", stateEng: "" },
-    { id: 3, swedish: "Skola", english: "School", stateSwe: "", stateEng: "" },
-    {
-      id: 4,
-      swedish: "Dator",
-      english: "Computer",
-      stateSwe: "",
-      stateEng: "",
-    },
-  ]);
+  
+  const [wordPairs, setWordPairs] = useState(pairsList);
+  
 
   const [result, setResult] = useState({ tries: 0, correct: 0 });
   const [feedbackMessage, setFeedbackMessage] = useState("");
   const [matchedPairs, setMatchedPairs] = useState([]);
   const [showResult, setShowResult] = useState(false);
+
+  // to handle the shuffling of the swedish order 
+  const [shuffledSwedishOrder, setShuffledSwedishOrder] = useState([]);
+  const [shuffledEnglishOrder, setShuffledEnglishOrder] = useState([]);
+
+  useEffect(() => {
+    // Create a shuffled array of IDs when the component mounts, so only initial time
+    const shuffledOrder = wordPairs.map((pair) => pair.id);
+    for (let i = shuffledOrder.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffledOrder[i], shuffledOrder[j]] = [shuffledOrder[j], shuffledOrder[i]];
+    }
+    setShuffledSwedishOrder(shuffledOrder);
+  }, []);
+
+  useEffect(() => {
+    // Create a shuffled array of IDs when the component mounts, so only initial time
+    const shuffledOrder = wordPairs.map((pair) => pair.id);
+    for (let i = shuffledOrder.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffledOrder[i], shuffledOrder[j]] = [shuffledOrder[j], shuffledOrder[i]];
+    }
+    setShuffledEnglishOrder(shuffledOrder);
+  }, []);  
 
   const updateButtonState = (id, language, state) => {
     setWordPairs((prevWordPairs) =>
@@ -39,6 +51,18 @@ const ConnectWords = () => {
             }
           : pair
       )
+    );
+  };
+
+  // Update the state of the remaining buttons of the same language
+  const updateRemainingLanguageButtons = (id, language, state) => {
+    setWordPairs((prevWordPairs) =>
+      prevWordPairs.map((pair) => {
+        if (pair.id !== id && pair.stateEng !== "hidden" && pair.stateSwe !== "hidden") {
+          updateButtonState(pair.id, language, state);
+        }
+        return pair;
+      })
     );
   };
 
@@ -68,6 +92,7 @@ const ConnectWords = () => {
     // if it is the first word clicked, highlight it
     if (!firstClicked) {
       updateButtonState(selectedId, selectedLanguage, "clicked");
+      updateRemainingLanguageButtons(selectedId, selectedLanguage, "disabled");
     } else {
       handleSecondWordClick(selectedId, selectedLanguage, firstClicked);
     }
@@ -80,51 +105,48 @@ const ConnectWords = () => {
   ) => {
     updateButtonState(selectedId, selectedLanguage, "clicked");
 
-    if (selectedLanguage === firstClicked.language) {
-      // second word clicked, but the same language
-      // TODO might need to handle some user feedback here, another highlight
-      setFeedbackMessage(
-        `They are the same language. Try again but take a word from the ${
-          selectedLanguage === "swedish" ? "English" : "Swedish"
-        } words.`
-      );
+    // set all the other buttons in that language as disabled 
+    updateRemainingLanguageButtons(selectedId, selectedLanguage, "disabled");
+    
+    // Check if the translation matches
+    const isMatch = firstClicked.id === selectedId;
+
+    if (isMatch) {
+      // it is a match
+      setResult((prevResult) => ({
+        tries: prevResult.tries + 1,
+        correct: prevResult.correct + 1,
+      }));
+      setMatchedPairs([...matchedPairs, selectedId]);
+      updateButtonState(firstClicked.id, firstClicked.language, "correct");
+      updateButtonState(selectedId, selectedLanguage, "correct");
+      setTimeout(() => {
+        updateButtonState(firstClicked.id, firstClicked.language, "hidden");
+        updateButtonState(selectedId, selectedLanguage, "hidden");
+        const oppositeLanguage = selectedLanguage === "swedish" ? "english" : "swedish";
+        updateRemainingLanguageButtons(selectedId, oppositeLanguage, "");
+        updateRemainingLanguageButtons(selectedId, selectedLanguage, "");
+      }, 1500);
+    } else {
+      // wrong answer
+      setResult((prevResult) => ({
+        tries: prevResult.tries + 1,
+        correct: prevResult.correct,
+      }));
+      setFeedbackMessage("Wrong! Try again.");
+      updateButtonState(firstClicked.id, firstClicked.language, "wrong");
       updateButtonState(selectedId, selectedLanguage, "wrong");
       setTimeout(() => {
         setFeedbackMessage("");
-        updateButtonState(selectedId, selectedLanguage, "");
-      }, 2000);
-    } else {
-      // Check if the translation matches
-      const isMatch = firstClicked.id === selectedId;
+        // reset the buttons for the firstClicked language
+        updateButtonState(firstClicked.id, firstClicked.language, "");
+        updateRemainingLanguageButtons(firstClicked.id, firstClicked.language, "");
 
-      if (isMatch) {
-        // it is a match
-        setResult((prevResult) => ({
-          tries: prevResult.tries + 1,
-          correct: prevResult.correct + 1,
-        }));
-        setMatchedPairs([...matchedPairs, selectedId]);
-        updateButtonState(firstClicked.id, firstClicked.language, "correct");
-        updateButtonState(selectedId, selectedLanguage, "correct");
-        setTimeout(() => {
-          updateButtonState(firstClicked.id, firstClicked.language, "disabled");
-          updateButtonState(selectedId, selectedLanguage, "disabled");
-        }, 2000);
-      } else {
-        // wrong answer
-        setResult((prevResult) => ({
-          tries: prevResult.tries + 1,
-          correct: prevResult.correct,
-        }));
-        setFeedbackMessage("Wrong! Try again.");
-        updateButtonState(firstClicked.id, firstClicked.language, "wrong");
-        updateButtonState(selectedId, selectedLanguage, "wrong");
-        setTimeout(() => {
-          setFeedbackMessage("");
-          updateButtonState(firstClicked.id, firstClicked.language, "");
-          updateButtonState(selectedId, selectedLanguage, "");
-        }, 2000);
-      }
+        // reset the buttons for the second clicked language
+        updateButtonState(selectedId, selectedLanguage, "");
+        const oppositeLanguage = selectedLanguage === "swedish" ? "english" : "swedish";
+        updateRemainingLanguageButtons(selectedId, selectedLanguage, "");
+      }, 1500);
     }
   };
 
@@ -139,6 +161,14 @@ const ConnectWords = () => {
       setShowResult(true);
     }
   }, [result, wordPairs.length, matchedPairs.length]);
+
+  // used to display the sweidhs words according to the shuffled array
+  const createNewArrayFromOrder = (idArray) => {
+    const rearrangedPairs = idArray.map((id) =>
+      wordPairs.find((pair) => pair.id === id)
+    );
+    return rearrangedPairs;
+  };
 
   return (
     <div>
@@ -155,7 +185,7 @@ const ConnectWords = () => {
           <div className="word-pairs-container">
             {/* Display Swedish words on the left */}
             <div className="word-column">
-              {wordPairs.map((pair) => (
+              {createNewArrayFromOrder(shuffledSwedishOrder).map((pair) => (
                 <button
                   key={pair.id}
                   className={`connect-word-button ${pair.stateSwe}`}
@@ -168,7 +198,7 @@ const ConnectWords = () => {
 
             {/* Display English words on the right */}
             <div className="word-column">
-              {wordPairs.map((pair) => (
+              {createNewArrayFromOrder(shuffledEnglishOrder).map((pair) => (
                 <button
                   key={pair.id}
                   className={`connect-word-button ${pair.stateEng}`}
