@@ -1,8 +1,9 @@
 import ChangePageButton from "./ChangePageButton";
 import { GetRandomInt, ShuffleArray } from "../utils";
 import { useState, useEffect } from "react";
-import { completeList } from "../data-sets/compose-translate";
-import "./CreateSentence.css";
+import {completeList} from "../data-sets/compose-translate";
+import './CreateSentence.css';
+import {text_prob, server_is_up} from "./AI_server_interface"
 
 const makeSentences = completeList;
 
@@ -87,15 +88,42 @@ function CreateSentence() {
     setSentence([...sentence, word]);
   };
 
-  const checkSentence = (senId) => {
-    var cor = sentence.join(" ") === makeSentences[senId].words.join(" ");
-    setIsCorrect(cor);
-    setShowResult(true);
-    setNextDisabled(false);
-    setWordsDisabled(true);
-    //console.log("res: " + cor);
-  };
+  
 
+    const checkSentence = (senId) => {
+        const user_scenatnce = sentence.join(' ')
+        const correct_scentance = makeSentences[senId].words.join(' ')
+        if (server_is_up){
+            const correct_promise = text_prob(correct_scentance)
+            const user_promise = text_prob(user_scenatnce)
+            Promise.all([correct_promise, user_promise])
+            .then(dataArray => {
+                const [correct_prob, user_prob] = dataArray;
+                let grad
+                if (user_prob < correct_prob){
+                    grad = user_prob / correct_prob
+                }else{
+                    grad = 1
+                }
+            
+            setIsCorrect(grad > 0.60);
+            setShowResult(true);
+            setNextDisabled(false);
+            setWordsDisabled(true);
+            console.log(user_prob, correct_prob, grad)
+            }).catch(error => {console.error('Error:', error);});    
+        }else{
+            var cor = (user_scenatnce === correct_scentance);
+            setIsCorrect(cor);
+            setShowResult(true);
+            setNextDisabled(false);
+            setWordsDisabled(true);
+            //console.log("res: " + cor);
+        }
+        
+    };
+
+   
   return (
     <div className="create-sentence">
       <ChangePageButton to="/home" label="Go to Home" />
