@@ -168,7 +168,7 @@
     display: flex;
 }
 
-.chk-button {
+/* .chk-button {
     cursor: pointer;
     border-radius: 40px;
     background-color: var(--main-color);
@@ -177,7 +177,7 @@
 .chk-button:disabled {
     background-color: var(--main-color-disabled);
     cursor: not-allowed;
-}
+} */
 
 /*
 .next-button {

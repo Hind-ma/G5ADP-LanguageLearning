@@ -58,12 +58,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* Set the height to 100% of the viewport height */
+  /* height: 100vh; Set the height to 100% of the viewport height */
 }
 
 .button-container button {
   margin: 8px; /* Adjust the margin between buttons */
 }
+
 button {
   font-family: "Signika", Verdana, Tahoma, sans-serif;
 }

@@ -149,7 +149,7 @@ function CreateSentence() {
                     </div>
                     <div className="button-container">
                         <button 
-                            className="chk-button" 
+                            className="check-button" 
                             onClick={() => checkSentence(currentSenIdx)}
                             disabled={checkButtonDisabled}
                             >
