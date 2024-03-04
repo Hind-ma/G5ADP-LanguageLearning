@@ -1,3 +1,4 @@
+
 from transformers import AutoTokenizer, AutoModelForCausalLM
 import torch
 
@@ -30,3 +31,16 @@ class swegpt_handeler:
         final_log_prob = (suum * exponent)
         final_prob = torch.exp(final_log_prob)
         return final_prob.item() if final_prob != str(final_prob.item()) != "nan" else 0
+
+    def calc_text_prob(self, text):
+        full_text = '<s> ' + text + ' <s>'
+        ids = self.tokenizer(full_text, return_tensors="pt")["input_ids" ][0].to(dtype = torch.int64).to(self.device)
+        with torch.no_grad():
+            logits = self.model(ids[:-1].unsqueeze(0), use_cache=True).logits[0]
+        probs = torch.softmax(logits, dim = 1)[torch.arange(logits.shape[0]), ids[1:]]
+        log_sum = torch.sum(torch.log(probs))
+        normalized_prob = log_sum / probs.shape[0]
+        final_prob = torch.exp(normalized_prob)
+        return final_prob.item()
+
+swegpt_handeler().calc_text_prob("Jag gillar korv")

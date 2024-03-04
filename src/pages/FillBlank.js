@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import "./FillBlankModel.css";
 // import "../App.css";
 import { sentenceList } from "../data-sets/fillBlank";
+import {server_is_up, fill_prob } from './AI_server_interface.js';
 
 // creates a list with five random sentences from the dataset 
 const sentences = sentenceList.sort(() => Math.random() - 0.5).slice(0, 5); 
@@ -67,7 +68,7 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
 
     const checkAnswer = () => {
 
-        if(ml_server_is_up){
+        if(server_is_up){
             setGradingIsLoading(true);
             const correct_promise = fill_prob(sentence.split("_")[0], answer.toLowerCase(), sentence.split("_")[1], "1")
             const answer_promise = fill_prob(sentence.split("_")[0], userInput.toLowerCase(), sentence.split("_")[1], "1")
