@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import "./FillBlankModel.css";
+// import "../App.css";
 import { sentenceList } from "../data-sets/fillBlank";
 
 // creates a list with five random sentences from the dataset 
@@ -303,23 +304,22 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
                     
                     <div className="fill-container">
                         <button 
-                            id = "check"
+                            // id = "check"
                             onClick={checkAnswer} 
-                            className="fill-button" 
+                            className="check-button" 
                             disabled={checkButtonDisabled}
                             >
                             Check
                         </button>
                         <button 
-                            id="next" 
+                            // id="next" 
                             disabled={nextDisabled} 
                             onClick={handleNextButtonClicked} 
-                            className="fill-button"
+                            className="next-button"
                             >
                             Next
                         </button>
                     </div>
- 
                 </div>
             )}
         </div>  
