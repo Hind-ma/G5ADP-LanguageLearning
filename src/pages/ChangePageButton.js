@@ -9,7 +9,7 @@ const ChangePageButton = ({ to, label }) => {
     };
 
     return (
-        <button onClick={changePage}>
+        <button className="check-button" onClick={changePage}>
             {label}
         </button>
     );
