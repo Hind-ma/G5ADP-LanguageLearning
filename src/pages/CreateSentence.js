@@ -4,7 +4,10 @@ import { useState, useEffect } from "react";
 import {completeList} from "../data-sets/compose-translate";
 import './CreateSentence.css';
 
-const makeSentences = completeList;
+import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
+var makeSentences = completeList;
 
 
 /** Shows if the sentence is correct or incorrect */
@@ -54,11 +57,28 @@ function CreateSentence() {
     const currentSentence = makeSentences[currentSenIdx].words;
     const [shuffledWords, setShuffledWords] = useState([]);
 
+    const navigate = useNavigate();
+    const {state} = useLocation();
+    var quizList = [];
+    if (state !== null) {
+        quizList = state.fullQuiz;
+    }
+
     useEffect(() => {
         setShuffledWords(ShuffleArray(makeSentences[currentSenIdx].words));
     }, [currentSenIdx]);
 
     function updateMakeSentence() {
+        if (quizList.length !== 0) {
+            quizList.shift();
+            console.log(quizList.length);
+        }
+        if (quizList.length === 0) {
+            navigate("/learn");
+        } else {
+            navigate(quizList[0].route, {state: {fullQuiz: quizList}});
+        }
+
         setCurrentSenIdx((currentSenIdx + 1) % makeSentences.length);
         //console.log("senId: " + currentSenIdx);
 

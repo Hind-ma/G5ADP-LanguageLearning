@@ -3,7 +3,10 @@ import React, { useState } from "react";
 import './PickWord.css';
 import { wordList } from "../data-sets/pickLearnConnect";
 
-const questions = wordList.sort(() => Math.random() - 0.5).slice(0, 5); 
+import { useLocation } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+
+var questions = wordList.sort(() => Math.random() - 0.5).slice(0, 5); 
 
 function PickWord() {
 
@@ -15,6 +18,12 @@ function PickWord() {
   const [correctOptionSelected, setCorrectOptionSelected] = useState(false);
   const [optionsSelected, setOptionsSelected] = useState([]);
 
+  const navigate = useNavigate();
+  const {state} = useLocation();
+  var quizList = [];
+  if (state !== null) {
+    quizList = state.fullQuiz;
+  }
 
   const optionClicked = (correctOption, option) => {
     setClickedOptionButton(option);
@@ -29,10 +38,19 @@ function PickWord() {
     }
   }
 
-  const handleNextButtonClicked = () => {
+  /*const handleNextButtonClicked = () => {
    if (currentQuestion + 1 < questions.length) {
       setCurrentQuestion(currentQuestion + 1);
     } else {
+      if (quizList.length !== 0) {
+        quizList.shift();
+        console.log(quizList.length);
+      }
+      if (quizList.length === 0) {
+        navigate("/learn");
+      } else {
+        navigate(quizList[0].route, {state: {fullQuiz: quizList}});
+      }
       setRoundScore(true);
     }
 
@@ -41,7 +59,28 @@ function PickWord() {
     setNextButtonDisabled(true);
     setCorrectOptionSelected(false);
     setOptionsSelected([]);
-  };
+  };*/
+
+  const handleNextButtonClicked = () => {
+    if (quizList.length !== 0) {
+      quizList.shift();
+      console.log(quizList.length);
+    }
+    if (quizList.length === 0) {
+      navigate("/learn");
+    } else {
+      navigate(quizList[0].route, {state: {fullQuiz: quizList}});
+    }
+
+    // Reset currentQuestion index
+    setCurrentQuestion(currentQuestion => (currentQuestion + 1) % questions.length);
+ 
+     // Reset clicked button and disable the next button
+     setClickedOptionButton(null);
+     setNextButtonDisabled(true);
+     setCorrectOptionSelected(false);
+     setOptionsSelected([]);
+   };
 
   return (
     <div>

@@ -4,8 +4,11 @@ import { GetRandomInt } from "../utils";
 import {completeList} from "../data-sets/compose-translate";
 import './TranslateSentence.css';
 
+import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 // creates a list with five random sentences form the dataset 
-const sentenceList = completeList.sort(() => Math.random() - 0.5).slice(0, 5); 
+var sentenceList = completeList.sort(() => Math.random() - 0.5).slice(0, 5); 
 
 function TranslateSentence() {
   // consts for the user input
@@ -23,6 +26,13 @@ function TranslateSentence() {
   // consts for the score
   const [showRoundScore, setRoundScore] = useState(false);
   const [score, setScore] = useState(0);
+
+  const navigate = useNavigate();
+  const {state} = useLocation();
+  var quizList = [];
+  if (state !== null) {
+    quizList = state.fullQuiz;
+  }
 
   const currSentence = sentenceList[sentenceIndex];
   
@@ -53,10 +63,19 @@ function TranslateSentence() {
     setInputDisabled(true);
   };
 
-  const handleNextButtonClicked = () => {
+  /*const handleNextButtonClicked = () => {
     if (sentenceIndex + 1 < sentenceList.length) {
       setSentenceIndex(sentenceIndex + 1);
     } else {
+      if (quizList.length !== 0) {
+        quizList.shift();
+        console.log(quizList.length);
+      }
+      if (quizList.length === 0) {
+        navigate("/learn");
+      } else {
+        navigate(quizList[0].route, {state:{fullQuiz: quizList}});
+      }
        setRoundScore(true);
      }
  
@@ -67,6 +86,27 @@ function TranslateSentence() {
      setCheckButtonDisabled(true);
      setInputDisabled(false);
      setShowCorrectSentence(false);
+   };*/
+
+   const handleNextButtonClicked = () => {
+    setSentenceIndex((sentenceIndex + 1) % sentenceList.length);
+    if (quizList.length !== 0) {
+      quizList.shift();
+      console.log(quizList.length);
+    }
+    if (quizList.length === 0) {
+      navigate("/learn");
+    } else {
+      navigate(quizList[0].route, {state:{fullQuiz: quizList}});
+    }
+
+    //reset answer and GUI-elements
+    setNextButtonDisabled(true);
+    setUserAnswer("");
+    setIsAnswerCorrect(null);
+    setCheckButtonDisabled(true);
+    setInputDisabled(false);
+    setShowCorrectSentence(false);
    };
 
   const handleInputChange = (e) => {

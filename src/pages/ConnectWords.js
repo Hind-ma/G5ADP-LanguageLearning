@@ -5,12 +5,23 @@ import "./ConnectWords.css";
 import "../App.css";
 import { wordList } from "../data-sets/pickLearnConnect";
 
+import { useLocation } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
-const pairsList = wordList.sort(() => Math.random() - 0.5).slice(0, 4); 
+
+var pairsList = wordList.sort(() => Math.random() - 0.5).slice(0, 4); 
 const ConnectWords = () => {
   
   const [wordPairs, setWordPairs] = useState(pairsList);
-  
+
+  const navigate = useNavigate();
+  const {state} = useLocation();
+  var quizList = [];
+  if (state !== null) {
+    quizList = state.fullQuiz;
+  }
+
+  const [nextButtonDisabled, setNextButtonDisabled] = useState(true);
 
   const [result, setResult] = useState({ tries: 0, correct: 0 });
   const [feedbackMessage, setFeedbackMessage] = useState("");
@@ -150,15 +161,31 @@ const ConnectWords = () => {
     }
   };
 
+  const handleNextButtonClicked = () => {
+    if (quizList.length !== 0) {
+      quizList.shift();
+      console.log(quizList.length);
+    }
+    if (quizList.length === 0) {
+      navigate("/learn");
+    } else {
+      navigate(quizList[0].route, {state: {fullQuiz: quizList}})
+    }
+
+    //reset answer and GUI-elements
+    setNextButtonDisabled(true);
+   };
+
   useEffect(() => {
     if (
       result.correct === wordPairs.length &&
       matchedPairs.length === wordPairs.length
     ) {
-      setFeedbackMessage(
-        `You got ${result.correct} out of ${result.tries} on the first try!`
-      );
-      setShowResult(true);
+      //setFeedbackMessage(
+      //  `You got ${result.correct} out of ${result.tries} on the first try!`
+      //);
+      //setShowResult(true);
+      setNextButtonDisabled(false);
     }
   }, [result, wordPairs.length, matchedPairs.length]);
 
@@ -208,6 +235,13 @@ const ConnectWords = () => {
                 </button>
               ))}
             </div>
+          </div>
+          <div>
+            <button
+                className="next-button"
+                onClick={handleNextButtonClicked}
+                disabled={nextButtonDisabled}>
+            </button>
           </div>
         </div>
       )}
