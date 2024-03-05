@@ -114,7 +114,7 @@ function CreateSentence() {
       Promise.all([correct_promise, user_promise])
       .then(dataArray => {
         const [correct_prob, user_prob] = dataArray;
-        var grade = user_prob / correct_prob;
+        var grade = user_prob / correct_prob
         if (grade > 1) {
           grade = 1;
         } 
@@ -164,11 +164,11 @@ function CreateSentence() {
 
     // document.getElementById("next").style.backgroundColor = "#6169e1";
     // document.getElementById("next").style.color = "#ffffff";
-    document.getElementById("input").style.color =hex_color;
-    document.getElementById("input").style.borderColor = hex_color;
-    if(grade > 0.60){
-        document.getElementById("allstar").style.visibility = "visible";
-    }    
+    // document.getElementById(index).style.color =hex_color;
+    //document.getElementById("input").style.borderColor = hex_color;
+    // if(grade > 0.60){
+    //     document.getElementById("allstar").style.visibility = "visible";
+    // }    
   }
 
   return (
@@ -176,7 +176,7 @@ function CreateSentence() {
       {showRoundScore ? (
         <div className="round-score">
           <h2>
-              You got {score} out of {makeSentences.length} correct, on {tries} tries
+              You got {score.toFixed(2)} out of {makeSentences.length} correct, on {tries} tries
           </h2>
           <ChangePageButton to="/home" label="End round" />
         </div>
