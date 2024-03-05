@@ -3,6 +3,7 @@ import { GetRandomInt, ShuffleArray } from "../utils";
 import { useState, useEffect } from "react";
 import { completeList } from "../data-sets/compose-translate";
 import "./CreateSentence.css";
+import EndQuizButton from "./EndQuizButton";
 
 const makeSentences = completeList;
 
@@ -98,55 +99,59 @@ function CreateSentence() {
 
   return (
     <div className="create-sentence">
-      <ChangePageButton to="/home" label="Go to Home" />
-      <div className="page-head">
-        <p>Make the sentence by selecting the words</p>
+      <div className="cancel-header">
+        <EndQuizButton to={"/learn"} />
       </div>
-      <div
-        className={`result-container ${
-          bShowResult ? (bCorrect ? "rt" : "wr") : null
-        }`}
-      >
-        <ResultBox bDisplay={bShowResult} bSuccess={bCorrect} />
-        <DisplayCorrectSentence
-          bDisplay={bShowResult}
-          bSuccess={bCorrect}
-          sentence={currentSentence.join(" ")}
-        />
-      </div>
-      <div className="check-container">
-        <div className="user-sen-container">
-          <p className="user-sen">
-            {sentence.length > 0 ? sentence.join(" ") : null}
-          </p>
+      <div className="sentence-activity">
+        <div className="page-head">
+          <p>Make the sentence by selecting the words</p>
         </div>
-        <button
-          className="check-button"
-          onClick={() => checkSentence(currentSenIdx)}
+        <div
+          className={`result-container ${
+            bShowResult ? (bCorrect ? "rt" : "wr") : null
+          }`}
         >
-          Check
-        </button>
-      </div>
-      <div className="word-container">
-        {shuffledWords.map((word, index) => (
+          <ResultBox bDisplay={bShowResult} bSuccess={bCorrect} />
+          <DisplayCorrectSentence
+            bDisplay={bShowResult}
+            bSuccess={bCorrect}
+            sentence={currentSentence.join(" ")}
+          />
+        </div>
+        <div className="check-container">
+          <div className="user-sen-container">
+            <p className="user-sen">
+              {sentence.length > 0 ? sentence.join(" ") : null}
+            </p>
+          </div>
           <button
-            id={index}
-            key={index}
-            disabled={bWordsDisable}
-            className={
-              !bWordsDisable ? "word-button" : "word-button word-disabled"
-            }
-            onClick={() => handleWordClick(word, index)}
+            className="check-button"
+            onClick={() => checkSentence(currentSenIdx)}
           >
-            {word}
+            Check
           </button>
-        ))}
-      </div>
-      <div className="next-wrap">
-        <NextSentenceButton
-          bDisabled={bNextDisable}
-          onClickFunc={updateMakeSentence}
-        />
+        </div>
+        <div className="word-container">
+          {shuffledWords.map((word, index) => (
+            <button
+              id={index}
+              key={index}
+              disabled={bWordsDisable}
+              className={
+                !bWordsDisable ? "word-button" : "word-button word-disabled"
+              }
+              onClick={() => handleWordClick(word, index)}
+            >
+              {word}
+            </button>
+          ))}
+        </div>
+        <div className="next-wrap">
+          <NextSentenceButton
+            bDisabled={bNextDisable}
+            onClickFunc={updateMakeSentence}
+          />
+        </div>
       </div>
     </div>
   );

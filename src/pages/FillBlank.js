@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import "./FillBlankModel.css";
 import { sentenceList } from "../data-sets/fillBlank";
+import EndQuizButton from "./EndQuizButton";
 
 const sentences = sentenceList;
 
@@ -238,8 +239,10 @@ function FillBlank() {
   //console.log("curIdx: " + currentSentence + "sen: " + sentences[currentSentence].sentence);
 
   return (
-    <div className="App">
-      <ChangePageButton to="/home" label="Go to Home page" />
+    <div>
+      <div className="cancel-header">
+        <EndQuizButton to={"/learn"} />
+      </div>
       <h1 className="fill-title">Fill in the blank of this sentence</h1>
       <Sentence
         sentence={sentences[currentSentence].sentence}
