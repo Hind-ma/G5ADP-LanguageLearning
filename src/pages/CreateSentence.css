@@ -127,7 +127,7 @@
     cursor: pointer;
 }
 
-.word-disabled {
+.word-button:disabled {
     border-color: var(--grey-outline);
     /*color: var(--main-color-disabled);
     background-color: var(--grey-outline);*/

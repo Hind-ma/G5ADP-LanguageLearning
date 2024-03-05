@@ -59,4 +59,22 @@ const text_prob = async (text) => {
         });
 }
 
-export { server_is_up, pingURL, fill_prob, text_prob };
+function interpolateHexColor(color1, color2, ratio) {
+    const parseHex = (color) => parseInt(color.substring(1), 16);
+
+    const r1 = (parseHex(color1) >> 16) & 255;
+    const g1 = (parseHex(color1) >> 8) & 255;
+    const b1 = parseHex(color1) & 255;
+
+    const r2 = (parseHex(color2) >> 16) & 255;
+    const g2 = (parseHex(color2) >> 8) & 255;
+    const b2 = parseHex(color2) & 255;
+
+    const r = Math.round(r1 + (r2 - r1) * ratio);
+    const g = Math.round(g1 + (g2 - g1) * ratio);
+    const b = Math.round(b1 + (b2 - b1) * ratio);
+
+    return `#${(1 << 24 | r << 16 | g << 8 | b).toString(16).slice(1)}`;
+}
+
+export { server_is_up, pingURL, fill_prob, text_prob, interpolateHexColor };

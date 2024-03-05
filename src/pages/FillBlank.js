@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import "./FillBlankModel.css";
 // import "../App.css";
 import { sentenceList } from "../data-sets/fillBlank";
-import {server_is_up, fill_prob } from './AI_server_interface.js';
+import {server_is_up, fill_prob, interpolateHexColor } from './AI_server_interface.js';
 
 // creates a list with five random sentences from the dataset 
 const sentences = sentenceList.sort(() => Math.random() - 0.5).slice(0, 5); 
@@ -23,31 +23,6 @@ async function pingURL(url) {
 
 const ml_server_is_up = await pingURL(url_address);
 
-function fill_prob(before, fill, after, ratio) {
-  const params = {
-    before: before,
-    fill: fill,
-    after: after,
-    ratio: ratio,
-  };
-
-  const url = new URL(url_address); // Replace url_address with your actual URL
-  url.search = new URLSearchParams(params).toString();
-  return fetch(url)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response.json(); // Parse the JSON response
-    })
-    .then((data) => {
-      return data; // Process the data
-    })
-    .catch((error) => {
-      throw error; // Rethrow the error to propagate it
-    });
-}
-
 function Sentence({ sentence, answer, correct, setCurrentSentence, currentSentence }) {
     const [userInput, setUserInput] = useState("");
     const [inputColor, setInputColor] = useState("white");
@@ -63,7 +38,7 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
     const [checkButtonDisabled, setCheckButtonDisabled] = useState(true);
     const [answerChecked, setAnswerChecked] = useState(false);
     const [grading, setGrading] = useState(0);
-    const [colorScale, setColorScale] = useState("#000000")
+    const [colorScale, setColorScale] = useState("#000000");
     const [gradingIsLoading, setGradingIsLoading] = useState(false);
 
     const checkAnswer = () => {
@@ -144,24 +119,6 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
         // document.getElementById("next").style.backgroundColor = "lightgray";
         // document.getElementById("next").style.color = "gray";
     }
-  
-    function interpolateHexColor(color1, color2, ratio) {
-        const parseHex = (color) => parseInt(color.substring(1), 16);
-
-        const r1 = (parseHex(color1) >> 16) & 255;
-        const g1 = (parseHex(color1) >> 8) & 255;
-        const b1 = parseHex(color1) & 255;
-
-        const r2 = (parseHex(color2) >> 16) & 255;
-        const g2 = (parseHex(color2) >> 8) & 255;
-        const b2 = parseHex(color2) & 255;
-
-        const r = Math.round(r1 + (r2 - r1) * ratio);
-        const g = Math.round(g1 + (g2 - g1) * ratio);
-        const b = Math.round(b1 + (b2 - b1) * ratio);
-
-        return `#${(1 << 24 | r << 16 | g << 8 | b).toString(16).slice(1)}`;
-    }
     
     const setDisplayGrade = (grade) => {
         console.log("?", grade)
@@ -174,8 +131,7 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
         document.getElementById("input").style.borderColor = hex_color;
         if(grade > 0.85){
             document.getElementById("allstar").style.visibility = "visible";
-        }
-        
+        }  
     }
 
     const handleKeyPress = (event) => {
