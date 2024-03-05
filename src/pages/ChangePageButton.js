@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const ChangePageButton = ({ to, label }) => {
+const ChangePageButton = ({ to, label, classname }) => {
     const nav = useNavigate();
 
     const changePage = () => {
@@ -9,7 +9,7 @@ const ChangePageButton = ({ to, label }) => {
     };
 
     return (
-        <button onClick={changePage}>
+        <button className={classname} onClick={changePage}>
             {label}
         </button>
     );
