@@ -90,6 +90,9 @@ function CreateSentence() {
     setNextDisabled(true);
     setWordsDisabled(false);
     setCheckButtonDisabled(false); 
+
+    setAnswerChecked(false);
+    setGrading(0);
   }
 
   const handleWordClick = (word, index) => {

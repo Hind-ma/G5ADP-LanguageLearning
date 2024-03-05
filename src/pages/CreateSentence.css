@@ -3,6 +3,7 @@
   flex-direction: column;
   align-items: center;
 }
+
 .sentence-activity {
     display: flex;
     flex-direction: column;
