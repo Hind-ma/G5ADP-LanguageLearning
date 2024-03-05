@@ -7,8 +7,10 @@ import { wordList } from "../data-sets/pickLearnConnect";
 
 import { useLocation } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
+import { ShuffleArray } from "../utils";
 
-var pairsList = wordList.sort(() => Math.random() - 0.5).slice(0, 4);
+//var pairsList = wordList.sort(() => Math.random() - 0.5).slice(0, 4);
+var pairsList = ShuffleArray(wordList).slice(0, 4);
 
 const ConnectWords = () => {
   

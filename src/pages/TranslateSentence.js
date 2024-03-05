@@ -1,6 +1,6 @@
 import ChangePageButton from "./ChangePageButton";
 import React, {useEffect, useState} from "react"
-import { GetRandomInt } from "../utils";
+import { GetRandomInt, ShuffleArray } from "../utils";
 import {completeList} from "../data-sets/compose-translate";
 import './TranslateSentence.css';
 
@@ -8,7 +8,8 @@ import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 // creates a list with five random sentences form the dataset 
-var sentenceList = completeList.sort(() => Math.random() - 0.5).slice(0, 5); 
+//var sentenceList = completeList.sort(() => Math.random() - 0.5).slice(0, 5);
+var quizSentences = ShuffleArray(completeList).slice(0, 5);
 
 function TranslateSentence() {
   // consts for the user input
@@ -34,7 +35,8 @@ function TranslateSentence() {
     quizList = state.fullQuiz;
   }
 
-  const currSentence = sentenceList[sentenceIndex];
+  //quizSentences = ShuffleArray(quizSentences);
+  const currSentence = quizSentences[sentenceIndex];
   
   // Switch the direction of translation randomly
   useEffect(() => {
@@ -89,7 +91,7 @@ function TranslateSentence() {
    };*/
 
    const handleNextButtonClicked = () => {
-    setSentenceIndex((sentenceIndex + 1) % sentenceList.length);
+    setSentenceIndex((sentenceIndex + 1) % quizSentences.length);
     if (quizList.length !== 0) {
       quizList.shift();
       console.log(quizList.length);
@@ -131,7 +133,7 @@ function TranslateSentence() {
         {showRoundScore ? (
           <div className="round-score">
             <h2>
-              You got {score} out of {sentenceList.length} correct
+              You got {score} out of {quizSentences.length} correct
             </h2>
             <ChangePageButton to="/" label="End round" />
           </div>

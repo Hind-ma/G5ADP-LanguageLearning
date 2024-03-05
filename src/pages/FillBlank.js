@@ -6,6 +6,7 @@ import { sentenceList } from "../data-sets/fillBlank";
 
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { ShuffleArray } from "../utils";
 
 var sentences = sentenceList;
 
@@ -238,6 +239,7 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
 
 function FillBlank() {
     const [currentSentence, setCurrentSentence] = useState(0);
+    sentences = ShuffleArray(sentences);
 
     const {state} = useLocation();
     var quizList = [];

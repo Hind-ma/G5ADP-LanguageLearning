@@ -80,7 +80,6 @@ function CreateSentence() {
         }
 
         setCurrentSenIdx((currentSenIdx + 1) % makeSentences.length);
-        //console.log("senId: " + currentSenIdx);
 
         setSentence([]);
         setShowResult(false);
