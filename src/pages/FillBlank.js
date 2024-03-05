@@ -4,7 +4,8 @@ import React, { useState } from "react";
 import "./FillBlankModel.css";
 // import "../App.css";
 import { sentenceList } from "../data-sets/fillBlank";
-import {server_is_up, fill_prob, interpolateHexColor } from './AI_server_interface.js';
+import EndQuizButton from "./EndQuizButton";
+import { server_is_up, fill_prob, interpolateHexColor } from "./AI_server_interface.js";
 
 // creates a list with five random sentences from the dataset 
 const sentences = sentenceList.sort(() => Math.random() - 0.5).slice(0, 5); 
@@ -284,8 +285,10 @@ function FillBlank() {
   const [currentSentence, setCurrentSentence] = useState(0);
 
     return (
-        <div className="App">
-            <ChangePageButton to="/home" label="Go to Home page" />
+    <div>
+          <div className="cancel-header">
+              <EndQuizButton to={"/learn"} />
+      </div>
 
             <h1 className="fill-title">Fill in the blank of this sentence</h1>
             <Sentence

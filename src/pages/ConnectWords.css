@@ -1,8 +1,9 @@
 /* ConnectWords.css */
+
+
 .word-pairs-container {
     display: flex;
     justify-content: center;
-    margin: 50px; /* Adjust the margin as needed */
   }
   
 .word-column {
@@ -27,13 +28,20 @@
     margin: 30px;
     text-transform: lowercase;
     pointer-events: all;
-}  
+} 
 
+.connect-word-button:hover {
+    border-color: var(--grey-outline);
+    color: var(--grey-disabled);
+    background-color: #ffffff;
+    cursor: pointer;
+}
 .clicked {
     /*background-color: #e6f7ff; */
     background-color: var(--main-color);
     border: none;
     color: #FFFFFF;
+    pointer-events: none;
 }
 
 .correct {
@@ -41,6 +49,7 @@
     border: none;
     color: #FFFFFF;
     position: relative;
+    pointer-events: none;
 }
 
 .correct::before{

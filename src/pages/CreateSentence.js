@@ -1,9 +1,10 @@
 import ChangePageButton from "./ChangePageButton";
 import { GetRandomInt, ShuffleArray } from "../utils";
 import { useState, useEffect } from "react";
-import {completeList} from "../data-sets/compose-translate";
-import './CreateSentence.css';
-import {text_prob, server_is_up, interpolateHexColor} from "./AI_server_interface"
+import { completeList } from "../data-sets/compose-translate";
+import "./CreateSentence.css";
+import { text_prob, server_is_up , interpolateHexColor} from "./AI_server_interface";
+import EndQuizButton from "./EndQuizButton";
 
 // creates a list with five random sentences from the dataset 
 const makeSentences = completeList.sort(() => Math.random() - 0.5).slice(0, 5)
@@ -160,97 +161,138 @@ function CreateSentence() {
     setColorScale(hex_color);    
   }
 
+  const checkSentence = (senId) => {
+    const user_scenatnce = sentence.join(" ");
+    const correct_scentance = makeSentences[senId].words.join(" ");
+    if (server_is_up) {
+      const correct_promise = text_prob(correct_scentance);
+      const user_promise = text_prob(user_scenatnce);
+      Promise.all([correct_promise, user_promise])
+        .then((dataArray) => {
+          const [correct_prob, user_prob] = dataArray;
+          let grad;
+          if (user_prob < correct_prob) {
+            grad = user_prob / correct_prob;
+          } else {
+            grad = 1;
+          }
+
+          setIsCorrect(grad > 0.6);
+          setShowResult(true);
+          setNextDisabled(false);
+          setWordsDisabled(true);
+          console.log(user_prob, correct_prob, grad);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    } else {
+      var cor = user_scenatnce === correct_scentance;
+      setIsCorrect(cor);
+      setShowResult(true);
+      setNextDisabled(false);
+      setWordsDisabled(true);
+      //console.log("res: " + cor);
+    }
+  };
+
   return (
-    <div>
-      {showRoundScore ? (
-        <div className="round-score">
-          <h2>
-              You got {score.toFixed(2)} out of {makeSentences.length} correct, on {tries} tries
-          </h2>
-          <ChangePageButton to="/home" label="End round" />
-        </div>
-      ) : (
-        <div>
-          <ChangePageButton to="/home" label="Go to Home" />
-          <div className="page-head">
-            <p>Make the sentence by selecting the words</p>
+    <div className="create-sentence">
+      <div className="cancel-header">
+        <EndQuizButton to={"/learn"} />
+      </div>
+      <div className="sentence-activity">
+        {showRoundScore ? (
+          <div className="round-score">
+            <h2>
+                You got {score.toFixed(2)} out of {makeSentences.length} correct, on {tries} tries
+            </h2>
+            <ChangePageButton to="/home" label="End round" />
           </div>
-          <div className={`result-container ${showResult ? (isCorrect ? 'rt' : 'wr') : null}`}>
-            <ResultBox bDisplay={showResult} bSuccess={isCorrect} />
-            <DisplayCorrectSentence bDisplay={showResult} bSuccess={isCorrect} sentence={currentSentence.join(' ')} />
-          </div>
-          <div className="user-sen-container">
-            <p className="user-sen">
-              {sentence.length > 0 ? sentence.join(' ') : null}
-            </p>
-          </div>
-          <div className="word-container" >
-            {shuffledWords.map((word, index) => (
-              <button
-                id={index} 
-                className="word-button"
-                key={index}
-                disabled={wordsDisable}
-                onClick={() => handleWordClick(word, index)}
-              >
-                {word}
-              </button>
-            ))}
-          </div>
+        ) : (
+          <div>
+            <div className="page-head">
+              <p>Make the sentence by selecting the words</p>
+            </div>
+            <div className={`result-container ${showResult ? (isCorrect ? 'rt' : 'wr') : null}`}>
+              <ResultBox bDisplay={showResult} bSuccess={isCorrect} />
+              <DisplayCorrectSentence bDisplay={showResult} bSuccess={isCorrect} sentence={currentSentence.join(' ')} />
+            </div>
+            <div className="user-sen-container">
+              <p className="user-sen">
+                {sentence.length > 0 ? sentence.join(' ') : null}
+              </p>
+            </div>
+            <div className="word-container" >
+              {shuffledWords.map((word, index) => (
+                <button
+                  id={index} 
+                  className="word-button"
+                  key={index}
+                  disabled={wordsDisable}
+                  onClick={() => handleWordClick(word, index)}
+                >
+                  {word}
+                </button>
+              ))}
+            </div>
 
-          {/* Show the grading */}
-          {gradingIsLoading && (
-            <div>Grading is being calculated...</div>
-          )}
-          {answerChecked && !gradingIsLoading && (
-            <>
-              <div>Grading: {grading.toFixed(2)}/1</div>
+            {/* Show the grading */}
+            {gradingIsLoading && (
+              <div>Grading is being calculated...</div>
+            )}
+            {answerChecked && !gradingIsLoading && (
+              <>
+                <div>Grading: {grading.toFixed(2)}/1</div>
 
-              <div style={{ display: "flex", flexDirection: "row" }}>
-                <div
-                  style={{
-                    background: colorScale,
-                    height: "10px", // Adjust the height as needed
-                    width: `${grading * 100}%`, // Adjust the width as needed
-                    marginTop: "5px", 
-                    borderLeft: "1px solid black",
-                    borderTop: "1px solid black",
-                    borderBottom: "1px solid black",
-                  }}
-              />
-              <div
-                  style={{
-                    background: "lightgrey",
-                    height: "10px", // Adjust the height as needed
-                    width: `${(1-grading) * 100}%`, // Adjust the width as needed
-                    marginTop: "5px",
-                    borderRight: "1px solid black",
-                    borderTop: "1px solid black",
-                    borderBottom: "1px solid black", 
-                  }}
+                <div style={{ display: "flex", flexDirection: "row" }}>
+                  <div
+                    style={{
+                      background: colorScale,
+                      height: "10px", // Adjust the height as needed
+                      width: `${grading * 100}%`, // Adjust the width as needed
+                      marginTop: "5px", 
+                      borderLeft: "1px solid black",
+                      borderTop: "1px solid black",
+                      borderBottom: "1px solid black",
+                    }}
                 />
+                <div
+                    style={{
+                      background: "lightgrey",
+                      height: "10px", // Adjust the height as needed
+                      width: `${(1-grading) * 100}%`, // Adjust the width as needed
+                      marginTop: "5px",
+                      borderRight: "1px solid black",
+                      borderTop: "1px solid black",
+                      borderBottom: "1px solid black", 
+                    }}
+                  />
+                </div>
+              </>
+            )}
+
+
+            <div className="button-container">
+              <button 
+                className="check-button" 
+                onClick={() => checkSentence(currentSenIdx)}
+                disabled={checkButtonDisabled}
+              >
+                Check
+              </button>
+              <div className="next-wrap">
+                <NextSentenceButton 
+                  bDisabled={nextDisable} 
+                  onClickFunc={updateMakeSentence} 
+                />  
               </div>
-            </>
-          )}
-
-
-          <div className="button-container">
-            <button 
-              className="check-button" 
-              onClick={() => checkSentence(currentSenIdx)}
-              disabled={checkButtonDisabled}
-            >
-              Check
-            </button>
-            <NextSentenceButton 
-              bDisabled={nextDisable} 
-              onClickFunc={updateMakeSentence} 
-            />
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
-  );
+  )
 }
-
+    
 export default CreateSentence;
