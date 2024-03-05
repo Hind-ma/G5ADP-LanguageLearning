@@ -28,6 +28,12 @@ def get_fill_in_prob():
         prob = swe_gbt.calc_fill_prob(before, fill, after)
     return str(prob)
 
+@app.route('/get_text_prob')
+def get_text_prob():
+    text = request.args.get('text', '')
+    prob = swe_gbt.calc_text_prob(text)
+    return str(prob)
+
 
 if __name__ == '__main__':
     # Default host and port
