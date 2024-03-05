@@ -65,11 +65,12 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
                         // if not exaclty correct, but still considerad correct enough, show correct word 
                         setShowCorrectWord(true); 
                     }
-                    setNextDisabled(false);
                     setCheckButtonDisabled(true);
                     setInputDisabled(true);
                     setScore(prevScore => prevScore + grade);
                 }
+
+                setNextDisabled(false);
 
                 // To handle the score 
                 setTries(prevTries => prevTries + 1); 
@@ -92,14 +93,14 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
                 // To handle the score
                 setScore(prevScore => prevScore + 1);
 
-                setNextDisabled(false);
                 setCheckButtonDisabled(true);
                 setInputDisabled(true);
             } else {
                 setSentenceCorrect(false);
                 setInputColor("red");
                 setDisplayIncorrect();
-            }
+            }                
+            setNextDisabled(false);
             setTries(prevTries => prevTries + 1);
         }
     };

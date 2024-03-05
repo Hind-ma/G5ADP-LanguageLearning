@@ -124,12 +124,12 @@ function CreateSentence() {
           setIsCorrect(false);
         } else {
           setIsCorrect(true);
-          setNextDisabled(false);
           setWordsDisabled(true);
           setCheckButtonDisabled(true);
           setScore(prevScore => prevScore + grade);
         }
         
+        setNextDisabled(false);
         setShowResult(true);
         setTries(prevTries => prevTries + 1);
         setGrading(grade);
@@ -145,10 +145,10 @@ function CreateSentence() {
       if (cor) {
         setScore(prevScore => prevScore + 1);
         setCheckButtonDisabled(true);
-        setNextDisabled(false);
         setWordsDisabled(true);
       } 
 
+      setNextDisabled(false);
       setShowResult(true);
       setTries(prevTries => prevTries + 1);
     } 
