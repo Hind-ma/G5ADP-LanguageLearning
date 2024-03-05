@@ -167,8 +167,6 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
     }
 
     const resetDisplay = () => {
-        // document.getElementById("next").style.backgroundColor = "lightgray";
-        // document.getElementById("next").style.color = "gray";
         document.getElementById("input").style.color = "black";
         document.getElementById("input").style.borderColor = "black";
         document.getElementById("allstar").style.visibility = "hidden";
@@ -261,7 +259,6 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
                     
                     <div className="fill-container">
                         <button 
-                            // id = "check"
                             onClick={checkAnswer} 
                             className="check-button" 
                             disabled={checkButtonDisabled}
@@ -269,7 +266,6 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
                             Check
                         </button>
                         <button 
-                            // id="next" 
                             disabled={nextDisabled} 
                             onClick={handleNextButtonClicked} 
                             className="next-button"

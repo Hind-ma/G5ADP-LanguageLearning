@@ -83,18 +83,17 @@ function CreateSentence() {
     } else {
         setShowRoundScore(true);
     }
-    //console.log("senId: " + currentSenIdx);
 
     setSentence([]);
     setShowResult(false);
     setNextDisabled(true);
     setWordsDisabled(false);
-    setCheckButtonDisabled(false); //TODO
+    setCheckButtonDisabled(false); 
   }
 
   const handleWordClick = (word, index) => {
     if (sentence.includes(word)) {
-      document.getElementById(index).classList.remove("word-disabled"); // TODO have??
+      document.getElementById(index).classList.remove("word-disabled"); 
       setSentence(sentence.filter((w) => w !== word));
       return;
     }
@@ -122,7 +121,6 @@ function CreateSentence() {
         setDisplayGrade(grade);
 
         if (grade < 0.60) {
-          // TODO wrong
           setIsCorrect(false);
         } else {
           setIsCorrect(true);
@@ -136,7 +134,6 @@ function CreateSentence() {
         setTries(prevTries => prevTries + 1);
         setGrading(grade);
         
-        console.log(user_prob, correct_prob, grade); //TODO for debugging
       }).catch(error => {console.error('Error:', error);})
       .finally(() => {
         setAnswerChecked(true);
@@ -160,15 +157,7 @@ function CreateSentence() {
   const setDisplayGrade = (grade) => {
     console.log("?", grade)
     const hex_color = interpolateHexColor("#C84C4C","#79BB6E", grade);
-    setColorScale(hex_color);
-
-    // document.getElementById("next").style.backgroundColor = "#6169e1";
-    // document.getElementById("next").style.color = "#ffffff";
-    // document.getElementById(index).style.color =hex_color;
-    //document.getElementById("input").style.borderColor = hex_color;
-    // if(grade > 0.60){
-    //     document.getElementById("allstar").style.visibility = "visible";
-    // }    
+    setColorScale(hex_color);    
   }
 
   return (
@@ -198,7 +187,7 @@ function CreateSentence() {
           <div className="word-container" >
             {shuffledWords.map((word, index) => (
               <button
-                id={index} //TODO NEEDED???
+                id={index} 
                 className="word-button"
                 key={index}
                 disabled={wordsDisable}
