@@ -9,10 +9,11 @@ import streak from "../images/streak.png"
 import chart from "../images/barChart.png"
 import progress from "../images/progress.png"
 
+import Header from "./Header";
 
 /**
  * categoryList
- * 
+ *
  * NOTE: Temporary category list for the demo/MVP.
  * I'm using routePage to determine the button disable state.
  * This is *NOT* a good solution but probably will do for now.
@@ -27,11 +28,11 @@ export const categoryList = [
 
 /**
  * LearnButton - for users to start learing or continue learning.
- * 
+ *
  * NOTE: I'm deliberatly making any non-guest user have it display as
  * "Continue Learning" since we actually don't have any progress stored.
  */
-function LearnButton({bGuestUser}) {
+function LearnButton({ bGuestUser }) {
   const item = bGuestUser ? "Start Learning" : "Continue Learning";
   return (
     <div>
@@ -77,12 +78,10 @@ function CategoryButton({label, route, bDisabled,pic}) {
 /**
  * StatsButton - Displays basic user stats
  */
-function StatsButton({label}) {
+function StatsButton({ label }) {
   return (
     <div>
-      <button>
-        {label}
-      </button>
+      <button>{label}</button>
     </div>
   );
 }
@@ -95,9 +94,21 @@ function StatsDisplay() {
     <div>
       {/* TODO: @CS, remove the para tag below, placeholder stats, Stats */}
       <p>Stats</p>
-        <StatsButton label={sessionStorage.getItem("dayStreak").toLocaleString() +  " Day Streak!"} />
-        <StatsButton label={sessionStorage.getItem("wordPerc").toLocaleString() + "% of All Words"} />
-        <StatsButton label={sessionStorage.getItem("wordRate").toLocaleString() + " Words/Day"} />
+      <StatsButton
+        label={
+          sessionStorage.getItem("dayStreak").toLocaleString() + " Day Streak!"
+        }
+      />
+      <StatsButton
+        label={
+          sessionStorage.getItem("wordPerc").toLocaleString() + "% of All Words"
+        }
+      />
+      <StatsButton
+        label={
+          sessionStorage.getItem("wordRate").toLocaleString() + " Words/Day"
+        }
+      />
     </div>
   );
 }
@@ -110,9 +121,8 @@ function GenerateDayStreak() {
     var val = GetRandomInt(1, 7);
     sessionStorage.setItem("dayStreak", val);
     return val;
-  }
-  else {
-    return sessionStorage.getItem("dayStreak")
+  } else {
+    return sessionStorage.getItem("dayStreak");
   }
 }
 
@@ -121,8 +131,7 @@ function GenerateWordPercent() {
     var val = GetRandomInt(30, 60);
     sessionStorage.setItem("wordPerc", val);
     return val;
-  }
-  else {
+  } else {
     return sessionStorage.getItem("wordPerc");
   }
 }
@@ -132,8 +141,7 @@ function GenerateWordRate() {
     var val = GetRandomInt(4, 9);
     sessionStorage.setItem("wordRate", val);
     return val;
-  }
-  else {
+  } else {
     return sessionStorage.getItem("wordRate");
   }
 }
@@ -143,15 +151,14 @@ function GenerateWordCount() {
     var val = GetRandomInt(35, 75);
     sessionStorage.setItem("wordCount", val);
     return val;
-  }
-  else {
+  } else {
     return sessionStorage.getItem("wordCount");
   }
 }
 
 function Home() {
-  var currentUsername = sessionStorage.getItem('username');
-  var bGuest = currentUsername === 'Guest User';
+  var currentUsername = sessionStorage.getItem("username");
+  var bGuest = currentUsername === "Guest User";
 
   // Store "FAKE" stats to make it consistent with account page view
   var [dayStreak] = useState(GenerateDayStreak);
@@ -165,16 +172,16 @@ function Home() {
 
   var [wordCount] = useState(GenerateWordCount);
   sessionStorage.setItem("wordCount", wordCount);
-  
+
   return (
-  <div>
+    <div>
+      <Header />
       {/* Navigation Buttons */}
       {/* currentUsername.charAt(0).toLocaleUpperCase() + currentUsername.slice(1) */}
       <div className="top-heading">
         <h4>Welcome {currentUsername.toLocaleUpperCase()}</h4>
       </div>
       <div className="top-btn-container">
-        <ChangePageButton to="/account" label={bGuest ? "Guest Home" : currentUsername.toLocaleUpperCase() + "'s Home"} />
         {/*<ChangePageButton to="/" label="LOG OUT" />*/}
       </div>
       <div className="home-page-content">
@@ -195,7 +202,7 @@ function Home() {
       <div className="stats-btn-container">
         {bGuest ? null : <StatsDisplay />}
       </div>
-  </div>
+    </div>
   );
 }
 

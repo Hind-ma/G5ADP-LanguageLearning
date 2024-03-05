@@ -6,6 +6,7 @@
 .fill-input {
     display: inline-block;
     margin-left: 10px;
+    margin-right: 10px;
     font-size: 25px;
     font-weight: bold;
     border-left: none;

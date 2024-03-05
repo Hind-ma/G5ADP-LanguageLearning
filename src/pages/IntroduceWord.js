@@ -2,10 +2,8 @@ import ChangePageButton from "./ChangePageButton";
 import { GetRandomInt } from "../utils";
 import { useState } from "react";
 import "./IntroduceWord.css";
-import blblob from "../pictures/bottom-left-blob.png";
-import tlblob from "../pictures/top-left-blob.png";
-import trblob from "../pictures/top-right-blob.png";
 import { wordList } from "../data-sets/pickLearnConnect";
+import EndQuizButton from "./EndQuizButton";
 
 /* TODO: @CS, Remove in future - this is only for Sprint 1 demo */
 /*const introWords = [
@@ -61,7 +59,9 @@ function PrintWordHeader() {
 function NextWordButton({ onClick }) {
   return (
     <div>
-      <button onClick={onClick}>Next Word</button>
+      <button className="next-button" onClick={onClick}>
+        Next Word
+      </button>
     </div>
   );
 }
@@ -79,7 +79,9 @@ function IntroduceWord() {
 
   return (
     <div className="background">
-      <ChangePageButton to="/home" label="Go to Home" />
+      <div className="cancel-header">
+        <EndQuizButton to={"/learn"} />
+      </div>
       <div>
         <PrintWordHeader />
         <PrintWord id={currentIdx} />
