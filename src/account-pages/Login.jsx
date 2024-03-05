@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Account.css";
+import "./Account_login.css";
 
 export const Login = (props) => {
     const [name, setName] = useState("");
@@ -27,9 +27,11 @@ export const Login = (props) => {
     };
 
     return (
-        <div className="auth-form-container">
+        <div>
+            <h1 className="fontHeader">Log In</h1>
+        <div>
             <form className="login-form" onSubmit={handleSubmit}>
-                <label className="font" htmlFor="name">Name</label>
+                <h3 className="font" htmlFor="name">Name</h3>
                 <input
                     value={name}
                     onChange={(e) => setName(e.target.value)}
@@ -39,7 +41,7 @@ export const Login = (props) => {
                     name="name"
                 />
 
-                <label className="font" htmlFor="password">Password</label>
+                <h3 className="font" htmlFor="password">Password</h3>
                 <input
                     value={pass}
                     onChange={(e) => setPass(e.target.value)}
@@ -53,14 +55,16 @@ export const Login = (props) => {
                     Log in
                 </button>
                 <p id="confirmation"></p>
-            </form>
+            
             <button
                 id="switchRegister"
                 onClick={() => props.onFormSwitch("register")}
-                className="check-button"
+                className="check-button-register"
             >
                 Don't have an account? Register here
-            </button>
+                    </button>
+                </form>
+            </div>
         </div>
     );
 };

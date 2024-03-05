@@ -37,10 +37,12 @@ export const Register = (props) => {
     sessionStorage.setItem(name, parsedUserData);
   };
 
-  return (
-    <div className="auth-form-container">
+    return (
+        <div>
+            <h1 className="fontHeader">Register</h1>
+      <div className="auth-form-container">
       <form noValidate className="register-form" onSubmit={handleSubmit}>
-       <label className="font"  htmlFor="name">Name</label>
+       <h3 className="font"  htmlFor="name">Name</h3>
         <input
           value={name}
           onChange={(e) => setName(e.target.value)}
@@ -50,7 +52,7 @@ export const Register = (props) => {
           name="name"
         />
 
-       <label className="font" htmlFor="email">Email</label>
+       <h3 className="font" htmlFor="email">Email</h3>
         <input
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -60,7 +62,7 @@ export const Register = (props) => {
           name="email"
         />
 
-       <label className="font" htmlFor="password">Password</label>
+              <h3 className="font" htmlFor="password">Password</h3>
         <input
           value={pass}
           onChange={(e) => setPass(e.target.value)}
@@ -70,7 +72,7 @@ export const Register = (props) => {
           name="password"
         />
 
-       <label className="font" htmlFor="confirmPassword">Confirm password</label>
+              <h3 className="font" htmlFor="confirmPassword">Confirm password</h3>
         <input
           value={confPass}
           onChange={(e) => setConfPass(e.target.value)}
@@ -93,6 +95,7 @@ export const Register = (props) => {
           </button>
         </div>
       </form>
-    </div>
+            </div>
+        </div>
   );
 };

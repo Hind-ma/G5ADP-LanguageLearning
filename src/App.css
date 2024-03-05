@@ -119,7 +119,7 @@ input {
 }
 
 .next-button::after {
-  /*content: url('./images/next-arrow.svg');*/
+  content: url('./images/next-arrow.svg');
     position: absolute;
     width:1.5rem;
     height: 1.5rem;
