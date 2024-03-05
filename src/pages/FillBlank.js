@@ -6,7 +6,6 @@ import { sentenceList } from "../data-sets/fillBlank";
 
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { GetRandomInt } from "../utils";
 
 var sentences = sentenceList;
 
@@ -238,7 +237,7 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
 }
 
 function FillBlank() {
-    const [currentSentence, setCurrentSentence] = useState(GetRandomInt(0, sentences.length));
+    const [currentSentence, setCurrentSentence] = useState(0);
 
     const {state} = useLocation();
     var quizList = [];

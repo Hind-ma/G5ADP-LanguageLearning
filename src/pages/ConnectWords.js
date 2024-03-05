@@ -8,8 +8,8 @@ import { wordList } from "../data-sets/pickLearnConnect";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 
+var pairsList = wordList.sort(() => Math.random() - 0.5).slice(0, 4);
 
-var pairsList = wordList.sort(() => Math.random() - 0.5).slice(0, 4); 
 const ConnectWords = () => {
   
   const [wordPairs, setWordPairs] = useState(pairsList);
@@ -137,7 +137,7 @@ const ConnectWords = () => {
         const oppositeLanguage = selectedLanguage === "swedish" ? "english" : "swedish";
         updateRemainingLanguageButtons(selectedId, oppositeLanguage, "");
         updateRemainingLanguageButtons(selectedId, selectedLanguage, "");
-      }, 1500);
+      }, 1000);
     } else {
       // wrong answer
       setResult((prevResult) => ({
@@ -157,7 +157,7 @@ const ConnectWords = () => {
         updateButtonState(selectedId, selectedLanguage, "");
         const oppositeLanguage = selectedLanguage === "swedish" ? "english" : "swedish";
         updateRemainingLanguageButtons(selectedId, selectedLanguage, "");
-      }, 1500);
+      }, 1000);
     }
   };
 
@@ -177,14 +177,13 @@ const ConnectWords = () => {
    };
 
   useEffect(() => {
-    if (
-      result.correct === wordPairs.length &&
-      matchedPairs.length === wordPairs.length
-    ) {
+    if (result.correct === wordPairs.length && matchedPairs.length === wordPairs.length) {
       //setFeedbackMessage(
       //  `You got ${result.correct} out of ${result.tries} on the first try!`
       //);
       //setShowResult(true);
+      //pairsList = wordList.sort(() => Math.random() - 0.5).slice(0, 4);
+      //setWordPairs((wordPairs) => {wordPairs = pairsList});
       setNextButtonDisabled(false);
     }
   }, [result, wordPairs.length, matchedPairs.length]);
