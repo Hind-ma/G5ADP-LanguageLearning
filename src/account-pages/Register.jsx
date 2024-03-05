@@ -82,7 +82,7 @@ export const Register = (props) => {
           name="confirmPassword"
         />
 
-        <button id="create" type="submit" className="button next-button">
+        <button id="create" type="submit" className="check-button">
           Sign up
         </button>
 
@@ -90,7 +90,7 @@ export const Register = (props) => {
 
         <div className="login-link-container">
           <p>Already have an account?</p>
-          <button id="switchLogin" onClick={() => props.onFormSwitch("login")} className="button check-button">
+          <button id="switchLogin" onClick={() => props.onFormSwitch("login")} className="check-button">
             Log in
           </button>
         </div>

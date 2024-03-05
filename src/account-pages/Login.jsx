@@ -51,17 +51,17 @@ export const Login = (props) => {
                     name="password"
                 />
 
-                <button id="lCreate" type="submit" className="next-button">
+                <button id="lCreate" type="submit" className="check-button">
                     Log in
                 </button>
                 <p id="confirmation"></p>
-            
+                <p>Don't have an account? </p>
             <button
                 id="switchRegister"
                 onClick={() => props.onFormSwitch("register")}
-                className="check-button-register"
+                className="check-button"
             >
-                Don't have an account? Register here
+                Sign up
                     </button>
                 </form>
             </div>

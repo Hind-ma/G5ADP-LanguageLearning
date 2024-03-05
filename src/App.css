@@ -23,7 +23,7 @@
 }
 
 .auth-form-container {
-  border: 5px solid;
+  border: none;
   position: absolute;
   top: 50%;
   left: 50%;
