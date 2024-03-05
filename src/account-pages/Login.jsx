@@ -39,6 +39,7 @@ export const Login = (props) => {
                     placeholder="Karl"
                     id="name"
                     name="name"
+                    className="account-input"
                 />
 
                 <h3 className="font" htmlFor="password">Password</h3>
@@ -49,6 +50,7 @@ export const Login = (props) => {
                     placeholder="*********"
                     id="password"
                     name="password"
+                    className="account-input"
                 />
 
                 <button id="lCreate" type="submit" className="check-button">

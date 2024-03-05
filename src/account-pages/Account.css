@@ -124,7 +124,7 @@ button {
     font-family: "Signika", Verdana, Tahoma, sans-serif;
 }
 
-input {
+.account-input {
     font-family: "Signika", Verdana, Tahoma, sans-serif;
     height: 36px;
     width:90%;

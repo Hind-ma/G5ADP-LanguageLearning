@@ -50,6 +50,7 @@ export const Register = (props) => {
           placeholder="Karl Nils"
           id="name"
           name="name"
+          className="account-input"
         />
 
        <h3 className="font" htmlFor="email">Email</h3>
@@ -60,6 +61,7 @@ export const Register = (props) => {
           placeholder="Learn@swedish.com"
           id="email"
           name="email"
+          className="account-input"
         />
 
               <h3 className="font" htmlFor="password">Password</h3>
@@ -70,6 +72,7 @@ export const Register = (props) => {
           placeholder="*****"
           id="password"
           name="password"
+          className="account-input"
         />
 
               <h3 className="font" htmlFor="confirmPassword">Confirm password</h3>
@@ -80,6 +83,7 @@ export const Register = (props) => {
           placeholder="*****"
           id="confirmPassword"
           name="confirmPassword"
+          className="account-input"
         />
 
         <button id="create" type="submit" className="check-button">
