@@ -11,14 +11,8 @@
     --text-color: #000;
 }
 
-body {
-    background-image: url("https://i.imgur.com/BT2wrLt.png");
-    background-size: cover;
-    background-position: center;
-    margin: 0;
-    padding: 0;
-}
 
+/*
 
 
 .auth-form-container !important
@@ -49,7 +43,9 @@ body {
     font-size: 60px;
 }
 
+*/
 /** Introduce word */
+/*
 .intro-word {
     border: 1px solid;
     transform: translate(0%, 25%);
@@ -65,8 +61,10 @@ body {
         transform: rotate(360deg);
     }
 }
+*/
 
 /* Home page */
+/*
 .button-container {
     display: flex;
     justify-content: center;
@@ -82,6 +80,7 @@ button {
     font-family: "Signika", Verdana, Tahoma, sans-serif;
 }
 
+
 account-input {
     font-family: "Signika", Verdana, Tahoma, sans-serif;
     height: 36px;
@@ -91,4 +90,5 @@ account-input {
     font-size: 16px;
     margin-bottom: 10px;
 }
+*/
 

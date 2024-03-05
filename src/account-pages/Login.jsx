@@ -27,9 +27,8 @@ export const Login = (props) => {
     };
 
     return (
-        <div>
+        <div className="background-form">
             <h1 className="fontHeader">Log In</h1>
-        <div>
             <form className="login-form" onSubmit={handleSubmit}>
                 <h3 className="font" htmlFor="name">Name</h3>
                 <input
@@ -53,20 +52,22 @@ export const Login = (props) => {
                     className="account-input"
                 />
 
-                <button id="lCreate" type="submit" className="check-button">
+                <button id="lCreate" type="submit" className="account-button">
                     Log in
                 </button>
-                <p id="confirmation"></p>
-                <p>Don't have an account? </p>
-            <button
-                id="switchRegister"
-                onClick={() => props.onFormSwitch("register")}
-                className="check-button"
-            >
-                Sign up
-                    </button>
+                <p id="confirmation" className="confirmation"></p>
+                <div className="login-link-container">
+                    <p>Don't have an account? </p>
+                                <button
+                    id="switchRegister"
+                    onClick={() => props.onFormSwitch("register")}
+                    className="account-button"
+                                >
+                    Sign up
+                        </button>
+                </div>
                 </form>
-            </div>
+            
         </div>
     );
 };

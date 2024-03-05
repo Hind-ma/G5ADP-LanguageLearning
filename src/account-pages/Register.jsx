@@ -38,10 +38,10 @@ export const Register = (props) => {
   };
 
     return (
-        <div>
-            <h1 className="fontHeader">Register</h1>
+        <div className="background-form">
       <div className="auth-form-container">
-      <form noValidate className="register-form" onSubmit={handleSubmit}>
+      <h1 className="fontHeader">Register</h1>
+      <form noValidate className="login-form" onSubmit={handleSubmit}>
        <h3 className="font"  htmlFor="name">Name</h3>
         <input
           value={name}
@@ -86,15 +86,15 @@ export const Register = (props) => {
           className="account-input"
         />
 
-        <button id="create" type="submit" className="check-button">
+        <button id="create" type="submit" className="account-button">
           Sign up
         </button>
 
-        <p id="confirmation"></p>
+        <p id="confirmation" className="confirmation"></p>
 
         <div className="login-link-container">
           <p>Already have an account?</p>
-          <button id="switchLogin" onClick={() => props.onFormSwitch("login")} className="check-button">
+          <button id="switchLogin" onClick={() => props.onFormSwitch("login")} className="account-button">
             Log in
           </button>
         </div>
