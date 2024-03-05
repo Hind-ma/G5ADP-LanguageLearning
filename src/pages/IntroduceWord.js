@@ -3,6 +3,7 @@ import { GetRandomInt } from "../utils";
 import { useState } from "react";
 import "./IntroduceWord.css";
 import { wordList } from "../data-sets/pickLearnConnect";
+import EndQuizButton from "./EndQuizButton";
 
 /* TODO: @CS, Remove in future - this is only for Sprint 1 demo */
 /*const introWords = [
@@ -78,7 +79,9 @@ function IntroduceWord() {
 
   return (
     <div className="background">
-      <ChangePageButton to="/home" label="Go to Home" />
+      <div className="cancel-header">
+        <EndQuizButton to={"/learn"} />
+      </div>
       <div>
         <PrintWordHeader />
         <PrintWord id={currentIdx} />

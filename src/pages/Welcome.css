@@ -5,7 +5,7 @@
     width: 100vw;
     height: 95vh;*/
     width: 55vw;
-    height: 86vh;
+    height: 79vh;
     left: 0;
     top: 0;
     background-image:  url("../images/hellobubble.png"), url("../images/hejbubble.png"), url("../images/welcomeblob.png");
@@ -34,29 +34,8 @@
     text-align: left;
 }
 
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 20vh;
-    padding: 0 20px;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
 
-.logo {
-    height: 40px;
-}
 
-.login-button {
-    height: 40px;
-    padding: 0 20px;
-    background-color: #6A80CF;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
 
 .content {
     display: flex;
@@ -105,6 +84,7 @@
     margin-top: 15;
     left: 0;
     top: 15%; /* Changed from 20% to 15% */
+    text-align: center;
 } 
 
 .button {
@@ -118,20 +98,18 @@
     box-shadow:0px 4px 14px 0 rgba(0,0,0,0.1);
     border:none;
     border-radius: 20px;
-    transition: 1360ms;
     transform: translateY(0);
     display: flex;
     flex-direction: row;
     align-self: flex-start;
     cursor: pointer;
     margin-top: 5vh;
+    width: 10em;
+    height: 4em;
+    display: inline-block;
 }
 
-.btn:hover {
-    transition: 1360ms;
+.button:hover {
     padding: 10px 50px;
-    transform: translateY(-0px);
-    background-color: #D8D8D8;
-    color: #6a80cf;
-    border: solid 2px #6a80cf;
+    background-color: var(--main-color-light);
 }

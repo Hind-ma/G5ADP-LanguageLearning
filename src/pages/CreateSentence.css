@@ -1,9 +1,16 @@
+.create-sentence{
+    display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-
-.create-sentence {
+.sentence-activity {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 40vw;
+    justify-content: center;
+    align-self: center;
 
 }
 
