@@ -186,6 +186,7 @@ const ConnectWords = () => {
       //setShowResult(true);
       //pairsList = wordList.sort(() => Math.random() - 0.5).slice(0, 4);
       //setWordPairs((wordPairs) => {wordPairs = pairsList});
+      //pairsList = ShuffleArray(wordList).slice(0, 4);
       setNextButtonDisabled(false);
     }
   }, [result, wordPairs.length, matchedPairs.length]);

@@ -1,6 +1,6 @@
 import ChangePageButton from "./ChangePageButton";
 import React, {useEffect, useState} from "react"
-import { GetRandomInt, ShuffleArray } from "../utils";
+import { ShuffleArray } from "../utils";
 import {completeList} from "../data-sets/compose-translate";
 import './TranslateSentence.css';
 
@@ -35,7 +35,6 @@ function TranslateSentence() {
     quizList = state.fullQuiz;
   }
 
-  //quizSentences = ShuffleArray(quizSentences);
   const currSentence = quizSentences[sentenceIndex];
   
   // Switch the direction of translation randomly
@@ -91,6 +90,8 @@ function TranslateSentence() {
    };*/
 
    const handleNextButtonClicked = () => {
+    // TODO: @CS, maybe this shuffle is overkill?
+    quizSentences = ShuffleArray(quizSentences);
     setSentenceIndex((sentenceIndex + 1) % quizSentences.length);
     if (quizList.length !== 0) {
       quizList.shift();

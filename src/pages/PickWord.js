@@ -74,6 +74,9 @@ function PickWord() {
       navigate(quizList[0].route, {state: {fullQuiz: quizList}});
     }
 
+    // TODO: @CS, maybe this shuffle is overkill?
+    questions = ShuffleArray(wordList).slice(0, 5);
+    
     // Reset currentQuestion index
     setCurrentQuestion(currentQuestion => (currentQuestion + 1) % questions.length);
  
