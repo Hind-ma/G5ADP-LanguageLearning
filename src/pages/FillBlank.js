@@ -232,7 +232,7 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
                         <>
                             <div>Grading: {grading.toFixed(2)}/1</div>
 
-                            <div style={{ display: "flex", flexDirection: "row" }}>
+                            <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", width: "50%", margin: "0 auto" }}>
                                 <div
                                     style={{
                                         background: colorScale,
