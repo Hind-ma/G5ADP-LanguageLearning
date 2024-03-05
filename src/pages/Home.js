@@ -24,6 +24,7 @@ export const categoryList = [
   {id: 2, categoryName: "Sports", routePage: "", img:lock},
   {id: 3, categoryName: "Travel", routePage: "", img:lock},
   {id: 4, categoryName: "Music", routePage: "", img:lock},
+  {id: 4, categoryName: "School", routePage: "", img:lock},
 ];
 
 /**
@@ -36,7 +37,7 @@ function LearnButton({ bGuestUser }) {
   const item = bGuestUser ? "Start Learning" : "Continue Learning";
   return (
     <div>
-      <ChangePageButton classname="learn-btn" to="/learn" label={item} />
+      <ChangePageButton className="learn-btn" to="/learn" label={item} />
     </div>
   );
 }
@@ -174,7 +175,7 @@ function Home() {
   sessionStorage.setItem("wordCount", wordCount);
 
   return (
-    <div>
+    <div className="home">
       <Header />
       {/* Navigation Buttons */}
       {/* currentUsername.charAt(0).toLocaleUpperCase() + currentUsername.slice(1) */}

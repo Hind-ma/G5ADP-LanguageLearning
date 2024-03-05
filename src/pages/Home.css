@@ -1,5 +1,12 @@
+.home{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .home-page-content{
     display: flex;
+    
   
 }
 
@@ -38,7 +45,7 @@ border-color: var(--grey-outline);
 border-width: 1px;
 border-style: solid;
 text-align: left;
-width: 800px;
+width: 55vw;
 height: 90px;
 border-radius: 20px;
 position: relative;
@@ -66,7 +73,6 @@ align-items: center;
     display: flex;
     flex-direction: column;
     width: 80%;
-
 }
 
 .content-title{
