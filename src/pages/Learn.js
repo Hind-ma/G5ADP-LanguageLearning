@@ -3,15 +3,11 @@ import "./Learn.css";
 import { useNavigate } from 'react-router-dom';
 
 const quizList = [
-    /*{id: 0, route: "/pick-word"},
+    {id: 0, route: "/pick-word"},
     {id: 1, route: "/pick-word"},
-    {id: 2, route: "/pick-word"},*/
+    {id: 2, route: "/pick-word"},
 
-    {id: 0, route: "/connect-words"},
-    {id: 1, route: "/connect-words"},
-    {id: 2, route: "/connect-words"},
-
-    /*{id: 3, route: "/connect-words"},
+    {id: 3, route: "/connect-words"},
     {id: 4, route: "/connect-words"},
     {id: 5, route: "/connect-words"},
 
@@ -22,7 +18,11 @@ const quizList = [
     {id: 9, route: "/fill-blank"},
 
     {id: 10, route: "/TranslateSentence"},
-    {id: 11, route: "/TranslateSentence"}*/
+    {id: 11, route: "/TranslateSentence"}
+
+    /*{id: 0, route: "/connect-words"},
+    {id: 1, route: "/connect-words"},
+    {id: 2, route: "/connect-words"},*/
 ];
 
 export const RandomQuizOrder = quizList.sort(() => Math.random() - 0.5).slice(0, quizList.length);

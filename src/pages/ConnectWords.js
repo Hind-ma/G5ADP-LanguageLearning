@@ -14,7 +14,7 @@ var pairsList = ShuffleArray(wordList).slice(0, 4);
 
 const ConnectWords = () => {
   
-  const [wordPairs, setWordPairs] = useState(pairsList);
+  var [wordPairs, setWordPairs] = useState(pairsList);
 
   const navigate = useNavigate();
   const {state} = useLocation();
@@ -171,6 +171,8 @@ const ConnectWords = () => {
     if (quizList.length === 0) {
       navigate("/learn");
     } else {
+      // TODO: @CS, This is a temporary "working" solution
+      //window.location.reload();
       navigate(quizList[0].route, {state: {fullQuiz: quizList}})
     }
 
@@ -184,9 +186,8 @@ const ConnectWords = () => {
       //  `You got ${result.correct} out of ${result.tries} on the first try!`
       //);
       //setShowResult(true);
-      //pairsList = wordList.sort(() => Math.random() - 0.5).slice(0, 4);
-      //setWordPairs((wordPairs) => {wordPairs = pairsList});
-      //pairsList = ShuffleArray(wordList).slice(0, 4);
+      
+      // TODO: @CS, something here
       setNextButtonDisabled(false);
     }
   }, [result, wordPairs.length, matchedPairs.length]);
