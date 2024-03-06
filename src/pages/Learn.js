@@ -40,11 +40,11 @@ function Learn() {
     localStorage.setItem("quizScore", 0);
     var quizLength = quizList.length;
     localStorage.setItem("maxScore", quizLength);
-    var score = localStorage.getItem("quizScore");
-    console.log("localStorage score: " + score.toString());
-    const maxScore = localStorage.getItem("maxScore");
-    var perc = (score / maxScore) * 100.0;
-    console.log("percentage: " + perc + "%");
+    //var score = localStorage.getItem("quizScore");
+    //console.log("localStorage score: " + score.toString());
+    //const maxScore = localStorage.getItem("maxScore");
+    //var perc = (score / maxScore) * 100.0;
+    //console.log("percentage: " + perc + "%");
   
     return (
         <div>

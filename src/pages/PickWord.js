@@ -34,9 +34,10 @@ function PickWord() {
       setNextButtonDisabled(false);
       setScore(score + 1);
 
+      // Practice Scoring
       var currentScore = localStorage.getItem("quizScore");
       currentScore = parseFloat(currentScore) + 1.0;
-      console.log(currentScore);
+      //console.log(currentScore);
       localStorage.setItem("quizScore", currentScore);
 
     } else {

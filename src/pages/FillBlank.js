@@ -81,6 +81,7 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
                 setTries(prevTries => prevTries + 1); 
                 setGrading(grade);
 
+                // Practice Scoring
                 var currentScore = localStorage.getItem("quizScore");
                 currentScore = parseFloat(currentScore) + parseFloat(grade);
                 console.log(currentScore);
@@ -168,7 +169,7 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
             //console.log(quiz.length);
         }
         if (quiz.length === 0) {
-            navigate("/learn");
+            navigate("/score");
         } else {
             navigate(quiz[0].route, {state: {fullQuiz: quiz}});
         }
@@ -203,9 +204,10 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
             setShowRoundScore(true);
         }
 
+        // Practice Scoring
         var currentScore = localStorage.getItem("quizScore");
         currentScore = parseFloat(currentScore) + 0.0;
-        console.log(currentScore);
+        //console.log(currentScore);
         localStorage.setItem("quizScore", currentScore);
         
         setAnswerChecked(false);

@@ -185,7 +185,7 @@ const ConnectWords = () => {
       //console.log(quizList.length);
     }
     if (quizList.length === 0) {
-      navigate("/learn");
+      navigate("/score");
     } else {
       // TODO: @CS, This is a temporary "working" solution
       //window.location.reload();
@@ -207,7 +207,7 @@ const ConnectWords = () => {
       //);
       //setShowResult(true);
       
-      // TODO: @CS, something here
+      // Practice Scoring
       var currentScore = localStorage.getItem("quizScore");
       var grade = 0.0;
       if (result.correct === null || result.tries === null) {
@@ -216,7 +216,7 @@ const ConnectWords = () => {
         grade = parseFloat(result.correct) / parseFloat(result.tries);
       }
       currentScore = parseFloat(currentScore) + parseFloat(grade);
-      console.log(currentScore);
+      //console.log(currentScore);
       localStorage.setItem("quizScore", currentScore);
       setNextButtonDisabled(false);
     }
