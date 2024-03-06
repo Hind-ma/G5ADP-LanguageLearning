@@ -122,7 +122,7 @@ function TranslateSentence() {
                   }`}
                 >
                   <input
-                    className="input"
+                    className="translate-input"
                     type="text"
                     placeholder="Type here"
                     value={userAnswer}
