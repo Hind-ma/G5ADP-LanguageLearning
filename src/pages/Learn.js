@@ -40,6 +40,7 @@ function Learn() {
   
     return (
         <div>
+            <Header />
             <div>
                 <p>Learn Page</p>
                 <ChangePageButton to="/home" label="Go to Home" />
