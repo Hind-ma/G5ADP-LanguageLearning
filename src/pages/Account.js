@@ -22,7 +22,9 @@ function LogoutButton({ route, bGuestUser }) {
 
   return (
     <div>
-      <button onClick={logout}>{bGuestUser ? "LOG IN" : "LOG OUT"}</button>
+      <button className="check-button" onClick={logout}>
+        {bGuestUser ? "LOG IN" : "LOG OUT"}
+      </button>
     </div>
   );
 }
@@ -33,8 +35,8 @@ function LogoutButton({ route, bGuestUser }) {
 function UserInfo({ usrName }) {
   return (
     <div>
-      <h4>Info</h4>
-      <p>Hej! {usrName.toLocaleUpperCase()}!</p>
+      <h2 className="title-text">Info</h2>
+      <p>Hej {usrName.toLocaleUpperCase()}!</p>
       <p>You have been a member with us since 2024</p>
       <p>
         You have learned {sessionStorage.getItem("wordCount")} Swedish words!
@@ -49,7 +51,7 @@ function UserInfo({ usrName }) {
 function StatsInfo() {
   return (
     <div>
-      <h4>Stats</h4>
+      <h2 className="title-text">Stats</h2>
       <p>
         You are on a {sessionStorage.getItem("dayStreak").toLocaleString()} Day
         Streak!
@@ -74,10 +76,17 @@ function Account() {
     <div>
       <Header />
       <div>
-        <p>Account</p>
+        <h1>Account</h1>
       </div>
       <div>
-        <ChangePageButton to="/home" label="Go to Home" />
+        {bGuest ? (
+          <p>
+            It looks like you are not logged in, log in or create an account to
+            see your statistics!
+          </p>
+        ) : null}
+      </div>
+      <div>
         <LogoutButton route="/" bGuestUser={bGuest} />
       </div>
       <div>
