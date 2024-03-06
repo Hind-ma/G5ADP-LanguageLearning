@@ -63,11 +63,10 @@ position: relative;
 display: flex;
 justify-content: space-between;
 align-items: center;
+background-color: #fff;
+padding: 0;
 }
 
-.card:disabled{
-    color: var(--grey-disabled);
-}
 
 .image{
    object-fit: contain;
@@ -80,7 +79,6 @@ align-items: center;
 .image-box{
     width: 90px;
     height: 90px;
-    
 }
 
 .content-home{
@@ -96,13 +94,13 @@ align-items: center;
     display: flex;
     justify-content: flex-start;
     margin-bottom: 7px;
+    margin-left: 5px;
 }
 
 .content-text{
     font-size: 4mm;
     margin-bottom: 10px;
-
-
+    margin-left: 5px;
 }
 
 .line{
@@ -111,6 +109,7 @@ align-items: center;
     background-color: var(--grey-outline);
     border-radius: 20px;
     margin: inherit;
+    margin-left: 5px;
 }
 
 .card-button {
@@ -119,11 +118,6 @@ align-items: center;
     align-self: center;
     background-color: transparent;
 
-}
-
-.card-button:disabled{
-    cursor: not-allowed;
-    content: url('../images/arrow.svg');  ;
 }
 
 .card-button:disabled:hover{
