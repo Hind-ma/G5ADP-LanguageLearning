@@ -51,11 +51,7 @@ const WelcomePage = () => {
       return (
         <div>
           <div className="header">
-            <ChangePageButton
-              to="/home"
-              label="SpråkBuddy"
-              className="logo"
-            ></ChangePageButton>
+            <h2 className="logo"></h2>
           </div>
           <Login
             onFormSwitch={handleFormSwitch}
