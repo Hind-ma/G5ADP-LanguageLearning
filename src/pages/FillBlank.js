@@ -81,6 +81,11 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
                 setTries(prevTries => prevTries + 1); 
                 setGrading(grade);
 
+                var currentScore = localStorage.getItem("quizScore");
+                currentScore += grade;
+                console.log(currentScore);
+                localStorage.setItem("quizScore", currentScore);
+
             }).catch(error => {
                 //console.error('Error:', error);
             })
@@ -200,6 +205,11 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
 
         setAnswerChecked(false);
         setGrading(0);
+
+        var currentScore = localStorage.getItem("quizScore");
+        currentScore = +currentScore + 0;
+        console.log(currentScore);
+        localStorage.setItem("quizScore", currentScore);
     }
 
     const inputIndex = sentence.indexOf("_");

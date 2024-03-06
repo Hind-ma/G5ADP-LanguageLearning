@@ -155,6 +155,11 @@ function CreateSentence() {
           setShowResult(true);
           setTries((prevTries) => prevTries + 1);
           setGrading(grade);
+
+          var currentScore = localStorage.getItem("quizScore");
+          currentScore = +currentScore + +grade;
+          console.log(currentScore);
+          localStorage.setItem("quizScore", currentScore);
         })
         .catch((error) => {
           //console.error("Error:", error);

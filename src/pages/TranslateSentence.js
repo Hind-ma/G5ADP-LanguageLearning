@@ -58,6 +58,11 @@ function TranslateSentence() {
 
     if (isCorrect) {
       setScore((prevScore) => prevScore + 1);
+
+      var currentScore = localStorage.getItem("quizScore");
+      currentScore = +currentScore + +score;
+      console.log(currentScore);
+      localStorage.setItem("quizScore", currentScore);
     } else {
       setShowCorrectSentence(true);
     }

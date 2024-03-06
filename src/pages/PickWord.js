@@ -33,6 +33,12 @@ function PickWord() {
       setCorrectOptionSelected(true);
       setNextButtonDisabled(false);
       setScore(score + 1);
+
+      var currentScore = localStorage.getItem("quizScore");
+      currentScore = +currentScore + 1;
+      console.log(currentScore);
+      localStorage.setItem("quizScore", currentScore);
+
     } else {
       setOptionsSelected((currentSelected) => [...currentSelected, option]);
       setNextButtonDisabled(true);

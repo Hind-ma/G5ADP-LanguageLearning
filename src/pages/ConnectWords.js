@@ -140,6 +140,18 @@ const ConnectWords = () => {
         tries: prevResult.tries + 1,
         correct: prevResult.correct + 1,
       }));
+
+      var currentScore = localStorage.getItem("quizScore");
+      var grade = 0;
+      if (result.correct === null) {
+        grade = 0;
+      } else {
+        grade = +result.correct / +result.tries;
+      }
+      currentScore = +currentScore + +grade;
+      console.log(currentScore);
+      localStorage.setItem("quizScore", currentScore);
+
       setMatchedPairs([...matchedPairs, selectedId]);
       updateButtonState(firstClicked.id, firstClicked.language, "correct");
       updateButtonState(selectedId, selectedLanguage, "correct");
