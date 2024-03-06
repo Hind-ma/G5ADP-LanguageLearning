@@ -9,7 +9,14 @@ function Scoring() {
     perc = perc.toPrecision(2);
     //console.log(perc);
     
-    var result = "Congratulations, you scored " + perc + "%";
+    var result = null;
+    if (perc <= 60.0){
+        result = "You scored " + perc + "%";
+    } else if (perc > 60.0 && perc <= 85.0) {
+        result = "Good work, you scored " + perc + "%";
+    } else {
+        result = "Congratulations, you scored " + perc + "%";
+    }
 
     const navigate = useNavigate();
 
