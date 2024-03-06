@@ -157,7 +157,7 @@ function CreateSentence() {
           setGrading(grade);
 
           var currentScore = localStorage.getItem("quizScore");
-          currentScore = +currentScore + +grade;
+          currentScore = parseFloat(currentScore) + parseFloat(grade);
           console.log(currentScore);
           localStorage.setItem("quizScore", currentScore);
         })

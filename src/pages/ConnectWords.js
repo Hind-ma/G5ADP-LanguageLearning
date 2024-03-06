@@ -140,18 +140,6 @@ const ConnectWords = () => {
         tries: prevResult.tries + 1,
         correct: prevResult.correct + 1,
       }));
-
-      var currentScore = localStorage.getItem("quizScore");
-      var grade = 0;
-      if (result.correct === null || result.tries == null) {
-        grade = 0;
-      } else {
-        grade = +result.correct / +result.tries;
-      }
-      currentScore = +currentScore + +grade;
-      console.log(currentScore);
-      localStorage.setItem("quizScore", currentScore);
-
       setMatchedPairs([...matchedPairs, selectedId]);
       updateButtonState(firstClicked.id, firstClicked.language, "correct");
       updateButtonState(selectedId, selectedLanguage, "correct");
@@ -220,6 +208,16 @@ const ConnectWords = () => {
       //setShowResult(true);
       
       // TODO: @CS, something here
+      var currentScore = localStorage.getItem("quizScore");
+      var grade = 0.0;
+      if (result.correct === null || result.tries === null) {
+        grade = 0.0;
+      } else {
+        grade = parseFloat(result.correct) / parseFloat(result.tries);
+      }
+      currentScore = parseFloat(currentScore) + parseFloat(grade);
+      console.log(currentScore);
+      localStorage.setItem("quizScore", currentScore);
       setNextButtonDisabled(false);
     }
   }, [result, wordPairs.length, matchedPairs.length]);

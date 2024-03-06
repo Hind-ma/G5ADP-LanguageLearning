@@ -82,7 +82,7 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
                 setGrading(grade);
 
                 var currentScore = localStorage.getItem("quizScore");
-                currentScore += grade;
+                currentScore = parseFloat(currentScore) + parseFloat(grade);
                 console.log(currentScore);
                 localStorage.setItem("quizScore", currentScore);
 
@@ -203,13 +203,13 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
             setShowRoundScore(true);
         }
 
-        setAnswerChecked(false);
-        setGrading(0);
-
         var currentScore = localStorage.getItem("quizScore");
-        currentScore = +currentScore + 0;
+        currentScore = parseFloat(currentScore) + 0.0;
         console.log(currentScore);
         localStorage.setItem("quizScore", currentScore);
+        
+        setAnswerChecked(false);
+        setGrading(0);
     }
 
     const inputIndex = sentence.indexOf("_");

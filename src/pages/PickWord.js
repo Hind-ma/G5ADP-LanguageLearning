@@ -35,7 +35,7 @@ function PickWord() {
       setScore(score + 1);
 
       var currentScore = localStorage.getItem("quizScore");
-      currentScore = +currentScore + 1;
+      currentScore = parseFloat(currentScore) + 1.0;
       console.log(currentScore);
       localStorage.setItem("quizScore", currentScore);
 

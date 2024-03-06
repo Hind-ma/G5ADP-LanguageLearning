@@ -60,7 +60,7 @@ function TranslateSentence() {
       setScore((prevScore) => prevScore + 1);
 
       var currentScore = localStorage.getItem("quizScore");
-      currentScore = +currentScore + +score;
+      currentScore = parseFloat(currentScore) + 1.0;
       console.log(currentScore);
       localStorage.setItem("quizScore", currentScore);
     } else {
