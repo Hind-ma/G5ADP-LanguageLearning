@@ -44,6 +44,11 @@ height: 100%;
     top: 230px;
     right: 250px;
 }
+
+.learn-btn:hover{
+    opacity: 0.8;
+}
+
 .card {
 box-shadow:  0 4px 8px 0 rgba(0, 0, 0, 0.2);
 margin: 0px 50px 15px 50px;
@@ -58,7 +63,10 @@ position: relative;
 display: flex;
 justify-content: space-between;
 align-items: center;
+}
 
+.card:disabled{
+    color: var(--grey-disabled);
 }
 
 .image{
@@ -113,6 +121,15 @@ align-items: center;
 
 }
 
-.card button:hover {
+.card-button:disabled{
+    cursor: not-allowed;
+    content: url('../images/arrow.svg');  ;
+}
+
+.card-button:disabled:hover{
+    opacity: 1;
+}
+
+.card-button:hover {
     opacity: 0.7;
 }
