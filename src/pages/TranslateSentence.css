@@ -61,7 +61,7 @@ h2 {
     background-color: transparent;
 }
 
-input {
+.translate-input {
     flex: 1;
     padding: 5px;
     margin-right: 10px;

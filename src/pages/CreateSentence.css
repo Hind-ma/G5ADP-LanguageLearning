@@ -141,6 +141,15 @@
     background-color: var(--grey-outline);*/
     color: var(--grey-disabled);
     background-color: var(--disabled-button);
+    pointer-events: auto;
+}
+
+.word-disabled {
+    border-color: var(--grey-outline);
+    /*color: var(--main-color-disabled);
+    background-color: var(--grey-outline);*/
+    color: var(--grey-disabled);
+    background-color: var(--disabled-button);
 }
 
 .word-button:hover {
