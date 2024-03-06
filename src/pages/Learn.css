@@ -1,0 +1,19 @@
+button {
+    font-family: "Signika", Verdana, Tahoma, sans-serif;
+}
+
+input {
+    font-family: "Signika", Verdana, Tahoma, sans-serif;
+}
+
+.check-button {
+    cursor: pointer;
+    background-color: var(--main-color);
+    border: none;
+    border-radius: 25px;
+    font-size: large;
+    color: #FFF;
+    padding: 10px;
+    margin-left: 10px;
+    box-shadow: 0px 4px 14px 0 rgba(0,0,0,0.1);
+}
