@@ -143,7 +143,7 @@ const ConnectWords = () => {
 
       var currentScore = localStorage.getItem("quizScore");
       var grade = 0;
-      if (result.correct === null) {
+      if (result.correct === null || result.tries == null) {
         grade = 0;
       } else {
         grade = +result.correct / +result.tries;
