@@ -12,12 +12,12 @@ import Header from "./Header";
  * I'm using routePage to determine the button disable state.
  * This is *NOT* a good solution but probably will do for now.
  */
-export const categoryList = [
-  { id: 0, categoryName: "Generic", routePage: "/learn" },
-  { id: 1, categoryName: "Supermarket", routePage: "" },
-  { id: 2, categoryName: "Sports", routePage: "" },
-  { id: 3, categoryName: "Travel", routePage: "" },
-  { id: 4, categoryName: "Music", routePage: "" },
+const categoryList = [
+  {id: 0, categoryName: "Generic", routePage: "/learn"},
+  {id: 1, categoryName: "Supermarket", routePage: ""},
+  {id: 2, categoryName: "Sports", routePage: ""},
+  {id: 3, categoryName: "Travel", routePage: ""},
+  {id: 4, categoryName: "Music", routePage: ""},
 ];
 
 /**
@@ -31,6 +31,32 @@ function LearnButton({ bGuestUser }) {
   return (
     <div>
       <ChangePageButton to="/learn" label={item} />
+    </div>
+  );
+}
+
+/**
+ * LogoutButton - resets username in sessionStorage
+ * 
+ * TODO: @CS, Move to account page instead
+ * 
+ * NOTE: if this is not done, pressing back on web browser shows up the
+ * last logged in user. I'm just doing it to prevent that. Clearing the
+ * storage causes error - so i reset to "Guest User".
+ */
+function LogoutButton({route, bGuestUser}) {
+  const nav = useNavigate();
+  const logout = () => {
+    //console.log("Logging Out");
+    sessionStorage.setItem("username", "Guest User");
+    nav(route);
+  };
+
+  return (
+    <div>
+      <button onClick={logout}>
+        {bGuestUser ? "LOG IN" : "LOG OUT"}
+      </button>
     </div>
   );
 }
@@ -160,7 +186,9 @@ function Home() {
         <h4>Welcome {currentUsername.toLocaleUpperCase()}</h4>
       </div>
       <div className="top-btn-container">
+        <ChangePageButton to="/account" label={bGuest ? "Guest Home" : currentUsername.toLocaleUpperCase() + "'s Home"} />
         {/*<ChangePageButton to="/" label="LOG OUT" />*/}
+        <LogoutButton bGuestUser={bGuest} route="/" />
       </div>
       <div className="learn-btn-container">
         <LearnButton bGuestUser={bGuest} />

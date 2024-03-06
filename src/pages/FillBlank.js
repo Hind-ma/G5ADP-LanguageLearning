@@ -1,4 +1,4 @@
-﻿import ChangePageButton from "./ChangePageButton";
+import ChangePageButton from "./ChangePageButton";
 
 import React, { useState } from "react";
 import "./FillBlankModel.css";
@@ -7,8 +7,11 @@ import { sentenceList } from "../data-sets/fillBlank";
 import EndQuizButton from "./EndQuizButton";
 import { server_is_up, fill_prob, interpolateHexColor } from "./AI_server_interface.js";
 
-// creates a list with five random sentences from the dataset 
-const sentences = sentenceList.sort(() => Math.random() - 0.5).slice(0, 5); 
+import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { ShuffleArray } from "../utils";
+
+var sentences = sentenceList;
 
 const url_address = "http://127.0.0.1:5000/get_fill_in_prob";
 
@@ -24,7 +27,7 @@ async function pingURL(url) {
 
 const ml_server_is_up = await pingURL(url_address);
 
-function Sentence({ sentence, answer, correct, setCurrentSentence, currentSentence }) {
+function Sentence({ sentence, answer, correct, setCurrentSentence, currentSentence, quiz }) {
     const [userInput, setUserInput] = useState("");
     const [inputColor, setInputColor] = useState("white");
     const [sentenceCorrect, setSentenceCorrect] = useState(false);
@@ -42,8 +45,9 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
     const [colorScale, setColorScale] = useState("#000000");
     const [gradingIsLoading, setGradingIsLoading] = useState(false);
 
-    const checkAnswer = () => {
+    const navigate = useNavigate();
 
+    const checkAnswer = () => {
         if(server_is_up){
             setGradingIsLoading(true);
             const correct_promise = fill_prob(sentence.split("_")[0], answer.toLowerCase(), sentence.split("_")[1], "1")
@@ -152,6 +156,15 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
     };
 
     const resetInput = () => {
+        if (quiz.length !== 0) {
+            quiz.shift();
+            console.log(quiz.length);
+        }
+        if (quiz.length === 0) {
+            navigate("/learn");
+        } else {
+            navigate(quiz[0].route, {state: {fullQuiz: quiz}});
+        }
         setUserInput("");
         setInputColor("white");
         setSentenceCorrect(false);
@@ -282,7 +295,14 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
 }
 
 function FillBlank() {
-  const [currentSentence, setCurrentSentence] = useState(0);
+    const [currentSentence, setCurrentSentence] = useState(0);
+    sentences = ShuffleArray(sentences);
+
+    const {state} = useLocation();
+    var quizList = [];
+    if (state !== null) {
+        quizList = state.fullQuiz;
+    }
 
     return (
     <div>
@@ -297,6 +317,7 @@ function FillBlank() {
                 correct={sentences[currentSentence].correct}
                 setCurrentSentence={setCurrentSentence}
                 currentSentence={currentSentence}
+                quiz={quizList}
             />
         </div>
     );

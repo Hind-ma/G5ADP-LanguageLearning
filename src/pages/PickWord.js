@@ -4,7 +4,12 @@ import "./PickWord.css";
 import { wordList } from "../data-sets/pickLearnConnect";
 import EndQuizButton from "./EndQuizButton";
 
-const questions = wordList.sort(() => Math.random() - 0.5).slice(0, 5);
+import { useLocation } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+import { ShuffleArray } from "../utils";
+
+//var questions = wordList.sort(() => Math.random() - 0.5).slice(0, 5);
+var questions = ShuffleArray(wordList).slice(0, 5);
 
 function PickWord() {
   const [showRoundScore, setRoundScore] = useState(false);
@@ -15,6 +20,12 @@ function PickWord() {
   const [correctOptionSelected, setCorrectOptionSelected] = useState(false);
   const [optionsSelected, setOptionsSelected] = useState([]);
 
+  const navigate = useNavigate();
+  const {state} = useLocation();
+  var quizList = [];
+  if (state !== null) {
+    quizList = state.fullQuiz;
+  }
   const optionClicked = (correctOption, option) => {
     setClickedOptionButton(option);
 
@@ -29,18 +40,28 @@ function PickWord() {
   };
 
   const handleNextButtonClicked = () => {
-    if (currentQuestion + 1 < questions.length) {
-      setCurrentQuestion(currentQuestion + 1);
+    if (quizList.length !== 0) {
+      quizList.shift();
+      console.log(quizList.length);
+    }
+    if (quizList.length === 0) {
+      navigate("/learn");
     } else {
-      setRoundScore(true);
+      navigate(quizList[0].route, {state: {fullQuiz: quizList}});
     }
 
-    // Reset clicked button and disable the next button
-    setClickedOptionButton(null);
-    setNextButtonDisabled(true);
-    setCorrectOptionSelected(false);
-    setOptionsSelected([]);
-  };
+    // TODO: @CS, maybe this shuffle is overkill?
+    questions = ShuffleArray(wordList).slice(0, 5);
+    
+    // Reset currentQuestion index
+    setCurrentQuestion(currentQuestion => (currentQuestion + 1) % questions.length);
+ 
+     // Reset clicked button and disable the next button
+     setClickedOptionButton(null);
+     setNextButtonDisabled(true);
+     setCorrectOptionSelected(false);
+     setOptionsSelected([]);
+   };
 
   return (
     <div className="pick-word">
@@ -54,7 +75,7 @@ function PickWord() {
             <h2>
               You got {score} out of {questions.length} correct
             </h2>
-            <ChangePageButton to="/home" label="End round" />
+            {/*<ChangePageButton to="/home" label="End round" />*/}
           </div>
         ) : (
           <div>

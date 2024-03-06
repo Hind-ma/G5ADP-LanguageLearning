@@ -1,17 +1,19 @@
 import ChangePageButton from "./ChangePageButton";
 import { GetRandomInt, ShuffleArray } from "../utils";
 import { useState, useEffect } from "react";
-import { completeList } from "../data-sets/compose-translate";
-import "./CreateSentence.css";
-import {
-  text_prob,
-  server_is_up,
-  interpolateHexColor,
-} from "./AI_server_interface";
+import {completeList} from "../data-sets/compose-translate";
+import './CreateSentence.css';
+
+import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
+import { text_prob, server_is_up , interpolateHexColor} from "./AI_server_interface";
 import EndQuizButton from "./EndQuizButton";
 
-// creates a list with five random sentences from the dataset
-const makeSentences = completeList.sort(() => Math.random() - 0.5).slice(0, 5);
+var makeSentences = completeList;
+
+// creates a list with five random sentences from the dataset 
+//const makeSentences = completeList.sort(() => Math.random() - 0.5).slice(0, 5)
 
 /** Shows if the sentence is correct or incorrect */
 function ResultBox({ bDisplay, bSuccess }) {
@@ -57,8 +59,10 @@ function NextSentenceButton({ bDisabled, onClickFunc }) {
   );
 }
 
-function CreateSentence() {
-  const [currentSenIdx, setCurrentSenIdx] = useState(0);
+function CreateSentence() { 
+  const startSenIdx = GetRandomInt(0, makeSentences.length - 1);
+  const [currentSenIdx, setCurrentSenIdx] = useState(startSenIdx);
+  //const [currentSenIdx, setCurrentSenIdx] = useState(0);
   const [sentence, setSentence] = useState([]);
   const [isCorrect, setIsCorrect] = useState(false);
   const [showResult, setShowResult] = useState(false);
@@ -67,6 +71,13 @@ function CreateSentence() {
 
   const currentSentence = makeSentences[currentSenIdx].words;
   const [shuffledWords, setShuffledWords] = useState([]);
+  
+  const navigate = useNavigate();
+    const {state} = useLocation();
+    var quizList = [];
+    if (state !== null) {
+        quizList = state.fullQuiz;
+    }
 
   // To handle the score
   const [showRoundScore, setShowRoundScore] = useState(false);
@@ -79,15 +90,21 @@ function CreateSentence() {
   const [gradingIsLoading, setGradingIsLoading] = useState(false);
 
   useEffect(() => {
-    setShuffledWords(ShuffleArray(makeSentences[currentSenIdx].words));
-  }, [currentSenIdx]);
+        setShuffledWords(ShuffleArray(makeSentences[currentSenIdx].words));
+    }, [currentSenIdx]);
 
   function updateMakeSentence() {
-    if (currentSenIdx + 1 < makeSentences.length) {
-      setCurrentSenIdx(currentSenIdx + 1);
-    } else {
-      setShowRoundScore(true);
+    if (quizList.length !== 0) {
+        quizList.shift();
+        console.log(quizList.length);
     }
+    if (quizList.length === 0) {
+        navigate("/learn");
+    } else {
+        navigate(quizList[0].route, {state: {fullQuiz: quizList}});
+    }
+
+    setCurrentSenIdx((currentSenIdx + 1) % makeSentences.length);
 
     setSentence([]);
     setShowResult(false);
