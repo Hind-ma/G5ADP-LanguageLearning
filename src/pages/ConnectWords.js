@@ -173,6 +173,10 @@ const ConnectWords = () => {
     } else {
       // TODO: @CS, This is a temporary "working" solution
       //window.location.reload();
+      if (quizList[0].route === "/connect-words")
+      {
+        window.location.reload();
+      }
       navigate(quizList[0].route, {state: {fullQuiz: quizList}})
     }
 
