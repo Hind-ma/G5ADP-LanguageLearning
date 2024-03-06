@@ -74,7 +74,7 @@ function TranslateSentence() {
     setSentenceIndex((sentenceIndex + 1) % quizSentences.length);
     if (quizList.length !== 0) {
       quizList.shift();
-      console.log(quizList.length);
+      //console.log(quizList.length);
     }
     if (quizList.length === 0) {
       navigate("/learn");

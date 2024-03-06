@@ -1,6 +1,5 @@
 // ConnectWords.js
 import React, { useState, useEffect } from "react";
-import ChangePageButton from "./ChangePageButton";
 import "./ConnectWords.css";
 import "../App.css";
 import { wordList } from "../data-sets/pickLearnConnect";
@@ -183,7 +182,7 @@ const ConnectWords = () => {
   const handleNextButtonClicked = () => {
     if (quizList.length !== 0) {
       quizList.shift();
-      console.log(quizList.length);
+      //console.log(quizList.length);
     }
     if (quizList.length === 0) {
       navigate("/learn");

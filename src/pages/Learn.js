@@ -9,8 +9,8 @@ const quizList = [
     {id: 2, route: "/pick-word"},
 
     {id: 3, route: "/connect-words"},
-    {id: 4, route: "/connect-words"},
-    {id: 5, route: "/connect-words"},
+    {id: 4, route: "/create-sen"},
+    {id: 5, route: "/TranslateSentence"},
 
     {id: 6, route: "/create-sen"},
     {id: 7, route: "/create-sen"},
@@ -29,8 +29,8 @@ const quizList = [
 export const RandomQuizOrder = quizList.sort(() => Math.random() - 0.5).slice(0, quizList.length);
 
 function Learn() {
-    console.log("Quiz Type");
-    RandomQuizOrder.map(x => console.log(x));
+    //console.log("Quiz Type");
+    //RandomQuizOrder.map(x => console.log(x));
 
     const navigate = useNavigate();
 
@@ -46,21 +46,10 @@ function Learn() {
                 <ChangePageButton to="/home" label="Go to Home" />
             </div>
             <div className="intro-btn-container">
-                {/* TODO: @CS, remove the para tag below, Learning Words */}
                 <p>Learn New Words</p>
                 <ChangePageButton to="/introduce" label="Introduce words" />
             </div>
-            {/* TODO: @CS, remove quizzes below */}
-            {/*<div>
-                <p>Practice Quiz</p>
-                <ChangePageButton to="/pick-word" label="Word Translation" />
-                <ChangePageButton to="/connect-words" label="Match Words" />
-                <ChangePageButton to="/create-sen" label="Make A Sentence" />
-                <ChangePageButton to="/fill-blank" label="Fill In The Blanks" />
-                <ChangePageButton to="/TranslateSentence" label="Translate Sentence" />
-            </div>*/}
             <div className="practice-btn-container">
-                {/* TODO: @CS, remove the para tag below, ACTUAL Practice Quizzes */}
                 <p>Practice</p>
                 <button onClick={() => startQuiz()}>Do Quiz</button>
             </div>

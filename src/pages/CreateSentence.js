@@ -96,7 +96,7 @@ function CreateSentence() {
   function updateMakeSentence() {
     if (quizList.length !== 0) {
         quizList.shift();
-        console.log(quizList.length);
+        //console.log(quizList.length);
     }
     if (quizList.length === 0) {
         navigate("/learn");
@@ -157,7 +157,7 @@ function CreateSentence() {
           setGrading(grade);
         })
         .catch((error) => {
-          console.error("Error:", error);
+          //console.error("Error:", error);
         })
         .finally(() => {
           setAnswerChecked(true);
@@ -179,7 +179,7 @@ function CreateSentence() {
   };
 
   const setDisplayGrade = (grade) => {
-    console.log("?", grade);
+    //console.log("?", grade);
     const hex_color = interpolateHexColor("#C84C4C", "#79BB6E", grade);
     setColorScale(hex_color);
   };
