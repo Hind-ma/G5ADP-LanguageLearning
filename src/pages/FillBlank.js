@@ -1,4 +1,4 @@
-import ChangePageButton from "./ChangePageButton";
+﻿import ChangePageButton from "./ChangePageButton";
 
 import React, { useState } from "react";
 import "./FillBlankModel.css";
@@ -81,7 +81,15 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
                 setTries(prevTries => prevTries + 1); 
                 setGrading(grade);
 
-            }).catch(error => {console.error('Error:', error);})
+                // Practice Scoring
+                var currentScore = localStorage.getItem("quizScore");
+                currentScore = parseFloat(currentScore) + parseFloat(grade);
+                console.log(currentScore);
+                localStorage.setItem("quizScore", currentScore);
+
+            }).catch(error => {
+                //console.error('Error:', error);
+            })
             .finally(() => {
                 setAnswerChecked(true);
                 setGradingIsLoading(false);
@@ -127,7 +135,7 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
     }
     
     const setDisplayGrade = (grade) => {
-        console.log("?", grade)
+        ///console.log("?", grade)
         const hex_color = interpolateHexColor("#C84C4C","#79BB6E", grade);
         setColorScale(hex_color);
   
@@ -158,10 +166,10 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
     const resetInput = () => {
         if (quiz.length !== 0) {
             quiz.shift();
-            console.log(quiz.length);
+            //console.log(quiz.length);
         }
         if (quiz.length === 0) {
-            navigate("/learn");
+            navigate("/score");
         } else {
             navigate(quiz[0].route, {state: {fullQuiz: quiz}});
         }
@@ -196,6 +204,12 @@ function Sentence({ sentence, answer, correct, setCurrentSentence, currentSenten
             setShowRoundScore(true);
         }
 
+        // Practice Scoring
+        var currentScore = localStorage.getItem("quizScore");
+        currentScore = parseFloat(currentScore) + 0.0;
+        //console.log(currentScore);
+        localStorage.setItem("quizScore", currentScore);
+        
         setAnswerChecked(false);
         setGrading(0);
     }

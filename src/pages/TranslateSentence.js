@@ -58,6 +58,12 @@ function TranslateSentence() {
 
     if (isCorrect) {
       setScore((prevScore) => prevScore + 1);
+
+      // Practice Scoring
+      var currentScore = localStorage.getItem("quizScore");
+      currentScore = parseFloat(currentScore) + 1.0;
+      //console.log(currentScore);
+      localStorage.setItem("quizScore", currentScore);
     } else {
       setShowCorrectSentence(true);
     }
@@ -74,10 +80,10 @@ function TranslateSentence() {
     setSentenceIndex((sentenceIndex + 1) % quizSentences.length);
     if (quizList.length !== 0) {
       quizList.shift();
-      console.log(quizList.length);
+      //console.log(quizList.length);
     }
     if (quizList.length === 0) {
-      navigate("/learn");
+      navigate("/score");
     } else {
       navigate(quizList[0].route, {state:{fullQuiz: quizList}});
     }

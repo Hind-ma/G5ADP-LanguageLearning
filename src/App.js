@@ -12,6 +12,7 @@ import Welcome from "./pages/Welcome";
 import CreateSentence from "./pages/CreateSentence";
 import Learn from "./pages/Learn";
 import React from 'react';
+import Scoring from "./pages/Scoring";
 
 function App() {
   
@@ -29,6 +30,7 @@ function App() {
         <Route path="/create-sen" element={<CreateSentence />} />
         <Route path="/connect-words" element={<ConnectWords />} />
         <Route path="/learn" element={<Learn />} />
+        <Route path="/score" element={<Scoring />} />
       </Routes>
     </div>
   );

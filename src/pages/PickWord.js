@@ -33,6 +33,13 @@ function PickWord() {
       setCorrectOptionSelected(true);
       setNextButtonDisabled(false);
       setScore(score + 1);
+
+      // Practice Scoring
+      var currentScore = localStorage.getItem("quizScore");
+      currentScore = parseFloat(currentScore) + 1.0;
+      //console.log(currentScore);
+      localStorage.setItem("quizScore", currentScore);
+
     } else {
       setOptionsSelected((currentSelected) => [...currentSelected, option]);
       setNextButtonDisabled(true);
@@ -42,7 +49,7 @@ function PickWord() {
   const handleNextButtonClicked = () => {
     if (quizList.length !== 0) {
       quizList.shift();
-      console.log(quizList.length);
+      //console.log(quizList.length);
     }
     if (quizList.length === 0) {
       navigate("/learn");
