@@ -43,12 +43,12 @@ function Learn() {
             <Header />
             <div>
                 <p>Learn Page</p>
-                <ChangePageButton to="/home" label="Go to Home" />
+                <ChangePageButton className="check-button" to="/home" label="Go to Home" />
             </div>
             <div className="intro-btn-container">
                 {/* TODO: @CS, remove the para tag below, Learning Words */}
                 <p>Learn New Words</p>
-                <ChangePageButton to="/introduce" label="Introduce words" />
+                <ChangePageButton className="check-button" to="/introduce" label="Introduce words" />
             </div>
             {/* TODO: @CS, remove quizzes below */}
             {/*<div>
@@ -62,7 +62,7 @@ function Learn() {
             <div className="practice-btn-container">
                 {/* TODO: @CS, remove the para tag below, ACTUAL Practice Quizzes */}
                 <p>Practice</p>
-                <button onClick={() => startQuiz()}>Do Quiz</button>
+                <button className="check-button" onClick={() => startQuiz()}>Do Quiz</button>
             </div>
         </div>
     );
