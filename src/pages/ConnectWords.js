@@ -266,6 +266,7 @@ const ConnectWords = () => {
                 className="next-button"
                 onClick={handleNextButtonClicked}
                 disabled={nextButtonDisabled}>
+                  Next
             </button>
           </div>
         </div>
