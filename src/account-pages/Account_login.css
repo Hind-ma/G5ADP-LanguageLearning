@@ -1,0 +1,94 @@
+:root {
+    --main-color: #6A80CF;
+    --main-color-light: #C2CAF2;
+    --main-color-disabled: #777E98;
+    --green-positive: #79BB6E;
+    --red-negative: #C84C4C;
+    --yellow-sparkle: #EDDB3D;
+    --grey-outline: #D8D8D8;
+    --grey-disabled: #808080;
+    --disabled-button: #D9D9D9;
+    --text-color: #000;
+}
+
+
+/*
+
+
+.auth-form-container !important
+{
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    font-family: "Signika", Verdana, Tahoma, sans-serif;
+    border-radius: 25px;
+    background-color: #C2CAF2;
+}
+
+
+.register-form {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    font-family: "Signika", Verdana, Tahoma, sans-serif;
+}
+
+.font {
+    font-family: "Signika", Verdana, Tahoma, sans-serif;
+}
+
+.fontHeader {
+    font-family: "Signika", Verdana, Tahoma, sans-serif;
+    margin-top: 20%;
+    font-size: 60px;
+}
+
+*/
+/** Introduce word */
+/*
+.intro-word {
+    border: 1px solid;
+    transform: translate(0%, 25%);
+    padding: 10px;
+}
+
+@keyframes App-logo-spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+*/
+
+/* Home page */
+/*
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+    .button-container button {
+        margin: 8px;
+    }
+
+button {
+    font-family: "Signika", Verdana, Tahoma, sans-serif;
+}
+
+
+account-input {
+    font-family: "Signika", Verdana, Tahoma, sans-serif;
+    height: 36px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+*/
+

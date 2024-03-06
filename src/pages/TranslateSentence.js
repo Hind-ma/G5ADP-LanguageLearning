@@ -1,12 +1,18 @@
 import ChangePageButton from "./ChangePageButton";
-import React, { useEffect, useState } from "react";
-import { GetRandomInt } from "../utils";
-import { completeList } from "../data-sets/compose-translate";
-import "./TranslateSentence.css";
+
+import React, {useEffect, useState} from "react"
+import { ShuffleArray } from "../utils";
+import {completeList} from "../data-sets/compose-translate";
+import './TranslateSentence.css';
+
 import EndQuizButton from "./EndQuizButton";
 
-// creates a list with five random sentences form the dataset
-const sentenceList = completeList.sort(() => Math.random() - 0.5).slice(0, 5);
+import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
+// creates a list with five random sentences form the dataset 
+//var sentenceList = completeList.sort(() => Math.random() - 0.5).slice(0, 5);
+var quizSentences = ShuffleArray(completeList).slice(0, 5);
 
 function TranslateSentence() {
   // consts for the user input
@@ -25,8 +31,15 @@ function TranslateSentence() {
   const [showRoundScore, setRoundScore] = useState(false);
   const [score, setScore] = useState(0);
 
-  const currSentence = sentenceList[sentenceIndex];
+  const navigate = useNavigate();
+  const {state} = useLocation();
+  var quizList = [];
+  if (state !== null) {
+    quizList = state.fullQuiz;
+  }
 
+  const currSentence = quizSentences[sentenceIndex];
+  
   // Switch the direction of translation randomly
   useEffect(() => {
     setIsEnglishToSwedish(Math.random() < 0.5 ? true : false);
@@ -55,11 +68,18 @@ function TranslateSentence() {
     setInputDisabled(true);
   };
 
-  const handleNextButtonClicked = () => {
-    if (sentenceIndex + 1 < sentenceList.length) {
-      setSentenceIndex(sentenceIndex + 1);
+   const handleNextButtonClicked = () => {
+    // TODO: @CS, maybe this shuffle is overkill?
+    quizSentences = ShuffleArray(quizSentences);
+    setSentenceIndex((sentenceIndex + 1) % quizSentences.length);
+    if (quizList.length !== 0) {
+      quizList.shift();
+      console.log(quizList.length);
+    }
+    if (quizList.length === 0) {
+      navigate("/learn");
     } else {
-      setRoundScore(true);
+      navigate(quizList[0].route, {state:{fullQuiz: quizList}});
     }
 
     //reset answer and GUI-elements
@@ -95,7 +115,7 @@ function TranslateSentence() {
           {showRoundScore ? (
             <div className="round-score">
               <h2>
-                You got {score} out of {sentenceList.length} correct
+                You got {score} out of {quizSentences.length} correct
               </h2>
               <ChangePageButton to="/" label="End round" />
             </div>
@@ -122,7 +142,7 @@ function TranslateSentence() {
                   }`}
                 >
                   <input
-                    className="input"
+                    className="translate-input"
                     type="text"
                     placeholder="Type here"
                     value={userAnswer}

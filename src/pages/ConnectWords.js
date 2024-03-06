@@ -6,9 +6,25 @@ import "../App.css";
 import { wordList } from "../data-sets/pickLearnConnect";
 import EndQuizButton from "./EndQuizButton";
 
-const pairsList = wordList.sort(() => Math.random() - 0.5).slice(0, 4);
+import { useLocation } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+import { ShuffleArray } from "../utils";
+
+//var pairsList = wordList.sort(() => Math.random() - 0.5).slice(0, 4);
+var pairsList = ShuffleArray(wordList).slice(0, 4);
+
 const ConnectWords = () => {
-  const [wordPairs, setWordPairs] = useState(pairsList);
+  
+  var [wordPairs, setWordPairs] = useState(pairsList);
+
+  const navigate = useNavigate();
+  const {state} = useLocation();
+  var quizList = [];
+  if (state !== null) {
+    quizList = state.fullQuiz;
+  }
+
+  const [nextButtonDisabled, setNextButtonDisabled] = useState(true);
 
   const [result, setResult] = useState({ tries: 0, correct: 0 });
   const [feedbackMessage, setFeedbackMessage] = useState("");
@@ -135,7 +151,7 @@ const ConnectWords = () => {
           selectedLanguage === "swedish" ? "english" : "swedish";
         updateRemainingLanguageButtons(selectedId, oppositeLanguage, "");
         updateRemainingLanguageButtons(selectedId, selectedLanguage, "");
-      }, 1500);
+      }, 1000);
     } else {
       // wrong answer
       setResult((prevResult) => ({
@@ -160,19 +176,40 @@ const ConnectWords = () => {
         const oppositeLanguage =
           selectedLanguage === "swedish" ? "english" : "swedish";
         updateRemainingLanguageButtons(selectedId, selectedLanguage, "");
-      }, 1500);
+      }, 1000);
     }
   };
 
+  const handleNextButtonClicked = () => {
+    if (quizList.length !== 0) {
+      quizList.shift();
+      console.log(quizList.length);
+    }
+    if (quizList.length === 0) {
+      navigate("/learn");
+    } else {
+      // TODO: @CS, This is a temporary "working" solution
+      //window.location.reload();
+      if (quizList[0].route === "/connect-words")
+      {
+        window.location.reload();
+      }
+      navigate(quizList[0].route, {state: {fullQuiz: quizList}})
+    }
+
+    //reset answer and GUI-elements
+    setNextButtonDisabled(true);
+   };
+
   useEffect(() => {
-    if (
-      result.correct === wordPairs.length &&
-      matchedPairs.length === wordPairs.length
-    ) {
-      setFeedbackMessage(
-        `You got ${result.correct} out of ${result.tries} on the first try!`
-      );
-      setShowResult(true);
+    if (result.correct === wordPairs.length && matchedPairs.length === wordPairs.length) {
+      //setFeedbackMessage(
+      //  `You got ${result.correct} out of ${result.tries} on the first try!`
+      //);
+      //setShowResult(true);
+      
+      // TODO: @CS, something here
+      setNextButtonDisabled(false);
     }
   }, [result, wordPairs.length, matchedPairs.length]);
 
@@ -192,7 +229,7 @@ const ConnectWords = () => {
       {showResult ? (
         <div className="result-container">
           <p>{feedbackMessage}</p>
-          <ChangePageButton to="/" label="Go to Home" />
+          {/*<ChangePageButton to="/home" label="Go to Home" />*/}
         </div>
       ) : (
         <div>
@@ -223,6 +260,14 @@ const ConnectWords = () => {
                 </button>
               ))}
             </div>
+          </div>
+          <div>
+            <button
+                className="next-button"
+                onClick={handleNextButtonClicked}
+                disabled={nextButtonDisabled}>
+                  Next
+            </button>
           </div>
         </div>
       )}
