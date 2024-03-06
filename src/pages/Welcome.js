@@ -7,8 +7,8 @@ import ChangePageButton from "./ChangePageButton";
 import "./Header.css";
 
 const WelcomePage = () => {
-  /*let currentUsername = sessionStorage.getItem("username");
-  let bGuest;
+  let currentUsername = sessionStorage.getItem("username");
+  /*let bGuest;
   console.log("guest " + bGuest);
   console.log("username " + currentUsername);
   if (currentUsername == null || currentUsername == undefined) {
@@ -51,7 +51,11 @@ const WelcomePage = () => {
       return (
         <div>
           <div className="header">
-            <h2 className="logo"></h2>
+            <ChangePageButton
+              to="/"
+              label="SpråkBuddy"
+              className="logo"
+            ></ChangePageButton>
           </div>
           <Login
             onFormSwitch={handleFormSwitch}
@@ -64,7 +68,7 @@ const WelcomePage = () => {
         <div>
           <div className="header">
             <ChangePageButton
-              to="/home"
+              to="/"
               label="SpråkBuddy"
               className="logo"
             ></ChangePageButton>
@@ -80,7 +84,7 @@ const WelcomePage = () => {
         <div>
           <div className="header">
             <ChangePageButton
-              to="/home"
+              to="/"
               label="SpråkBuddy"
               className="logo"
             ></ChangePageButton>
