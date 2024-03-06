@@ -13,7 +13,7 @@ import EndQuizButton from "./EndQuizButton";
 var makeSentences = completeList;
 
 // creates a list with five random sentences from the dataset 
-const makeSentences = completeList.sort(() => Math.random() - 0.5).slice(0, 5)
+//const makeSentences = completeList.sort(() => Math.random() - 0.5).slice(0, 5)
 
 /** Shows if the sentence is correct or incorrect */
 function ResultBox({ bDisplay, bSuccess }) {
