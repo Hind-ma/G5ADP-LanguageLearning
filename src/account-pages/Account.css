@@ -93,6 +93,8 @@ body {
     padding: 30px 50px 30px 50px;
     border-radius: 20px;
     border-color: var(--grey-outline);
+    border-width: 1px;
+    border-style: solid;
     box-shadow:0px 4px 14px 0 rgba(0,0,0,0.1);
 
 

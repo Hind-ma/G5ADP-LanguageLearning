@@ -19,14 +19,19 @@ export const Register = (props) => {
           storeData();
           sessionStorage.setItem("username", name);
           document.getElementById("confirmation").innerHTML = "The account has been created";
+          document.getElementById("confirmation").style.color = "var(--green-positive)"
           document.getElementById("switchLogin").disabled = true;
           document.getElementById("create").disabled = true;
           setTimeout(() => {
             props.continueToMenu(false);
           }, 1000);
-        } else document.getElementById("confirmation").innerHTML = "Passwords do not match";
+        } else{ document.getElementById("confirmation").innerHTML = "Passwords do not match";
+        document.getElementById("confirmation").style.color = "var(--red-negative)"
+      }
+        
       } else {
         document.getElementById("confirmation").innerHTML = "Username already taken";
+        document.getElementById("confirmation").style.color = "var(--red-negative)"
       }
     }
   };

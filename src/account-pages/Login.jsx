@@ -13,6 +13,7 @@ export const Login = (props) => {
             if (userPassword === pass) {
                 sessionStorage.setItem("username", name);
                 document.getElementById("confirmation").innerHTML = "Login successful";
+                document.getElementById("confirmation").style.color = "var(--green-positive)"
                 document.getElementById("switchRegister").disabled = true;
                 document.getElementById("lCreate").disabled = true;
                 setTimeout(() => {
@@ -20,9 +21,11 @@ export const Login = (props) => {
                 }, 1000);
             } else {
                 document.getElementById("confirmation").innerHTML = "Incorrect password";
+                document.getElementById("confirmation").style.color = "var(--red-negative)"
             }
         } else {
             document.getElementById("confirmation").innerHTML = "Username does not exist";
+            document.getElementById("confirmation").style.color = "var(--red-negative)"
         }
     };
 
