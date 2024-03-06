@@ -27,6 +27,12 @@ body {
 
 .sentence-container {
     margin-bottom: 20px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    width: 40vw;
+    justify-content: center;
+    align-self: center;
 }
 
 .sentence {
@@ -88,6 +94,11 @@ button {
     button.check {
         background-color: #5a52cc;
     }
+    
+    button.check:disabled {
+        background-color: var(--main-color-disabled);
+        cursor: not-allowed;
+    }
 
     button.next {
         background-color: #6c63ff;
@@ -119,8 +130,6 @@ button {
 
 */
 
-
-
 .star {
     font-size: 36px;
     color: gold;
@@ -131,3 +140,7 @@ button {
     .star.visible {
         display: block;
     }
+
+.correct-word {
+    color: var(--main-color-disabled);
+}
