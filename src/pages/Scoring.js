@@ -5,7 +5,7 @@ function Scoring() {
     var score = localStorage.getItem("quizScore");
     //console.log("localStorage score: " + score.toString());
     const maxScore = localStorage.getItem("maxScore");
-    var perc = (score / parseFloat(maxScore)) * 100.0;
+    var perc = (parseFloat(score) / parseFloat(maxScore)) * 100.0;
     perc = perc.toPrecision(2);
     //console.log(perc);
     
