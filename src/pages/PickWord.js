@@ -2,6 +2,7 @@ import ChangePageButton from "./ChangePageButton";
 import React, { useState } from "react";
 import "./PickWord.css";
 import { wordList } from "../data-sets/pickLearnConnect";
+import EndQuizButton from "./EndQuizButton";
 
 const questions = wordList.sort(() => Math.random() - 0.5).slice(0, 5);
 
@@ -42,10 +43,12 @@ function PickWord() {
   };
 
   return (
-    <div>
-      <ChangePageButton to="/home" label="Go to Home" />
+    <div className="pick-word">
+      <div className="cancel-header">
+        <EndQuizButton to={"/learn"} />
+      </div>
 
-      <div>
+      <div className="pickword-element-container">
         {showRoundScore ? (
           <div className="round-score">
             <h2>
@@ -57,7 +60,7 @@ function PickWord() {
           <div>
             Press on the Swedish word for{" "}
             <strong>{questions[currentQuestion].english}</strong>
-            <div className="element-container">
+            <div>
               <div className="pickword-button-container">
                 {questions[currentQuestion].options.map((option) => {
                   return (

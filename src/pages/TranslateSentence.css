@@ -4,6 +4,12 @@ h2 {
     margin-bottom: 50px;
 }
 
+.translate-sentence{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .translate-page {
     text-align: center;
     padding: 20px;

@@ -26,7 +26,6 @@
     align-items: center;
     margin-top: 100px;
     border-radius: 50%;
-     /* Set the height to 100% of the viewport height */
   }
 
 .fill-button {
@@ -34,11 +33,16 @@
     height: 60px;
     border-radius: 50%;
     border: none;
-    background-color: lightgray;
-    color: black;
+    background-color: var(--main-color);
+    color: white;
     margin-left:20px;
     cursor: pointer;
     font-size: 15px;
+}
+
+.fill-button:disabled {
+    background-color: var(--main-color-disabled);
+    cursor: not-allowed;
 }
 
 .stars {
