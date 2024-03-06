@@ -4,6 +4,7 @@ import ChangePageButton from "./ChangePageButton";
 import "./ConnectWords.css";
 import "../App.css";
 import { wordList } from "../data-sets/pickLearnConnect";
+import EndQuizButton from "./EndQuizButton";
 
 import { useLocation } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
@@ -30,7 +31,7 @@ const ConnectWords = () => {
   const [matchedPairs, setMatchedPairs] = useState([]);
   const [showResult, setShowResult] = useState(false);
 
-  // to handle the shuffling of the swedish order 
+  // to handle the shuffling of the swedish order
   const [shuffledSwedishOrder, setShuffledSwedishOrder] = useState([]);
   const [shuffledEnglishOrder, setShuffledEnglishOrder] = useState([]);
 
@@ -39,7 +40,10 @@ const ConnectWords = () => {
     const shuffledOrder = wordPairs.map((pair) => pair.id);
     for (let i = shuffledOrder.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
-      [shuffledOrder[i], shuffledOrder[j]] = [shuffledOrder[j], shuffledOrder[i]];
+      [shuffledOrder[i], shuffledOrder[j]] = [
+        shuffledOrder[j],
+        shuffledOrder[i],
+      ];
     }
     setShuffledSwedishOrder(shuffledOrder);
   }, []);
@@ -49,10 +53,13 @@ const ConnectWords = () => {
     const shuffledOrder = wordPairs.map((pair) => pair.id);
     for (let i = shuffledOrder.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
-      [shuffledOrder[i], shuffledOrder[j]] = [shuffledOrder[j], shuffledOrder[i]];
+      [shuffledOrder[i], shuffledOrder[j]] = [
+        shuffledOrder[j],
+        shuffledOrder[i],
+      ];
     }
     setShuffledEnglishOrder(shuffledOrder);
-  }, []);  
+  }, []);
 
   const updateButtonState = (id, language, state) => {
     setWordPairs((prevWordPairs) =>
@@ -71,7 +78,11 @@ const ConnectWords = () => {
   const updateRemainingLanguageButtons = (id, language, state) => {
     setWordPairs((prevWordPairs) =>
       prevWordPairs.map((pair) => {
-        if (pair.id !== id && pair.stateEng !== "hidden" && pair.stateSwe !== "hidden") {
+        if (
+          pair.id !== id &&
+          pair.stateEng !== "hidden" &&
+          pair.stateSwe !== "hidden"
+        ) {
           updateButtonState(pair.id, language, state);
         }
         return pair;
@@ -118,9 +129,9 @@ const ConnectWords = () => {
   ) => {
     updateButtonState(selectedId, selectedLanguage, "clicked");
 
-    // set all the other buttons in that language as disabled 
+    // set all the other buttons in that language as disabled
     updateRemainingLanguageButtons(selectedId, selectedLanguage, "disabled");
-    
+
     // Check if the translation matches
     const isMatch = firstClicked.id === selectedId;
 
@@ -136,7 +147,8 @@ const ConnectWords = () => {
       setTimeout(() => {
         updateButtonState(firstClicked.id, firstClicked.language, "hidden");
         updateButtonState(selectedId, selectedLanguage, "hidden");
-        const oppositeLanguage = selectedLanguage === "swedish" ? "english" : "swedish";
+        const oppositeLanguage =
+          selectedLanguage === "swedish" ? "english" : "swedish";
         updateRemainingLanguageButtons(selectedId, oppositeLanguage, "");
         updateRemainingLanguageButtons(selectedId, selectedLanguage, "");
       }, 1000);
@@ -153,11 +165,16 @@ const ConnectWords = () => {
         setFeedbackMessage("");
         // reset the buttons for the firstClicked language
         updateButtonState(firstClicked.id, firstClicked.language, "");
-        updateRemainingLanguageButtons(firstClicked.id, firstClicked.language, "");
+        updateRemainingLanguageButtons(
+          firstClicked.id,
+          firstClicked.language,
+          ""
+        );
 
         // reset the buttons for the second clicked language
         updateButtonState(selectedId, selectedLanguage, "");
-        const oppositeLanguage = selectedLanguage === "swedish" ? "english" : "swedish";
+        const oppositeLanguage =
+          selectedLanguage === "swedish" ? "english" : "swedish";
         updateRemainingLanguageButtons(selectedId, selectedLanguage, "");
       }, 1000);
     }
@@ -206,8 +223,9 @@ const ConnectWords = () => {
 
   return (
     <div>
-      <ChangePageButton to="/home" label="Go to Home" />
-
+      <div className="cancel-header">
+        <EndQuizButton to={"/learn"} />
+      </div>
       {showResult ? (
         <div className="result-container">
           <p>{feedbackMessage}</p>

@@ -1,4 +1,5 @@
 import ChangePageButton from "./ChangePageButton";
+import Header from "./Header";
 import "./Learn.css";
 import { useNavigate } from 'react-router-dom';
 

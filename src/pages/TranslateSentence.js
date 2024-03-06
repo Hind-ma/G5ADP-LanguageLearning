@@ -1,8 +1,11 @@
 import ChangePageButton from "./ChangePageButton";
+
 import React, {useEffect, useState} from "react"
 import { ShuffleArray } from "../utils";
 import {completeList} from "../data-sets/compose-translate";
 import './TranslateSentence.css';
+
+import EndQuizButton from "./EndQuizButton";
 
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -17,7 +20,7 @@ function TranslateSentence() {
   const [sentenceIndex, setSentenceIndex] = useState(0);
   const [isAnswerCorrect, setIsAnswerCorrect] = useState(null);
   const [isEnglishToSwedish, setIsEnglishToSwedish] = useState(true);
-  
+
   // consts for the buttons and other elements in the gui
   const [nextButtonDisabled, setNextButtonDisabled] = useState(true);
   const [checkButtonDisabled, setCheckButtonDisabled] = useState(true);
@@ -43,9 +46,10 @@ function TranslateSentence() {
   }, [sentenceIndex]);
 
   const checkAnswer = () => {
-    const ansToCheck = isEnglishToSwedish === true
-      ? currSentence.swedish.toLowerCase()
-      : currSentence.english.toLowerCase();
+    const ansToCheck =
+      isEnglishToSwedish === true
+        ? currSentence.swedish.toLowerCase()
+        : currSentence.english.toLowerCase();
 
     // The use of the const isCorrect is needed since otherwise it gets
     // into trouble with the asynchronous parts of isAnswerCorrect
@@ -53,7 +57,7 @@ function TranslateSentence() {
     setIsAnswerCorrect(isCorrect);
 
     if (isCorrect) {
-      setScore(prevScore => prevScore + 1);
+      setScore((prevScore) => prevScore + 1);
     } else {
       setShowCorrectSentence(true);
     }
@@ -63,31 +67,6 @@ function TranslateSentence() {
     setCheckButtonDisabled(true);
     setInputDisabled(true);
   };
-
-  /*const handleNextButtonClicked = () => {
-    if (sentenceIndex + 1 < sentenceList.length) {
-      setSentenceIndex(sentenceIndex + 1);
-    } else {
-      if (quizList.length !== 0) {
-        quizList.shift();
-        console.log(quizList.length);
-      }
-      if (quizList.length === 0) {
-        navigate("/learn");
-      } else {
-        navigate(quizList[0].route, {state:{fullQuiz: quizList}});
-      }
-       setRoundScore(true);
-     }
- 
-     //reset answer and GUI-elements
-     setNextButtonDisabled(true);
-     setUserAnswer("");
-     setIsAnswerCorrect(null);
-     setCheckButtonDisabled(true);
-     setInputDisabled(false);
-     setShowCorrectSentence(false);
-   };*/
 
    const handleNextButtonClicked = () => {
     // TODO: @CS, maybe this shuffle is overkill?
@@ -110,77 +89,95 @@ function TranslateSentence() {
     setCheckButtonDisabled(true);
     setInputDisabled(false);
     setShowCorrectSentence(false);
-   };
+  };
 
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
     setUserAnswer(inputValue);
 
     // If there is some input, the check button should be enabled - otherwise not
-    setCheckButtonDisabled(inputValue.trim() === '');
+    setCheckButtonDisabled(inputValue.trim() === "");
   };
 
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       checkAnswer();
     }
   };
 
   return (
-    <div className="translate-page">
-      <ChangePageButton to="/home" label="Go to Home" />
-
-      <div>
-        {showRoundScore ? (
-          <div className="round-score">
-            <h2>
-              You got {score} out of {quizSentences.length} correct
-            </h2>
-            <ChangePageButton to="/" label="End round" />
-          </div>
-        ) : (
-          <div>
-            <h3>
-              {isEnglishToSwedish === true
-                ? "Translate this to Swedish"
-                : "Translate this to English"}
-            </h3>
-
-            <h2>{isEnglishToSwedish === true ? currSentence.english : currSentence.swedish}</h2>
-            
-            <div className="element-container">
-              <div className={`answer-container ${isAnswerCorrect !== null ? (isAnswerCorrect ? 'correct' : 'wrong') : ''}`}>
-                <input
-                  className="input"
-                  type="text"
-                  placeholder="Type here"
-                  value={userAnswer}
-                  onChange={handleInputChange}
-                  onKeyDown={handleKeyDown}
-                  disabled={inputDisabled}
-                />
-                <button
-                  className="check-button"
-                  onClick={checkAnswer}
-                  disabled={checkButtonDisabled}
-                >Check</button>
+    <div className="translate-sentence">
+      <div className="cancel-header">
+        <EndQuizButton to={"/learn"} />
+      </div>
+      <div className="translate-page">
+        <div>
+          {showRoundScore ? (
+            <div className="round-score">
+              <h2>
+                You got {score} out of {quizSentences.length} correct
+              </h2>
+              <ChangePageButton to="/" label="End round" />
+            </div>
+          ) : (
+            <div>
+              <h3>
+                {isEnglishToSwedish === true
+                  ? "Translate this to Swedish"
+                  : "Translate this to English"}
+              </h3>
+              <h2>
+                {isEnglishToSwedish === true
+                  ? currSentence.english
+                  : currSentence.swedish}
+              </h2>
+              <div className="element-container">
+                <div
+                  className={`answer-container ${
+                    isAnswerCorrect !== null
+                      ? isAnswerCorrect
+                        ? "correct"
+                        : "wrong"
+                      : ""
+                  }`}
+                >
+                  <input
+                    className="input"
+                    type="text"
+                    placeholder="Type here"
+                    value={userAnswer}
+                    onChange={handleInputChange}
+                    onKeyDown={handleKeyDown}
+                    disabled={inputDisabled}
+                  />
+                  <button
+                    className="check-button"
+                    onClick={checkAnswer}
+                    disabled={checkButtonDisabled}
+                  >
+                    Check
+                  </button>
+                </div>
               </div>
-
               <button
                 className="next-button"
                 onClick={handleNextButtonClicked}
                 disabled={nextButtonDisabled}
-              ></button>
+              >
+                Next
+              </button>
+              {showCorrectSentence && !isAnswerCorrect && (
+                <div className="correct-sentence">
+                  Correct answer:{" "}
+                  {isEnglishToSwedish
+                    ? currSentence.swedish
+                    : currSentence.english}
+                </div>
+              )}
             </div>
-
-            {showCorrectSentence && !isAnswerCorrect && (
-              <div className="correct-sentence">
-                Correct answer: {isEnglishToSwedish ? currSentence.swedish : currSentence.english}
-              </div>
-            )}
-          </div>
-        )}
-      </div>  
+          )}
+        </div>
+      </div>
     </div>
   );
 }

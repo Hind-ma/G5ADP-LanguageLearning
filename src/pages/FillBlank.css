@@ -27,6 +27,12 @@ body {
 
 .sentence-container {
     margin-bottom: 20px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    width: 40vw;
+    justify-content: center;
+    align-self: center;
 }
 
 .sentence {
@@ -70,6 +76,7 @@ input {
     margin-top: 20px;
 }
 
+/*
 button {
     background-color: #6c63ff;
     color: white;
@@ -86,6 +93,11 @@ button {
 
     button.check {
         background-color: #5a52cc;
+    }
+    
+    button.check:disabled {
+        background-color: var(--main-color-disabled);
+        cursor: not-allowed;
     }
 
     button.next {
@@ -116,7 +128,7 @@ button {
             margin-right: auto;
         }
 
-
+*/
 
 .star {
     font-size: 36px;
@@ -128,3 +140,7 @@ button {
     .star.visible {
         display: block;
     }
+
+.correct-word {
+    color: var(--main-color-disabled);
+}
