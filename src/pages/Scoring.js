@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import Header from "./Header";
 import "./Scoring.css";
 
 function Scoring() {
@@ -26,6 +27,7 @@ function Scoring() {
 
     return (
         <div>
+            <Header />
             <p>Practice Score</p>
             <p>{result}</p>
             <div>
