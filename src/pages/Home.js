@@ -204,12 +204,8 @@ function Home() {
         <img className="stats.img" src={progress}/>
         <img className="stats.img" src={chart}/> 
         </div>
-        
       </div>
-      <div className="stats-btn-container">
-        {bGuest ? null : <StatsDisplay />}
-      </div>
-    </div>
+    </div> 
   );
 }
 
